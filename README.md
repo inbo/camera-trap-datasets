@@ -1,6 +1,6 @@
 # Camera trap datasets
 
-This repository contains the functionality to standardize camera trap data from [Agouti](https://agouti.eu) and the [LifeWatch camera trap research infrastructure (CATREIN)](https://www.lifewatch.be/en/camera-trap-research-infrastructure-catrein) so these can be published on [GBIF](https://www.gbif.org/). For reusable functions, see the [camtraptor](https://inbo.github.io/movepub) R package.
+This repository contains the functionality to standardize camera trap data from [Agouti](https://agouti.eu) and the [LifeWatch camera trap research infrastructure (CATREIN)](https://www.lifewatch.be/en/camera-trap-research-infrastructure-catrein) so these can be published on [GBIF](https://www.gbif.org/). For reusable functions, see the [camtraptor](https://inbo.github.io/camtraptor) R package.
 
 ## Datasets
 
