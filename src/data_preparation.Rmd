@@ -1,6 +1,8 @@
 ---
 title: "Untitled"
-author: "Sanne Govaert"
+author: 
+- Bram D'hondt
+- Sanne Govaert
 date: "`r Sys.Date()`"
 output: html_document
 ---
