@@ -10,3 +10,191 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+```{r prep packages}
+library(tidyverse) # Includes ggplot2, dplyr...
+library(camtraptor)
+# library(camtrapDensity)
+```
+
+```{r camtrap data}
+raw <- read_camtrap_dp("./.../datapackage.json")
+set <- raw # we'll go forward with set, raw will stay integer
+```
+
+# Notes on cameras + fixes
+
+```{r fix VOR15b -- 2023-04-06--2023-05-12}
+# Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet gemaakt.
+# seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
+# NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
+```
+
+```{r fix defecten}
+# VOR16a -- 2021-11--2022-01 -- Vroegtijdig uitgevallen.
+# VOR18b -- 2022-12--2023-01 -- Defect. Geen reeks bekomen.
+# VOR21b -- 2022-12--2023-01 -- Defect. Geen reeks bekomen.
+# PEE01 -- 2023-11--2024-01 -- Defect. Geen reeks bekomen.
+# PEE16 -- 2024-01--2024-02 -- Defect. Geen reeks bekomen.
+# INS07 -- 2024-02--2024-04 -- Vroegtijdig uitgevallen.
+# INS12 -- 2024-02--2024-04 -- Defect. Geen reeks bekomen.
+# VOR06b -- 2024-04-05--2024-04-25 -- Geen camera gehangen (geen voorhanden).
+# VOR20b -- 2024-04--2024-05 -- Vroegtijdig uitgevallen.
+# VOR22b -- 2024-04--2024-05 -- Vroegtijdig uitgevallen.
+# INS12 -- 2024-04--2024-05 -- Vroegtijdig uitgevallen.
+# INS14 -- 2024-04--2024-05 -- Vroegtijdig uitgevallen.
+# Niet te verhelpen. Aanvaard als methodologische beperking.
+```
+
+```{r fix lichte beeldafwijkingen} 
+# VOR16a -- 2022-01--2022-02 -- Tijdelijk tak voor camera.
+# VOR16a -- 2022-02--2022-03 -- Tijdelijk tak voor camera.
+# VOR16a -- 2022-05--2022-05 -- Lichte verschuiving.
+# VOR17a -- 2021--2022 -- Lichte verschuivingen doorheen campagne.
+# Issue: positie van camera licht verschoven vergeleken met voorgaande of nagaande deployment.
+# Genegeerd. Aanvaard als ruis.
+```
+
+```{r fix missassigned observations}
+# Issue: 5 observaties zijn aan verkeerde deployment toegewezen. Behoren toe aan VOR08a i.p.v. BHN12.
+# Zie Comment MISASSIGN_CAM=\"Vordenstein_8\".
+# Te maken met kleine mismatch in eindtijd van deployment?
+# M.o.: loont dus om 'Comments' te checken!
+
+obsID <- c("3a99db01-32a7-491c-94e1-80a6abb0f3b7",
+           "490d5103-a4e4-4bfc-aba9-e9035bef5d56",
+           "fcf7e851-2ca7-40e7-b4bc-4291a1309e38",
+           "e3b614b2-e798-4bff-864c-68b5770900ca",
+           "5ea46e50-f24d-4d21-bc32-64e9a16444af")
+
+rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
+
+set$data$observations$deploymentID[set$data$observations$observationID == obsID[1]] <- rightdepID
+set$data$observations$deploymentID[set$data$observations$observationID == obsID[2]] <- rightdepID
+set$data$observations$deploymentID[set$data$observations$observationID == obsID[3]] <- rightdepID
+set$data$observations$deploymentID[set$data$observations$observationID == obsID[4]] <- rightdepID
+set$data$observations$deploymentID[set$data$observations$observationID == obsID[5]] <- rightdepID
+
+rm(obsID, rightdepID)
+```
+
+```{r fix VOR16a -- 2021-11-29--2021-12-13}
+# Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
+# dID <- "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf"
+# Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
+```
+
+```{r fix VOR15a--VOR18a -- 2021-2022}
+# Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
+# Geen gevolg nodig.
+```
+
+```{r fix BHN13 -- 2022-02--2022-03}
+# Issue: gesneuveld bij storm om 2022-02-18-17-31. Maar is aanvankelijk blijven lopen.
+
+dID <- "f27bd070-d28c-45f0-a888-5b97835bf796"
+val <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels") # Tijd zoals ingesteld
+
+set$data$deployments$end[set$data$deployments$deploymentID == dID] <- val
+
+out <- set$data$observations %>% 
+  filter(deploymentID == dID & timestamp >= val)
+
+set$data$observations <- set$data$observations %>% 
+  anti_join(out, by = "observationID")
+
+rm(dID, val, out)
+```
+
+```{r fix BHN12 -- 2022-02--2022-03}
+# Issue: positie van camera sterk verschoven. Kijkt sterk in de lucht. Problematisch.
+# dID = "7a85b0ea-6ed8-4d1e-801f-78082cb660ec"
+
+set <- filter_camtrap_dp(set, deploymentID != "7a85b0ea-6ed8-4d1e-801f-78082cb660ec")
+```
+
+```{r fix BHN13 -- 2022-05-03--2022-05-31}
+# Issue: (1) beeld niet identiek aan deployments vóór storm; (2) beeld niet stabiel tijdens deployment.
+# Genegeerd. Aanvaard als ruis. 
+```
+
+```{r fix VOR18a -- 2022-05-03--2022-05-31}
+# Issue: voortijdig uitgevallen, op 2022-05-07.
+# dID <- "d0cb880b-8f5d-446b-b558-836eaffc4f31"
+# Geen gevolg nodig.
+```
+
+```{r fix VOR23b -- 2022--2023}
+# Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2022-12-05 13:40:00" zijn geïnstalleerd (+ 11.87361 uur).
+
+wrong = "2022-12-05 01:47:35"
+right = "2022-12-05 13:40:00"
+
+set <- correct_time(set, depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
+                    wrongTime = wrong, rightTime = right)
+
+rm(wrong, right)
+```
+
+```{r fix PEE11=INS05 -- 2023--2024}
+# Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2023-11-21 11:44:00" zijn geïnstalleerd.
+
+wrong = "2023-11-22 00:04:41"
+right = "2023-11-21 11:44:00"
+
+set <- correct_time(set, depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
+                    wrongTime = wrong, rightTime = right)
+set <- correct_time(set, depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
+                    wrongTime = wrong, rightTime = right)
+
+rm(wrong, right)
+```
+
+```{r fix VOR08b -- 2023-11--2024-01}
+# Issue: grote tak voor camera gevallen; daar aanwezig van 2023-11-27 tot 2024-01-10
+# Dit is nagenoeg de ganse sequentie -> makkelijkst om geheel te verwijderen
+# dID = "91ae688c-818c-4e74-8c02-8bc2f8c842be"
+
+set <- filter_camtrap_dp(set, deploymentID != "91ae688c-818c-4e74-8c02-8bc2f8c842be")
+```
+
+```{r VOR06b -- 2024-02--2024-04}
+# Issue: wel registraties t.e.m. uitlezen, maar klok staat stil vanaf 2024-03-14.
+# Problematisch. Pro's en cons. -> verstandigst om geheel te verwijderen (?)
+# dID = "72633b07-b39c-4827-ae35-ffcc1cb02607"
+
+set <- filter_camtrap_dp(set, deploymentID != "72633b07-b39c-4827-ae35-ffcc1cb02607")
+```
+
+```{r fix INS11 -- 2024-04--2024-05}
+# Issue: problematisch op diverse vlakken.
+# - Ingesteld op zomer- ipv wintertijd (maar correctie reeds gemaakt in Agouti).
+# - Aanmaak sequenties foutief (reeksen van 10 zijn vaak opgesplitst).
+# dID = "f22c4374-20e6-4b17-818e-6129d0cd3611"
+
+# Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend).
+```
+
+# Filtering
+
+Exclude
+records that are blank
+unclassified media
+vehicles
+observations of humans
+
+Exclude dogs (or: include observations but exclude media)
+
+Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
+
+Geospatial coordinates are rounded to 0.001 degrees
