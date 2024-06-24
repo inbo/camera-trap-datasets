@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(here)
 library(camtrapdp)
 library(tidyverse) 
+library(lubridate)
 #library(camtraptor)
 #library(camtrapDensity)
 ```
@@ -123,21 +124,48 @@ Geen gevolg nodig.
 
 ## fix BHN13 -- 2022-02--2022-03
 
-Issue: gesneuveld bij storm om 2022-02-18-17-31. Maar is aanvankelijk blijven lopen.
+Issue: gesneuveld bij storm om 2022-02-18-17-31. Maar is aanvankelijk blijven lopen. DeploymentEnd wordt aangepast, en de observations van na dit moment worden er uit gehaald.
 
 ```{r fix BHN13 -- 2022-02--2022-03}
-dID <- "f27bd070-d28c-45f0-a888-5b97835bf796"
-val <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels") # Tijd zoals ingesteld
+deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
+new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
-set$data$deployments$end[set$data$deployments$deploymentID == dID] <- val
+deployments <-
+  deployments %>%
+  mutate(
+    deploymentEnd =
+      as.POSIXct(
+        ifelse(
+          deploymentID == deploymentID_storm,
+          new_deploymentEnd,
+          deploymentEnd
+        )
+      )
+  )
 
-out <- set$data$observations %>% 
-  filter(deploymentID == dID & timestamp >= val)
+# check
+deployments %>% filter(deploymentID == deploymentID_storm) %>% select(deploymentEnd)
 
-set$data$observations <- set$data$observations %>% 
-  anti_join(out, by = "observationID")
+# add updated deployments to data package
+data$deployments <- deployments 
 
-rm(dID, val, out)
+# filter observations and media (based on associated mediaID and eventID)
+data <-
+  data %>%
+  camtrapdp::filter_observations(
+    eventEnd <= new_deploymentEnd
+  )
+
+# Check if fix is correct
+observations(data) %>% 
+  filter(deploymentID == deploymentID_storm) %>% 
+  summarize(
+    last_eventEnd = max(eventEnd)
+  )
+
+# work with new data frames
+media <- camtrapdp::media(data)
+observations <- camtrapdp::observations(data)
 ```
 
 ## fix BHN12 -- 2022-02--2022-03
@@ -227,7 +255,7 @@ Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend
 # Filtering
 
 Exclude
-records that are blank
+records that are blank (observationType)
 unclassified media
 vehicles
 observations of humans
