@@ -12,14 +12,21 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r prep packages}
-library(tidyverse) # Includes ggplot2, dplyr...
-library(camtraptor)
-# library(camtrapDensity)
+library(here)
+library(camtrapdp)
+library(tidyverse) 
+#library(camtraptor)
+#library(camtrapDensity)
 ```
 
 ```{r camtrap data}
-raw <- read_camtrap_dp("./.../datapackage.json")
-set <- raw # we'll go forward with set, raw will stay integer
+file <- here::here("data", "raw", "muntjak-vlaanderen-20240606110007", "datapackage.json")
+raw_data <- camtrapdp::read_camtrapdp(file)
+data <- raw_data 
+
+deployments <- camtrapdp::deployments(data)
+media <- camtrapdp::media(data)
+observations <- camtrapdp::observations(data)
 ```
 
 # Notes on cameras + fixes
