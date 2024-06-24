@@ -173,7 +173,9 @@ Issue: positie van camera sterk verschoven. Kijkt sterk in de lucht. Problematis
 dID = "7a85b0ea-6ed8-4d1e-801f-78082cb660ec"
 
 ```{r fix BHN12 -- 2022-02--2022-03}
-set <- filter_camtrap_dp(set, deploymentID != "7a85b0ea-6ed8-4d1e-801f-78082cb660ec")
+data <-
+  data %>% 
+  camtrapdp::filter_deployments(deploymentID != "7a85b0ea-6ed8-4d1e-801f-78082cb660ec")
 ```
 
 ## fix BHN13 -- 2022-05-03--2022-05-31
