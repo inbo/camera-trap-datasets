@@ -70,26 +70,41 @@ Genegeerd. Aanvaard als ruis.
 ##  fix missassigned observations
 
 Issue: 5 observaties zijn aan verkeerde deployment toegewezen. Behoren toe aan VOR08a i.p.v. BHN12.
-Zie Comment MISASSIGN_CAM=\"Vordenstein_8\".
-Te maken met kleine mismatch in eindtijd van deployment?
+
+```{r show missassigned observations}
+filter(observations, observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
+```
+
+```{r show deploymentID and locationID of these 2 locations}
+deployments %>% 
+  filter(locationName %in% c("VOR08a", "BHN12")) %>% 
+  select(deploymentID, locationID, locationName)
+```
+
+
+Heeft dit te maken met kleine mismatch in eindtijd van deployment?
 M.o.: loont dus om 'Comments' te checken!
 
 ```{r fix missassigned observations}
-obsID <- c("3a99db01-32a7-491c-94e1-80a6abb0f3b7",
-           "490d5103-a4e4-4bfc-aba9-e9035bef5d56",
-           "fcf7e851-2ca7-40e7-b4bc-4291a1309e38",
-           "e3b614b2-e798-4bff-864c-68b5770900ca",
-           "5ea46e50-f24d-4d21-bc32-64e9a16444af")
+misassigned <- observations %>%
+  filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") %>%
+  as.list()
 
 rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
-set$data$observations$deploymentID[set$data$observations$observationID == obsID[1]] <- rightdepID
-set$data$observations$deploymentID[set$data$observations$observationID == obsID[2]] <- rightdepID
-set$data$observations$deploymentID[set$data$observations$observationID == obsID[3]] <- rightdepID
-set$data$observations$deploymentID[set$data$observations$observationID == obsID[4]] <- rightdepID
-set$data$observations$deploymentID[set$data$observations$observationID == obsID[5]] <- rightdepID
+observations <-
+  observations %>%
+  mutate(
+    deploymentID = ifelse(
+      observationID %in% misassigned$observationID,
+      rightdepID,
+      deploymentID
+    )
+  )
 
-rm(obsID, rightdepID)
+# check if fix is correct
+observations %>%
+  filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
 ```
 
 ## fix VOR16a -- 2021-11-29--2021-12-13
