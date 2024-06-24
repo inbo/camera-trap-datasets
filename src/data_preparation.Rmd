@@ -219,16 +219,22 @@ Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die
 wrong = "2023-11-22 00:04:41"
 right = "2023-11-21 11:44:00"
 
-set <- correct_time(set, depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
-                    wrongTime = wrong, rightTime = right)
-
-rm(wrong, right)
+data <-
+  data %>%
+  camtrapDensity::correct_time(
+    depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
+    wrongTime = wrong_time, rightTime = right_time
+  ) %>%
+  camtrapDensity::correct_time(
+    depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
+    wrongTime = wrong_time, rightTime = right_time
+  ) %>% 
+  camtrapDensity::correct_time(
+    depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
+    wrongTime = wrong_time, rightTime = right_time) %>% 
+  camtrapDensity::correct_time(
+    depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
+    wrongTime = wrong_time, rightTime = right_time)
 ```
 
 ## fix VOR08b -- 2023-11--2024-01
