@@ -17,7 +17,7 @@ library(camtrapdp)
 library(tidyverse) 
 library(lubridate)
 #library(camtraptor)
-#library(camtrapDensity)
+library(camtrapDensity)
 ```
 
 ```{r camtrap data}
@@ -194,19 +194,25 @@ Geen gevolg nodig.
 Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2022-12-05 13:40:00" zijn geïnstalleerd (+ 11.87361 uur).
 
 ```{r fix VOR23b -- 2022--2023}
-wrong = "2022-12-05 01:47:35"
-right = "2022-12-05 13:40:00"
+wrong_time = "2022-12-05 01:47:35"
+right_time = "2022-12-05 13:40:00"
 
-set <- correct_time(set, depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
-                    wrongTime = wrong, rightTime = right)
-set <- correct_time(set, depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
-                    wrongTime = wrong, rightTime = right)
-
-rm(wrong, right)
+data <-
+  data %>%
+  camtrapDensity::correct_time(
+    depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
+    wrongTime = wrong_time, rightTime = right_time
+  ) %>%
+  camtrapDensity::correct_time(
+    depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
+    wrongTime = wrong_time, rightTime = right_time
+  ) %>% 
+  camtrapDensity::correct_time(
+    depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
+    wrongTime = wrong_time, rightTime = right_time) %>% 
+  camtrapDensity::correct_time(
+    depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
+    wrongTime = wrong_time, rightTime = right_time)
 ```
 
 ## fix PEE11=INS05 -- 2023--2024
