@@ -243,7 +243,9 @@ Dit is nagenoeg de ganse sequentie -> makkelijkst om geheel te verwijderen
 dID = "91ae688c-818c-4e74-8c02-8bc2f8c842be"
 
 ```{r fix VOR08b -- 2023-11--2024-01}
-set <- filter_camtrap_dp(set, deploymentID != "91ae688c-818c-4e74-8c02-8bc2f8c842be")
+data <-
+  data %>% 
+  camtrapdp::filter_deployments(deploymentID != "91ae688c-818c-4e74-8c02-8bc2f8c842be")
 ```
 
 ## VOR06b -- 2024-02--2024-04
@@ -251,8 +253,9 @@ Issue: wel registraties t.e.m. uitlezen, maar klok staat stil vanaf 2024-03-14.
 Problematisch. Pro's en cons. -> verstandigst om geheel te verwijderen (?)
 
 ```{r VOR06b -- 2024-02--2024-04}
-#dID = "72633b07-b39c-4827-ae35-ffcc1cb02607"
-set <- filter_camtrap_dp(set, deploymentID != "72633b07-b39c-4827-ae35-ffcc1cb02607")
+data <-
+  data %>% 
+  camtrapdp::filter_deployments(deploymentID != "72633b07-b39c-4827-ae35-ffcc1cb02607")
 ```
 
 ## fix INS11 -- 2024-04--2024-05
