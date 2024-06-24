@@ -110,8 +110,11 @@ observations %>%
 ## fix VOR16a -- 2021-11-29--2021-12-13
 
 Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
-dID <- "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf"
 Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
+
+```{r fix BHN13 -- 2022-02--2022-03}
+observations %>% filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
+```
 
 ## fix VOR15a--VOR18a -- 2021-2022
 
