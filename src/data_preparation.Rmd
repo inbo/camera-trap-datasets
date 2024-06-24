@@ -162,10 +162,6 @@ observations(data) %>%
   summarize(
     last_eventEnd = max(eventEnd)
   )
-
-# work with new data frames
-media <- camtrapdp::media(data)
-observations <- camtrapdp::observations(data)
 ```
 
 ## fix BHN12 -- 2022-02--2022-03
