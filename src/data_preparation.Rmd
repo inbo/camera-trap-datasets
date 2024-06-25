@@ -34,7 +34,11 @@ raw_data <- camtrapdp::read_camtrapdp(file)
 Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet worden gemaakt.
 
 ```{r}
-seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
+seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f" # @Bram is this correct?
+
+deployments(raw_data) %>%
+  filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
+  select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
 
 NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
