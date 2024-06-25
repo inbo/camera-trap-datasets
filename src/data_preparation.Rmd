@@ -85,13 +85,26 @@ Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de r
 Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
 
 ```{r fix VOR16a -- 2021-11-29--2021-12-13}
+deployments(raw_data) %>% 
+  filter(locationName == "VOR16a")
+
 observations(raw_data) %>%
-  filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
+  filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf") %>% 
+  select(deploymentID, eventStart, eventEnd)
 ```
 
 ### VOR15a--VOR18a -- 2021-2022
 
 Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
+
+```{r fix VOR16a -- 2021-11-29--2021-12-13}
+deployments(raw_data) %>% 
+  filter(locationName == "VOR15a")
+
+observations(raw_data) %>%
+  filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf") %>% 
+  select(deploymentID, eventStart, eventEnd)
+```
 
 Geen gevolg nodig.
 
@@ -153,17 +166,13 @@ Heeft dit te maken met kleine mismatch in eindtijd van deployment?
 M.o.: loont dus om 'Comments' te checken!
 
 ```{r fix missassigned observations}
-misassigned <- observations(clean_data) %>%
-  filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") %>%
-  as.list()
-
 rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
 clean_data$observations <-
   observations(clean_data) %>%
   mutate(
     deploymentID = ifelse(
-      observationID %in% misassigned$observationID,
+      observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
       rightdepID,
       deploymentID
     )
