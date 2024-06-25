@@ -16,7 +16,7 @@ library(here)
 library(camtrapdp)
 library(tidyverse) 
 library(lubridate)
-#library(camtraptor)
+library(camtraptor)
 library(camtrapDensity)
 ```
 
@@ -321,21 +321,38 @@ clean_data <-
 
 # Filtering
 
+The data should only include observations (and associated media) of animals. Excluded are records that document blank or unclassified media, vehicles and observations of humans. Geospatial coordinates are rounded to 0.001 degrees.
+
 ```{r}
+# inspection
+clean_data %>% 
+  deployments() %>% 
+  select(latitude, longitude)
+clean_data %>%
+  observations() %>% 
+  select(observationType) %>% 
+  unique()
+
+# filtering and rounding
 filtered_data <-
   clean_data %>% 
   camtrapdp::filter_observations(
     observationType == "animal"
-  ) 
+  ) %>% 
+  camtraptor::round_coordinates(digits = 3)
 
+# check
+filtered_data %>% 
+  deployments() %>% 
+  select(latitude, longitude)
+```
+
+
+Exclude dogs (or: include observations but exclude media)
+```{r}
 filtered_data %>% 
   filter_observations(scientificName == "Canis lupus familiaris") %>% 
   media()
 ```
 
-
-Exclude dogs (or: include observations but exclude media)
-
 Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
-
-Geospatial coordinates are rounded to 0.001 degrees
