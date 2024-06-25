@@ -26,13 +26,12 @@ raw_data <- camtrapdp::read_camtrapdp(file)
 data <- raw_data 
 
 deployments <- camtrapdp::deployments(data)
-media <- camtrapdp::media(data)
 observations <- camtrapdp::observations(data)
 ```
 
 # Notes on cameras + fixes
 
-## fix VOR15b -- 2023-04-06--2023-05-12}
+## fix VOR15b -- 2023-04-06--2023-05-12
 
 Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet gemaakt.
 seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
@@ -93,7 +92,7 @@ misassigned <- observations %>%
 
 rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
-observations <-
+observations_clean <-
   observations %>%
   mutate(
     deploymentID = ifelse(
@@ -104,7 +103,7 @@ observations <-
   )
 
 # check if fix is correct
-observations %>%
+observations_clean %>%
   filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
 ```
 
@@ -113,8 +112,8 @@ observations %>%
 Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
 Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
 
-```{r fix BHN13 -- 2022-02--2022-03}
-observations %>% filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
+```{r fix VOR16a -- 2021-11-29--2021-12-13}
+observations_clean %>% filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
 ```
 
 ## fix VOR15a--VOR18a -- 2021-2022
@@ -130,7 +129,7 @@ Issue: gesneuveld bij storm om 2022-02-18-17-31. Maar is aanvankelijk blijven lo
 deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
 new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
-deployments <-
+deployments_clean <-
   deployments %>%
   mutate(
     deploymentEnd =
@@ -144,10 +143,11 @@ deployments <-
   )
 
 # check
-deployments %>% filter(deploymentID == deploymentID_storm) %>% select(deploymentEnd)
+deployments_clean %>% filter(deploymentID == deploymentID_storm) %>% select(deploymentEnd)
 
-# add updated deployments to data package
-data$deployments <- deployments 
+# add updated deployments and observations to data package
+data$deployments <- deployments_clean 
+data$observations <- observations_clean 
 
 # filter observations and media (based on associated mediaID and eventID)
 data <-
@@ -215,7 +215,7 @@ data <-
 
 Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2023-11-21 11:44:00" zijn geïnstalleerd.
 
-```{r fix PEE11=INS05 -- 2023--2024}
+```{r fix PEE11-INS05 -- 2023--2024}
 wrong = "2023-11-22 00:04:41"
 right = "2023-11-21 11:44:00"
 
@@ -267,11 +267,18 @@ Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend
 
 # Filtering
 
-Exclude
-records that are blank (observationType)
-unclassified media
-vehicles
-observations of humans
+```{r}
+filtered_data <-
+  data %>% 
+  camtrapdp::filter_observations(
+    observationType == "animal"
+  ) 
+
+filtered_data %>% 
+  filter_observations(scientificName == "Canis lupus familiaris") %>% 
+  media()
+```
+
 
 Exclude dogs (or: include observations but exclude media)
 
