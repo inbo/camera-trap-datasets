@@ -91,6 +91,35 @@ Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
 
 Geen gevolg nodig.
 
+### BHN13 -- 2022-05-03--2022-05-31
+
+Issue: (1) beeld niet identiek aan deployments vóór storm; (2) beeld niet stabiel tijdens deployment.
+
+Genegeerd. Aanvaard als ruis.
+
+### VOR18a -- 2022-05-03--2022-05-31
+
+Issue: voortijdig uitgevallen, op 2022-05-07.
+
+```{r}
+observations(raw_data) %>%
+  filter(deploymentID == "d0cb880b-8f5d-446b-b558-836eaffc4f31")
+```
+
+Geen gevolg nodig.
+
+### INS11 -- 2024-04--2024-05
+
+Issue: problematisch op diverse vlakken.
+- Ingesteld op zomer- ipv wintertijd (maar correctie reeds gemaakt in Agouti).
+- Aanmaak sequenties foutief (reeksen van 10 zijn vaak opgesplitst).
+
+```{r}
+observations(raw_data) %>%
+  filter(deploymentID == "f22c4374-20e6-4b17-818e-6129d0cd3611")
+```
+
+Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend).
 
 ## Inaccurate data that can be fixed
 
@@ -195,17 +224,6 @@ clean_data <-
   camtrapdp::filter_deployments(deploymentID != "7a85b0ea-6ed8-4d1e-801f-78082cb660ec")
 ```
 
-### Fix BHN13 -- 2022-05-03--2022-05-31
-
-Issue: (1) beeld niet identiek aan deployments vóór storm; (2) beeld niet stabiel tijdens deployment.
-Genegeerd. Aanvaard als ruis.
-
-### Fix VOR18a -- 2022-05-03--2022-05-31
-
-Issue: voortijdig uitgevallen, op 2022-05-07.
-dID <- "d0cb880b-8f5d-446b-b558-836eaffc4f31"
-Geen gevolg nodig.
-
 ### Fix VOR23b -- 2022--2023
 
 Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2022-12-05 13:40:00" zijn geïnstalleerd (+ 11.87361 uur).
@@ -259,36 +277,39 @@ right = "2023-11-21 11:44:00"
 #     wrongTime = wrong_time, rightTime = right_time)
 ```
 
-### Fix VOR08b -- 2023-11--2024-01
+## Inaccurate data that need to be removed
 
-Issue: grote tak voor camera gevallen; daar aanwezig van 2023-11-27 tot 2024-01-10
+Overview: 
+
+LocationName | Time range | DeploymentID
+-- | -- | -- 
+VOR08b | 2023-11--2024-01 | "91ae688c-818c-4e74-8c02-8bc2f8c842be"
+VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607
+
+### VOR08b -- 2023-11--2024-01
+
+Issue: grote tak voor camera gevallen; daar aanwezig van 2023-11-27 tot 2024-01-10.
+
 Dit is nagenoeg de ganse sequentie -> makkelijkst om geheel te verwijderen
-dID = "91ae688c-818c-4e74-8c02-8bc2f8c842be"
-
-```{r fix VOR08b -- 2023-11--2024-01}
-clean_data <-
-  clean_data %>% 
-  camtrapdp::filter_deployments(deploymentID != "91ae688c-818c-4e74-8c02-8bc2f8c842be")
-```
 
 ### VOR06b -- 2024-02--2024-04
 
 Issue: wel registraties t.e.m. uitlezen, maar klok staat stil vanaf 2024-03-14.
+
 Problematisch. Pro's en cons. -> verstandigst om geheel te verwijderen (?)
 
-```{r VOR06b -- 2024-02--2024-04}
+### Remove deployments
+
+```{r remove deployments}
+deploymentID_to_remove <- c(
+  "91ae688c-818c-4e74-8c02-8bc2f8c842be",
+  "72633b07-b39c-4827-ae35-ffcc1cb02607"
+)
 clean_data <-
   clean_data %>% 
-  camtrapdp::filter_deployments(deploymentID != "72633b07-b39c-4827-ae35-ffcc1cb02607")
+  camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
 ```
 
-### fix INS11 -- 2024-04--2024-05
-
-Issue: problematisch op diverse vlakken.
-- Ingesteld op zomer- ipv wintertijd (maar correctie reeds gemaakt in Agouti).
-- Aanmaak sequenties foutief (reeksen van 10 zijn vaak opgesplitst).
-dID = "f22c4374-20e6-4b17-818e-6129d0cd3611"
-Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend).
 
 # Filtering
 
