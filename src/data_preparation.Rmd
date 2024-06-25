@@ -29,16 +29,21 @@ deployments <- camtrapdp::deployments(data)
 observations <- camtrapdp::observations(data)
 ```
 
-# Notes on cameras + fixes
+# Notes on cameras and solutions
 
-## fix VOR15b -- 2023-04-06--2023-05-12
+## To do: issue that still need a fix
+
+### VOR15b -- 2023-04-06 -- 2023-05-12
 
 Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet worden gemaakt.
+
 seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
+
 NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
 
+## Issues without fix (accept as they are)
 
-## fix defecten
+### Defects
 
 Location | Time range | Comment
 -------- | ---------- | -------
@@ -58,7 +63,7 @@ INS14 | 2024-04 -- 2024-05 | Vroegtijdig uitgevallen.
 Niet te verhelpen. Aanvaard als methodologische beperking.
 
 
-## fix lichte beeldafwijkingen
+### Slight image abnormalities
 
 Location | Time range | Comment
 -------- | ---------- | -------
@@ -70,8 +75,25 @@ VOR17a | 2021 -- 2022 | Lichte verschuivingen doorheen campagne.
 Issue: positie van camera licht verschoven vergeleken met voorgaande of nagaande deployment.
 Genegeerd. Aanvaard als ruis.
 
+### VOR16a -- 2021-11-29--2021-12-13
 
-##  fix missassigned observations
+Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
+
+Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
+
+```{r fix VOR16a -- 2021-11-29--2021-12-13}
+observations %>% filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
+```
+
+## VOR15a--VOR18a -- 2021-2022
+
+Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
+Geen gevolg nodig.
+
+
+## Inaccurate data that can be fixed
+
+### Fix missassigned observations
 
 Issue: 5 observaties zijn aan verkeerde deployment toegewezen. Behoren toe aan VOR08a i.p.v. BHN12.
 
@@ -87,6 +109,7 @@ deployments %>%
 
 
 Heeft dit te maken met kleine mismatch in eindtijd van deployment?
+
 M.o.: loont dus om 'Comments' te checken!
 
 ```{r fix missassigned observations}
@@ -111,19 +134,7 @@ observations_clean %>%
   filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
 ```
 
-## fix VOR16a -- 2021-11-29--2021-12-13
 
-Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
-Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
-
-```{r fix VOR16a -- 2021-11-29--2021-12-13}
-observations_clean %>% filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf")
-```
-
-## fix VOR15a--VOR18a -- 2021-2022
-
-Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
-Geen gevolg nodig.
 
 ## fix BHN13 -- 2022-02--2022-03
 
