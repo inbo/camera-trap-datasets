@@ -33,7 +33,7 @@ observations <- camtrapdp::observations(data)
 
 ## fix VOR15b -- 2023-04-06--2023-05-12
 
-Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet gemaakt.
+Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet worden gemaakt.
 seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
 NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
 
@@ -193,22 +193,22 @@ Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die
 wrong_time = "2022-12-05 01:47:35"
 right_time = "2022-12-05 13:40:00"
 
-data <-
-  data %>%
-  camtrapDensity::correct_time(
-    depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
-    wrongTime = wrong_time, rightTime = right_time
-  ) %>%
-  camtrapDensity::correct_time(
-    depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
-    wrongTime = wrong_time, rightTime = right_time
-  ) %>% 
-  camtrapDensity::correct_time(
-    depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
-    wrongTime = wrong_time, rightTime = right_time) %>% 
-  camtrapDensity::correct_time(
-    depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
-    wrongTime = wrong_time, rightTime = right_time)
+# data <-
+#   data %>%
+#   camtrapDensity::correct_time(
+#     depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
+#     wrongTime = wrong_time, rightTime = right_time
+#   ) %>%
+#   camtrapDensity::correct_time(
+#     depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
+#     wrongTime = wrong_time, rightTime = right_time
+#   ) %>% 
+#   camtrapDensity::correct_time(
+#     depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
+#     wrongTime = wrong_time, rightTime = right_time) %>% 
+#   camtrapDensity::correct_time(
+#     depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
+#     wrongTime = wrong_time, rightTime = right_time)
 ```
 
 ## fix PEE11=INS05 -- 2023--2024
@@ -219,22 +219,23 @@ Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die
 wrong = "2023-11-22 00:04:41"
 right = "2023-11-21 11:44:00"
 
-data <-
-  data %>%
-  camtrapDensity::correct_time(
-    depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
-    wrongTime = wrong_time, rightTime = right_time
-  ) %>%
-  camtrapDensity::correct_time(
-    depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
-    wrongTime = wrong_time, rightTime = right_time
-  ) %>% 
-  camtrapDensity::correct_time(
-    depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
-    wrongTime = wrong_time, rightTime = right_time) %>% 
-  camtrapDensity::correct_time(
-    depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
-    wrongTime = wrong_time, rightTime = right_time)
+# data <-
+#   data %>%
+#   camtrapDensity::correct_time(
+#     depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
+#     wrongTime = wrong_time, rightTime = right_time
+#   ) %>%
+#   camtrapDensity::correct_time(
+#     depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
+#     wrongTime = wrong_time, rightTime = right_time
+#   ) %>% 
+#   camtrapDensity::correct_time(
+#     depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
+#     wrongTime = wrong_time, rightTime = right_time
+#     ) %>% 
+#   camtrapDensity::correct_time(
+#     depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
+#     wrongTime = wrong_time, rightTime = right_time)
 ```
 
 ## fix VOR08b -- 2023-11--2024-01
