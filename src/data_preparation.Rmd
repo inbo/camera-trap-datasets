@@ -226,17 +226,6 @@ observations(clean_data) %>%
   )
 ```
 
-### Fix BHN12 -- 2022-02--2022-03
-
-Issue: positie van camera sterk verschoven. Kijkt sterk in de lucht. Problematisch.
-dID = "7a85b0ea-6ed8-4d1e-801f-78082cb660ec"
-
-```{r fix BHN12 -- 2022-02--2022-03}
-clean_data <-
-  clean_data %>% 
-  camtrapdp::filter_deployments(deploymentID != "7a85b0ea-6ed8-4d1e-801f-78082cb660ec")
-```
-
 ### Fix VOR23b -- 2022--2023
 
 Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2022-12-05 13:40:00" zijn geïnstalleerd (+ 11.87361 uur).
@@ -296,8 +285,13 @@ Overview:
 
 LocationName | Time range | DeploymentID
 -- | -- | -- 
+HN12 | 2022-02--2022-03 | "7a85b0ea-6ed8-4d1e-801f-78082cb660ec"
 VOR08b | 2023-11--2024-01 | "91ae688c-818c-4e74-8c02-8bc2f8c842be"
 VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607
+
+### BHN12 -- 2022-02--2022-03
+
+Issue: positie van camera sterk verschoven. Kijkt sterk in de lucht. Problematisch.
 
 ### VOR08b -- 2023-11--2024-01
 
@@ -315,6 +309,7 @@ Problematisch. Pro's en cons. -> verstandigst om geheel te verwijderen (?)
 
 ```{r remove deployments}
 deploymentID_to_remove <- c(
+  "7a85b0ea-6ed8-4d1e-801f-78082cb660ec",
   "91ae688c-818c-4e74-8c02-8bc2f8c842be",
   "72633b07-b39c-4827-ae35-ffcc1cb02607"
 )
