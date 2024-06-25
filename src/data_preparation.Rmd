@@ -97,7 +97,7 @@ observations(raw_data) %>%
 
 Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
 
-```{r fix VOR16a -- 2021-11-29--2021-12-13}
+```{r VOR15a--VOR18a -- 2021-2022}
 deployments(raw_data) %>% 
   filter(locationName == "VOR15a")
 
