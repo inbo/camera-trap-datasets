@@ -170,7 +170,7 @@ M.o.: loont dus om 'Comments' te checken!
 rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
 clean_data$observations <-
-  observations(clean_data) %>%
+  camtrapdp::observations(clean_data) %>%
   dplyr::mutate(
     deploymentID = ifelse(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
@@ -195,7 +195,7 @@ deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
 new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
 clean_data$deployments <-
-  deployments(clean_data) %>%
+  camtrapdp::deployments(clean_data) %>%
   dplyr::mutate(
     deploymentEnd =
       as.POSIXct(
@@ -327,10 +327,10 @@ The data should only include observations (and associated media) of animals. Exc
 ```{r}
 # inspection
 clean_data %>% 
-  deployments() %>% 
+  camtrapdp::deployments() %>% 
   dplyr::select(latitude, longitude)
 clean_data %>%
-  observations() %>% 
+  camtrapdp::observations() %>% 
   dplyr::select(observationType) %>% 
   unique()
 
@@ -340,11 +340,11 @@ filtered_data <-
   camtrapdp::filter_observations(
     observationType == "animal" # this also hapens in write_dwc()
   ) %>% 
-  camtraptor::round_coordinates(digits = 3)
+  camtrapdp::round_coordinates(digits = 3)
 
 # check
 filtered_data %>% 
-  deployments() %>% 
+  camtrapdp::deployments() %>% 
   dplyr::select(latitude, longitude)
 ```
 
@@ -352,8 +352,8 @@ filtered_data %>%
 Exclude dogs (or: include observations but exclude media)
 ```{r}
 filtered_data %>% 
-  filter_observations(scientificName == "Canis lupus familiaris") %>% 
-  media()
+  camtrapdp::filter_observations(scientificName == "Canis lupus familiaris") %>% 
+  camtrapdp::media()
 ```
 
 Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
