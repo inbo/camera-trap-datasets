@@ -21,7 +21,8 @@ library(camtrapDensity)
 ```
 
 ```{r camtrap data}
-file <- here::here("data", "raw", "muntjak-vlaanderen-20240606110007", "datapackage.json")
+name_exportfolder <- "muntjak-vlaanderen-20240606110007"
+file <- here::here("data", "raw", name_exportfolder, "datapackage.json")
 raw_data <- camtrapdp::read_camtrapdp(file)
 ```
 
