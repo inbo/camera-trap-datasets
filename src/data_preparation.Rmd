@@ -15,9 +15,8 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(here)
 library(camtraptor)
 library(camtrapdp)
-library(tidyverse) 
+library(dplyr) 
 library(lubridate)
-library(camtrapDensity)
 ```
 
 ```{r camtrap data}
@@ -340,7 +339,7 @@ filtered_data <-
   camtrapdp::filter_observations(
     observationType == "animal" # this also hapens in write_dwc()
   ) %>% 
-  camtrapdp::round_coordinates(digits = 3)
+  camtraptor::round_coordinates(digits = 3)
 
 # check
 filtered_data %>% 
