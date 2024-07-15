@@ -334,15 +334,12 @@ clean_data %>%
   unique()
 
 # filtering and rounding
-filtered_data <-
+rounded_data <-
   clean_data %>% 
-  camtrapdp::filter_observations(
-    observationType == "animal" # this also hapens in write_dwc()
-  ) %>% 
   camtraptor::round_coordinates(digits = 3)
 
 # check
-filtered_data %>% 
+rounded_data %>% 
   camtrapdp::deployments() %>% 
   dplyr::select(latitude, longitude)
 ```
@@ -350,7 +347,7 @@ filtered_data %>%
 
 Exclude dogs (or: include observations but exclude media)
 ```{r}
-filtered_data %>% 
+rounded_data %>% 
   camtrapdp::filter_observations(scientificName == "Canis lupus familiaris") %>% 
   camtrapdp::media()
 ```
@@ -360,5 +357,5 @@ Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti
 # Transform to a Darwin Core Archive
 
 ```{r}
-camtrapdp::write_dwc(filtered_data, here("data", "processed", name_exportfolder))
+camtrapdp::write_dwc(rounded_data, here("data", "processed", name_exportfolder))
 ```
