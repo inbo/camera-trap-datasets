@@ -338,7 +338,7 @@ clean_data %>%
 filtered_data <-
   clean_data %>% 
   camtrapdp::filter_observations(
-    observationType == "animal"
+    observationType == "animal" # this also hapens in write_dwc()
   ) %>% 
   camtraptor::round_coordinates(digits = 3)
 
@@ -357,3 +357,9 @@ filtered_data %>%
 ```
 
 Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
+
+# Transform to a Darwin Core Archive
+
+```{r}
+camtrapdp::write_dwc(filtered_data, here("data", "processed", name_exportfolder))
+```
