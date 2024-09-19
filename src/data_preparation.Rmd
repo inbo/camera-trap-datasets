@@ -30,7 +30,9 @@ raw_data <- camtrapdp::read_camtrapdp(file)
 
 ### VOR15b -- 2023-04-06 -- 2023-05-12
 
-Issue: This sequence is from a muntjak, not a calibration. In Agouti (2024-04) the correction cannot be made.
+Issue: This sequence is from a muntjac, not a calibration. 
+
+YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible).
 
 ```{r}
 seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f" # @Bram is this correct?
@@ -39,8 +41,6 @@ deployments(raw_data) %>%
   dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
-
-YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible).
 
 ## Issues without fix (accept as they are)
 
@@ -65,14 +65,14 @@ INS14 | 2024-04 -- 2024-05 | Prematurely failed.
 
 ### Slight image abnormalities
 
+Issue: the position of the camera was slightly shifted compared to the previous or subsequent deployment. Ignored. Accepted as noise
+
 Location | Time range | Comment
 -------- | ---------- | -------
 VOR16a | 2022-01 -- 2022-02 | Temporary branch for the camera.
 VOR16a | 2022-02 -- 2022-03 | Temporary branch for the camera.
 VOR16a | 2022-05 -- 2022-05 | Slight shift.
 VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
-
-Issue: the position of the camera was slightly shifted compared to the previous or subsequent deployment. Ignored. Accepted as noise
 
 ### Other issues
 
