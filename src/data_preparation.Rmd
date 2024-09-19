@@ -99,37 +99,60 @@ clean_data <- raw_data
 Issue: 5 observations have been assigned to the wrong deployment. They belong to VOR08a instead of BHN12.
 
 ```{r show missassigned observations}
-observations(clean_data) %>%
-  dplyr::filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
+misassigned <- 
+  clean_data %>%
+  camtrapdp::filter_observations(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") 
+
+misassigned %>% 
+  camtrapdp::observations() %>% 
+  dplyr::select(eventID, deploymentID, observationComments, eventEnd)
 ```
-
-```{r show deploymentID and locationID of these 2 locations}
-deployments(clean_data) %>% 
-  dplyr::filter(locationName %in% c("VOR08a", "BHN12")) %>% 
-  dplyr::select(deploymentID, locationID, locationName)
-```
-
-
-Is this related to a small mismatch in the deployment end time?
-
-Suggestion: it's worth checking the 'Comments' section!
 
 ```{r fix missassigned observations}
-rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
+correct_depID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
-clean_data$observations <-
+# Correct deploymentID in observations and update observationComment
+camtrapdp::observations(clean_data) <-
   camtrapdp::observations(clean_data) %>%
   dplyr::mutate(
     deploymentID = ifelse(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
-      rightdepID,
+      correct_depID,
+      deploymentID
+    ),
+    observationComments = ifelse(
+      observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
+      "",
+      observationComments
+    )
+  )
+
+# Extract eventIDs of media related to misassigned observations
+eventID_misassigned <-
+  misassigned %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(eventID) %>% 
+  unique()
+
+# Correct deploymentID in these media
+camtrapdp::media(clean_data) <-
+  camtrapdp::media(clean_data) %>% 
+  dplyr::mutate(
+    deploymentID = ifelse(
+      eventID %in% eventID_misassigned,
+      correct_depID,
       deploymentID
     )
   )
 
-# check if fix is correct
-observations(clean_data) %>%
-  dplyr::filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
+# Inspect fix
+camtrapdp::observations(clean_data) %>%
+  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+  dplyr::select(eventID, deploymentID, observationComments)
+
+camtrapdp::media(clean_data) %>% 
+  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+  dplyr::select(eventID, deploymentID)
 ```
 
 ### 1.3.2 Correct deploymentEnd
