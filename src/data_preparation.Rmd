@@ -46,6 +46,8 @@ YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible
 
 ### Defects
 
+Cannot be remedied. Accepted as a methodological limitation.
+
 Location | Time range | Comment
 -------- | ---------- | -------
 VOR16a | 2021-11 -- 2022-01 | Prematurely failed.
@@ -61,9 +63,6 @@ VOR22b | 2024-04 -- 2024-05 | Prematurely failed.
 INS12 | 2024-04 -- 2024-05 | Prematurely failed.
 INS14 | 2024-04 -- 2024-05 | Prematurely failed.
 
-Cannot be remedied. Accepted as a methodological limitation.
-
-
 ### Slight image abnormalities
 
 Location | Time range | Comment
@@ -75,75 +74,21 @@ VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
 
 Issue: the position of the camera was slightly shifted compared to the previous or subsequent deployment. Ignored. Accepted as noise
 
+### Other issues
 
-### VOR16a -- 2021-11-29--2021-12-13
-
-Issue: from 2021-12-13 10:30:00, each image became a single sequence, and the series also stopped abruptly.
-
-Ignored. Accepted as noise. The end date of the deployment reflects the premature stop.
-
-```{r fix VOR16a -- 2021-11-29--2021-12-13}
-deployments(raw_data) %>% 
-  dplyr::filter(locationName == "VOR16a")
-
-observations(raw_data) %>%
-  dplyr::filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf") %>% 
-  dplyr::select(deploymentID, eventStart, eventEnd)
-```
-
-### VOR15a--VOR18a -- 2021-2022
-
-Issue: not set up to take a photo at noon and midnight.
-
-```{r VOR15a--VOR18a -- 2021-2022}
-deployments(raw_data) %>% 
-  dplyr::filter(locationName == "VOR15a")
-
-observations(raw_data) %>%
-  dplyr::filter(deploymentID == "3ca9d6dd-2dd3-4f68-adf1-316466ea16cf") %>% 
-  dplyr::select(deploymentID, eventStart, eventEnd)
-```
-
-No action required.
-
-### BHN13 -- 2022-05-03--2022-05-31
-
-Issues:
-- image not identical to deployments before the storm
-- image not stable during deployment.
-
-Ignored. Accepted as noise.
-
-### VOR18a -- 2022-05-03--2022-05-31
-
-Issue: failed prematurely on 2022-05-07.
-
-```{r}
-observations(raw_data) %>%
-  dplyr::filter(deploymentID == "d0cb880b-8f5d-446b-b558-836eaffc4f31")
-```
-
-No action required.
-
-### INS11 -- 2024-04--2024-05
-
- Issue: problematic in various aspects.
-- Set to daylight saving time instead of standard time (but the correction has already been made in Agouti).
-- Sequence creation is incorrect (sequences of 10 are often split).
-
-```{r}
-observations(raw_data) %>%
-  dplyr::filter(deploymentID == "f22c4374-20e6-4b17-818e-6129d0cd3611")
-```
-
-Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
+Location | Time range | Issue | Conclusion
+-------- | ---------- | ----- | ----------
+VOR16a | 2021-11-29 -- 2021-12-13 | Each image became a single sequence, and the series also stopped abruptly. | Ignored. Accepted as noise. The end date of the deployment reflects the premature stop.
+VOR15a -- VOR18a | 2021 - 2011 | Not set up to take a photo at noon and midnight. | No action required.
+BHN13 | 2022-05-03 -- 2022-05-31 | (1) image not identical to deployments before the storm; (2) image not stable during deployment. | Ignored. Accepted as noise.
+VOR18a | 2022-05-03 -- 2022-05-31 | Failed prematurely on 2022-05-07. | No action required.
+INS11 | 2024-04 -- 2024-05 | Problematic in various aspects. (1) Set to daylight saving time instead of standard time (but the correction has already been made in Agouti); (2) Sequence creation is incorrect (sequences of 10 are often split). | Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
 
 ## Inaccurate data that can be fixed
 
 ```{r}
 clean_data <- raw_data
 ```
-
 
 ### Fix missassigned observations
 
