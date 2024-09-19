@@ -187,12 +187,15 @@ observations(clean_data) %>%
 
 ### Fix BHN13 -- 2022-02--2022-03
 
-Issue: damaged in a storm on 2022-02-18-17-31. But it initially continued to operate. DeploymentEnd will be adjusted, and observations after this time will be removed.
+Issue: damaged in a storm on 2022-02-18-17-31. But it initially continued to operate.
+
+DeploymentEnd is adjusted, and observations after this time are removed.
 
 ```{r fix BHN13 -- 2022-02--2022-03}
 deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
 new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
+# Mutate deploymentEnd
 clean_data$deployments <-
   camtrapdp::deployments(clean_data) %>%
   dplyr::mutate(
@@ -206,24 +209,30 @@ clean_data$deployments <-
       )
   )
 
-# check
-deployments(clean_data) %>%
-  dplyr::filter(deploymentID == deploymentID_storm) %>%
-  dplyr::select(deploymentEnd)
-
-# filter observations and media (based on associated mediaID and eventID)
+# Update observations and media
 clean_data <-
   clean_data %>%
-  camtrapdp::filter_observations(
-    eventEnd <= new_deploymentEnd
-  )
+  camtrapdp::filter_observations(eventEnd <= new_deploymentEnd)
+```
 
-# Check if fix is correct
+```{r check fix BHN13 -- 2022-02--2022-03}
+# Inspect deployment
+deployments(clean_data) %>%
+  dplyr::filter(deploymentID == deploymentID_storm) %>%
+  dplyr::select(deploymentID, deploymentStart, deploymentEnd)
+
+# Inspect observations
 observations(clean_data) %>% 
   dplyr::filter(deploymentID == deploymentID_storm) %>% 
-  dplyr::summarise(
-    last_eventEnd = max(eventEnd)
-  )
+  dplyr::summarise(last_eventEnd = max(eventEnd))
+
+# Inspect media
+media(clean_data) %>% 
+  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+  dplyr::summarise(last_timestamp = max(timestamp))
+
+# Inspect metadata
+clean_data$temporal
 ```
 
 ### Fix VOR23b -- 2022--2023
