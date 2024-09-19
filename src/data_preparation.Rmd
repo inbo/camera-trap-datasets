@@ -309,12 +309,19 @@ rounded_data %>%
   camtrapdp::deployments() %>% 
   dplyr::select(latitude, longitude)
 ```
-Exclude dogs (or: include observations but exclude media)
+Exclude the media of dogs for privacy reasons, but keep the observations.
 
 ```{r}
-rounded_data %>% 
-  camtrapdp::filter_observations(scientificName == "Canis lupus familiaris") %>% 
-  camtrapdp::media()
+mediaID_dogs <- rounded_data %>% 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris", "Canis lupus")) %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(mediaID)
+
+
+camtrapdp::media(rounded_data) <-
+  rounded_data %>% 
+  camtrapdp::media() %>% 
+  dplyr::filter(!mediaID %in% mediaID_dogs)
 ```
 
 Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
