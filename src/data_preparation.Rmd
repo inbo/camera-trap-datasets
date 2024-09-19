@@ -237,7 +237,7 @@ clean_data$temporal
 
 ### Fix VOR23b -- 2022--2023
 
-Issue: incorrect time setting throughout the campaign. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
+Issue: incorrect time setting throughout the deployment. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
 
 ```{r fix VOR23b -- 2022--2023}
 wrong_time = "2022-12-05 01:47:35"
@@ -266,7 +266,7 @@ clean_data <-
 
 ### Fix PEE11=INS05 -- 2023--2024
 
- Issue: incorrect time setting throughout the campaign. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
+ Issue: incorrect time setting throughout the deployment. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
 
 ```{r fix PEE11-INS05 -- 2023--2024}
 wrong = "2023-11-22 00:04:41"
