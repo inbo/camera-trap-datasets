@@ -132,7 +132,7 @@ observations(clean_data) %>%
 
 Issue: BHN13 is damaged in a storm on 2022-02-18-17-31. But it initially continued to operate.
 
-DeploymentEnd is adjusted, and observations after this time are removed.
+DeploymentEnd is adjusted, and observations and related media after this time are removed.
 
 ```{r fix BHN13 -- 2022-02--2022-03}
 deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
@@ -236,11 +236,11 @@ clean_data <-
 
 Overview: 
 
-LocationName | Time range | DeploymentID | Issue
+DeploymentID | LocationName | Time range | Issue
 -- | -- | -- | --
-HN12 | 2022-02--2022-03 | "7a85b0ea-6ed8-4d1e-801f-78082cb660ec" | The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
-VOR08b | 2023-11--2024-01 | "91ae688c-818c-4e74-8c02-8bc2f8c842be" | A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10. This is almost the entire sequence, so it would be easiest to remove it completely.
-VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607 | Issue: Although there were recordings up until the last readout, the clock has stopped since 2024-03-14. Problematic. Pros and cons. → It would be wisest to remove it completely (?)
+"7a85b0ea-6ed8-4d1e-801f-78082cb660ec" | BHN12 | 2022-02--2022-03 | The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
+"91ae688c-818c-4e74-8c02-8bc2f8c842be" | VOR08b | 2023-11--2024-01 | A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10. This is almost the entire sequence, so it would be easiest to remove it completely.
+"72633b07-b39c-4827-ae35-ffcc1cb02607 | VOR06b | 2024-02--2024-04 | Although there were recordings up until the last readout, the clock has stopped since 2024-03-14. Problematic. Pros and cons. → It would be wisest to remove it completely (?)
 
 ### Remove deployments
 
@@ -250,11 +250,11 @@ deploymentID_to_remove <- c(
   "91ae688c-818c-4e74-8c02-8bc2f8c842be",
   "72633b07-b39c-4827-ae35-ffcc1cb02607"
 )
+
 clean_data <-
   clean_data %>% 
   camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
 ```
-
 
 # Filtering
 
