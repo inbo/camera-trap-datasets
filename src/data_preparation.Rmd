@@ -120,7 +120,7 @@ camtrapdp::observations(clean_data) <-
     ),
     observationComments = ifelse(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
-      "",
+      NA,
       observationComments
     )
   )
