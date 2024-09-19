@@ -128,11 +128,9 @@ observations(clean_data) %>%
   dplyr::filter(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"")
 ```
 
+### Correct deploymentEnd
 
-
-### Fix BHN13 -- 2022-02--2022-03
-
-Issue: damaged in a storm on 2022-02-18-17-31. But it initially continued to operate.
+Issue: BHN13 is damaged in a storm on 2022-02-18-17-31. But it initially continued to operate.
 
 DeploymentEnd is adjusted, and observations after this time are removed.
 
@@ -180,9 +178,9 @@ media(clean_data) %>%
 clean_data$temporal
 ```
 
-### Fix VOR23b -- 2022--2023
+### Correct time
 
-Issue: incorrect time setting throughout the deployment. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
+1) Issue: incorrect time setting throughout the deployment of VOR23b -- 2022--2023. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
 
 ```{r fix VOR23b -- 2022--2023}
 wrong_time = "2022-12-05 01:47:35"
@@ -209,9 +207,7 @@ clean_data <-
     )
 ```
 
-### Fix PEE11=INS05 -- 2023--2024
-
- Issue: incorrect time setting throughout the deployment. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
+2) Issue: incorrect time setting throughout the deployment of PEE11=INS05 -- 2023--2024. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
 
 ```{r fix PEE11-INS05 -- 2023--2024}
 wrong = "2023-11-22 00:04:41"
