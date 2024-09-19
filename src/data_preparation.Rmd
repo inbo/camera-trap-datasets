@@ -41,7 +41,7 @@ YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible
 ```{r}
 depID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
 
-deployments(raw_data) %>%
+camtrapdp::deployments(raw_data) %>%
   dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
@@ -166,7 +166,7 @@ deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
 new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
 # Mutate deploymentEnd
-clean_data$deployments <-
+camtrapdp::deployments(clean_data) <-
   camtrapdp::deployments(clean_data) %>%
   dplyr::mutate(
     deploymentEnd =
@@ -190,17 +190,17 @@ clean_data <- camtrapdp:::update_temporal(clean_data)
 
 ```{r check fix BHN13 -- 2022-02--2022-03}
 # Inspect deployment
-deployments(clean_data) %>%
+camtrapdp::deployments(clean_data) %>%
   dplyr::filter(deploymentID == deploymentID_storm) %>%
   dplyr::select(deploymentID, deploymentStart, deploymentEnd)
 
 # Inspect observations
-observations(clean_data) %>% 
+camtrapdp::observations(clean_data) %>% 
   dplyr::filter(deploymentID == deploymentID_storm) %>% 
   dplyr::summarise(last_eventEnd = max(eventEnd))
 
 # Inspect media
-media(clean_data) %>% 
+camtrapdp::media(clean_data) %>% 
   dplyr::filter(deploymentID == deploymentID_storm) %>% 
   dplyr::summarise(last_timestamp = max(timestamp))
 
