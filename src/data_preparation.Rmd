@@ -39,8 +39,6 @@ Issue: This sequence is from a muntjac, not a calibration.
 YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible).
 
 ```{r}
-depID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f"
-
 camtrapdp::deployments(raw_data) %>%
   dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
