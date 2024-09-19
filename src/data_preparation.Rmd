@@ -232,23 +232,26 @@ Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die
 ```{r fix VOR23b -- 2022--2023}
 wrong_time = "2022-12-05 01:47:35"
 right_time = "2022-12-05 13:40:00"
+duration = lubridate::as.duration(lubridate::interval(wrong_time, right_time))
 
-# clean_data <-
-#   clean_data %>%
-#   camtrapDensity::correct_time(
-#     depID = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
-#     wrongTime = wrong_time, rightTime = right_time
-#   ) %>%
-#   camtrapDensity::correct_time(
-#     depID = "c8008e80-3684-4ee0-a491-0e11a7d55918",
-#     wrongTime = wrong_time, rightTime = right_time
-#   ) %>% 
-#   camtrapDensity::correct_time(
-#     depID = "83784cd8-107a-4219-82bd-05da22d7abf1",
-#     wrongTime = wrong_time, rightTime = right_time) %>% 
-#   camtrapDensity::correct_time(
-#     depID = "96dc5829-22e9-4532-ba0f-0d891e74051a",
-#     wrongTime = wrong_time, rightTime = right_time)
+clean_data <-
+  clean_data %>%
+  camtrapdp::shift_time(
+    deployment_id = "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
+    duration = duration
+  ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "c8008e80-3684-4ee0-a491-0e11a7d55918",
+    duration = duration
+  ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "83784cd8-107a-4219-82bd-05da22d7abf1",
+    duration = duration
+    ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "96dc5829-22e9-4532-ba0f-0d891e74051a",
+    duration = duration
+    )
 ```
 
 ### Fix PEE11=INS05 -- 2023--2024
@@ -259,23 +262,23 @@ Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die
 wrong = "2023-11-22 00:04:41"
 right = "2023-11-21 11:44:00"
 
-# clean_data <-
-#   clean_data %>%
-#   camtrapDensity::correct_time(
-#     depID = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
-#     wrongTime = wrong_time, rightTime = right_time
-#   ) %>%
-#   camtrapDensity::correct_time(
-#     depID = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
-#     wrongTime = wrong_time, rightTime = right_time
-#   ) %>% 
-#   camtrapDensity::correct_time(
-#     depID = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
-#     wrongTime = wrong_time, rightTime = right_time
-#     ) %>% 
-#   camtrapDensity::correct_time(
-#     depID = "6acb2575-65f7-411d-b5b1-a8b466127a43",
-#     wrongTime = wrong_time, rightTime = right_time)
+clean_data <-
+  clean_data %>%
+  camtrapdp::shift_time(
+    deployment_id = "e6f5df99-30a8-4969-b432-eaf88d1d780e",
+    duration = duration
+  ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
+    duration = duration
+  ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
+    duration = duration
+    ) %>%
+  camtrapdp::shift_time(
+    deployment_id = "6acb2575-65f7-411d-b5b1-a8b466127a43",
+    duration = duration)
 ```
 
 ## Inaccurate data that need to be removed
