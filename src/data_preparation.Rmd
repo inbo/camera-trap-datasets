@@ -236,27 +236,11 @@ clean_data <-
 
 Overview: 
 
-LocationName | Time range | DeploymentID
--- | -- | -- 
-HN12 | 2022-02--2022-03 | "7a85b0ea-6ed8-4d1e-801f-78082cb660ec"
-VOR08b | 2023-11--2024-01 | "91ae688c-818c-4e74-8c02-8bc2f8c842be"
-VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607
-
-### BHN12 -- 2022-02--2022-03
-
-Issue: : The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
-
-### VOR08b -- 2023-11--2024-01
-
-Issue: A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10.
-
-This is almost the entire sequence, so it would be easiest to remove it completely.
-
-### VOR06b -- 2024-02--2024-04
-
-Issue: Although there were recordings up until the last readout, the clock has stopped since 2024-03-14.
-
-Problematic. Pros and cons. → It would be wisest to remove it completely (?)
+LocationName | Time range | DeploymentID | Issue
+-- | -- | -- | --
+HN12 | 2022-02--2022-03 | "7a85b0ea-6ed8-4d1e-801f-78082cb660ec" | The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
+VOR08b | 2023-11--2024-01 | "91ae688c-818c-4e74-8c02-8bc2f8c842be" | A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10. This is almost the entire sequence, so it would be easiest to remove it completely.
+VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607 | Issue: Although there were recordings up until the last readout, the clock has stopped since 2024-03-14. Problematic. Pros and cons. → It would be wisest to remove it completely (?)
 
 ### Remove deployments
 
