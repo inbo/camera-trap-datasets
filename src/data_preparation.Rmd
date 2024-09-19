@@ -30,7 +30,7 @@ raw_data <- camtrapdp::read_camtrapdp(file)
 
 ### VOR15b -- 2023-04-06 -- 2023-05-12
 
-Issue: deze sequentie is een muntjak, geen kalibratie. In Agouti dd24-04 kan correctie niet worden gemaakt.
+Issue: This sequence is from a muntjak, not a calibration. In Agouti (2024-04) the correction cannot be made.
 
 ```{r}
 seqID <- "f111b060-61cb-4e1f-b47b-e5fab4c3123f" # @Bram is this correct?
@@ -40,7 +40,7 @@ deployments(raw_data) %>%
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
 
-NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
+YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible).
 
 ## Issues without fix (accept as they are)
 
@@ -48,40 +48,39 @@ NOG TE CORRIGEREN, in Agouti, van zodra mogelijk (dd24-05-16 nog steeds niet).
 
 Location | Time range | Comment
 -------- | ---------- | -------
-VOR16a | 2021-11 -- 2022-01 | Vroegtijdig uitgevallen.
-VOR18b | 2022-12 -- 2023-01 | Defect. Geen reeks bekomen.
-VOR21b | 2022-12 -- 2023-01 | Defect. Geen reeks bekomen.
-PEE01 | 2023-11 -- 2024-01 | Defect. Geen reeks bekomen.
-PEE16 | 2024-01 -- 2024-02 | Defect. Geen reeks bekomen.
-INS07 | 2024-02 -- 2024-04 | Vroegtijdig uitgevallen.
-INS12 | 2024-02 -- 2024-04 | Defect. Geen reeks bekomen.
-VOR06b | 2024-04-05 -- 2024-04-25 | Geen camera gehangen (geen voorhanden).
-VOR20b | 2024-04 -- 2024-05 | Vroegtijdig uitgevallen.
-VOR22b | 2024-04 -- 2024-05 | Vroegtijdig uitgevallen.
-INS12 | 2024-04 -- 2024-05 | Vroegtijdig uitgevallen.
-INS14 | 2024-04 -- 2024-05 | Vroegtijdig uitgevallen.
+VOR16a | 2021-11 -- 2022-01 | Prematurely failed.
+VOR18b | 2022-12 -- 2023-01 | Defective. No sequence obtained.
+VOR21b | 2022-12 -- 2023-01 | Defective. No sequence obtained.
+PEE01 | 2023-11 -- 2024-01 | Defective. No sequence obtained.
+PEE16 | 2024-01 -- 2024-02 | Defective. No sequence obtained.
+INS07 | 2024-02 -- 2024-04 | Prematurely failed.
+INS12 | 2024-02 -- 2024-04 | Defective. No sequence obtained.
+VOR06b | 2024-04-05 -- 2024-04-25 | No camera was installed (none available).
+VOR20b | 2024-04 -- 2024-05 | Prematurely failed.
+VOR22b | 2024-04 -- 2024-05 | Prematurely failed.
+INS12 | 2024-04 -- 2024-05 | Prematurely failed.
+INS14 | 2024-04 -- 2024-05 | Prematurely failed.
 
-Niet te verhelpen. Aanvaard als methodologische beperking.
+Cannot be remedied. Accepted as a methodological limitation.
 
 
 ### Slight image abnormalities
 
 Location | Time range | Comment
 -------- | ---------- | -------
-VOR16a | 2022-01 -- 2022-02 | Tijdelijk tak voor camera.
-VOR16a | 2022-02 -- 2022-03 | Tijdelijk tak voor camera.
-VOR16a | 2022-05 -- 2022-05 | Lichte verschuiving.
-VOR17a | 2021 -- 2022 | Lichte verschuivingen doorheen campagne.
+VOR16a | 2022-01 -- 2022-02 | Temporary branch for the camera.
+VOR16a | 2022-02 -- 2022-03 | Temporary branch for the camera.
+VOR16a | 2022-05 -- 2022-05 | Slight shift.
+VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
 
-Issue: positie van camera licht verschoven vergeleken met voorgaande of nagaande deployment.
-Genegeerd. Aanvaard als ruis.
+Issue: the position of the camera was slightly shifted compared to the previous or subsequent deployment. Ignored. Accepted as noise
 
 
 ### VOR16a -- 2021-11-29--2021-12-13
 
-Issue: vanaf 2021-12-13 10:30:00, wordt elk beeld één sequentie, en stopt de reeks ook abrupt.
+Issue: from 2021-12-13 10:30:00, each image became a single sequence, and the series also stopped abruptly.
 
-Genegeerd. Aanvaard als ruis. Einddatum van deployment weerspiegelt vroegtijdige stop.
+Ignored. Accepted as noise. The end date of the deployment reflects the premature stop.
 
 ```{r fix VOR16a -- 2021-11-29--2021-12-13}
 deployments(raw_data) %>% 
@@ -94,7 +93,7 @@ observations(raw_data) %>%
 
 ### VOR15a--VOR18a -- 2021-2022
 
-Issue: niet ingesteld om op de middag en middernacht een foto te nemen.
+Issue: not set up to take a photo at noon and midnight.
 
 ```{r VOR15a--VOR18a -- 2021-2022}
 deployments(raw_data) %>% 
@@ -105,37 +104,39 @@ observations(raw_data) %>%
   dplyr::select(deploymentID, eventStart, eventEnd)
 ```
 
-Geen gevolg nodig.
+No action required.
 
 ### BHN13 -- 2022-05-03--2022-05-31
 
-Issue: (1) beeld niet identiek aan deployments vóór storm; (2) beeld niet stabiel tijdens deployment.
+Issues:
+- image not identical to deployments before the storm
+- image not stable during deployment.
 
-Genegeerd. Aanvaard als ruis.
+Ignored. Accepted as noise.
 
 ### VOR18a -- 2022-05-03--2022-05-31
 
-Issue: voortijdig uitgevallen, op 2022-05-07.
+Issue: failed prematurely on 2022-05-07.
 
 ```{r}
 observations(raw_data) %>%
   dplyr::filter(deploymentID == "d0cb880b-8f5d-446b-b558-836eaffc4f31")
 ```
 
-Geen gevolg nodig.
+No action required.
 
 ### INS11 -- 2024-04--2024-05
 
-Issue: problematisch op diverse vlakken.
-- Ingesteld op zomer- ipv wintertijd (maar correctie reeds gemaakt in Agouti).
-- Aanmaak sequenties foutief (reeksen van 10 zijn vaak opgesplitst).
+ Issue: problematic in various aspects.
+- Set to daylight saving time instead of standard time (but the correction has already been made in Agouti).
+- Sequence creation is incorrect (sequences of 10 are often split).
 
 ```{r}
 observations(raw_data) %>%
   dplyr::filter(deploymentID == "f22c4374-20e6-4b17-818e-6129d0cd3611")
 ```
 
-Op 'ongeldig' gezet in Agouti. Kan in theorie nog worden opgeschoond (tijdrovend).
+Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
 
 ## Inaccurate data that can be fixed
 
@@ -146,7 +147,7 @@ clean_data <- raw_data
 
 ### Fix missassigned observations
 
-Issue: 5 observaties zijn aan verkeerde deployment toegewezen. Behoren toe aan VOR08a i.p.v. BHN12.
+Issue: 5 observations have been assigned to the wrong deployment. They belong to VOR08a instead of BHN12.
 
 ```{r show missassigned observations}
 observations(clean_data) %>%
@@ -160,9 +161,9 @@ deployments(clean_data) %>%
 ```
 
 
-Heeft dit te maken met kleine mismatch in eindtijd van deployment?
+Is this related to a small mismatch in the deployment end time?
 
-M.o.: loont dus om 'Comments' te checken!
+Suggestion: it's worth checking the 'Comments' section!
 
 ```{r fix missassigned observations}
 rightdepID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
@@ -186,7 +187,7 @@ observations(clean_data) %>%
 
 ### Fix BHN13 -- 2022-02--2022-03
 
-Issue: gesneuveld bij storm om 2022-02-18-17-31. Maar is aanvankelijk blijven lopen. DeploymentEnd wordt aangepast, en de observations van na dit moment worden er uit gehaald.
+Issue: damaged in a storm on 2022-02-18-17-31. But it initially continued to operate. DeploymentEnd will be adjusted, and observations after this time will be removed.
 
 ```{r fix BHN13 -- 2022-02--2022-03}
 deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
@@ -227,7 +228,7 @@ observations(clean_data) %>%
 
 ### Fix VOR23b -- 2022--2023
 
-Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2022-12-05 13:40:00" zijn geïnstalleerd (+ 11.87361 uur).
+Issue: incorrect time setting throughout the campaign. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
 
 ```{r fix VOR23b -- 2022--2023}
 wrong_time = "2022-12-05 01:47:35"
@@ -256,7 +257,7 @@ clean_data <-
 
 ### Fix PEE11=INS05 -- 2023--2024
 
-Issue: verkeerde tijdsinstelling doorheen campagne. Retroactief bepaald moet die, bij 1ste opstelling, ong. om "2023-11-21 11:44:00" zijn geïnstalleerd.
+ Issue: incorrect time setting throughout the campaign. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
 
 ```{r fix PEE11-INS05 -- 2023--2024}
 wrong = "2023-11-22 00:04:41"
@@ -293,19 +294,19 @@ VOR06b | 2024-02--2024-04 | "72633b07-b39c-4827-ae35-ffcc1cb02607
 
 ### BHN12 -- 2022-02--2022-03
 
-Issue: positie van camera sterk verschoven. Kijkt sterk in de lucht. Problematisch.
+Issue: : The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
 
 ### VOR08b -- 2023-11--2024-01
 
-Issue: grote tak voor camera gevallen; daar aanwezig van 2023-11-27 tot 2024-01-10.
+Issue: A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10.
 
-Dit is nagenoeg de ganse sequentie -> makkelijkst om geheel te verwijderen
+This is almost the entire sequence, so it would be easiest to remove it completely.
 
 ### VOR06b -- 2024-02--2024-04
 
-Issue: wel registraties t.e.m. uitlezen, maar klok staat stil vanaf 2024-03-14.
+Issue: Although there were recordings up until the last readout, the clock has stopped since 2024-03-14.
 
-Problematisch. Pro's en cons. -> verstandigst om geheel te verwijderen (?)
+Problematic. Pros and cons. → It would be wisest to remove it completely (?)
 
 ### Remove deployments
 
