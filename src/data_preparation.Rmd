@@ -18,6 +18,7 @@ library(here)
 library(camtrapdp)
 library(dplyr) 
 library(lubridate)
+library(EML)
 ```
 
 ### Read data
@@ -284,9 +285,9 @@ clean_data <-
   camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
 ```
 
-# 2. Filtering data
+# 2. Get data ready for publication
 
-The data should only include observations (and associated media) of animals. Excluded are records that document blank or unclassified media, vehicles and observations of humans. Geospatial coordinates are rounded to 0.001 degrees.
+Geospatial coordinates are rounded to 0.001 degrees.
 
 ```{r}
 # inspection
@@ -308,9 +309,8 @@ rounded_data %>%
   camtrapdp::deployments() %>% 
   dplyr::select(latitude, longitude)
 ```
-
-
 Exclude dogs (or: include observations but exclude media)
+
 ```{r}
 rounded_data %>% 
   camtrapdp::filter_observations(scientificName == "Canis lupus familiaris") %>% 
@@ -319,8 +319,106 @@ rounded_data %>%
 
 Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
 
+Add Metadata
+
+```{r}
+muntjac <- rounded_data
+
+# Basic metadata
+muntjac$title <- "AGOUTI_MUNTJAC_OCCURRENCES - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
+
+muntjac$licenses <- list(
+  list(name = "CC0-1.0", scope = "data"), 
+  list(path = "http://creativecommons.org/licenses/by/4.0/", scope = "media")
+  )
+
+muntjac$description <- c(
+  "<![CDATA[ This camera trap dataset is derived from INBO’s <a href=\"https://www.agouti.eu/\">Agouti</a> project on the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>). ]]>",
+  "This is an occurrence dataset published by the Research Institute of Nature and Forest (INBO). It is part of a project to monitor muntjac in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forests (ANB).",
+  "Issues with the dataset can be reported at <a href=\"https://github.com/inbo/mica-occurrences/issues\">https://github.com/inbo/mica-occurrences/issues</a>",
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
+)
+
+muntjac$contributors <-
+  list(
+    list(
+      title = "Bram D'hondt",
+      email = "bram.dhondt@inbo.be",
+      path = "https://orcid.org/0000-0002-1330-1457",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jim Casaer",
+      email = "jim.casaer@inbo.be",
+      path = "https://orcid.org/0000-0001-6788-5876",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jan Vercammen",
+      email = "jan.vercammen@inbo.be",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Lynn Pallemaerts",
+      email = "lynn.pallemaerts@inbo.be",
+      path = "https://orcid.org/0000-0002-5034-5416",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Tim Adriaens",
+      email = "tim.adriaens@inbo.be",
+      path = "https://orcid.org/0000-0001-7268-4200",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Peter Desmet",
+      email = "peter.desmet@inbo.be",
+      path = "https://orcid.org/0000-0002-8442-8025",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Sanne Govaert",
+      email = "sanne.govaert@inbo.be",
+      path = "https://orcid.org/0000-0002-8939-1305",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    )
+  )
+
+# Keywords
+muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacux reevesi", "invasive alien species")
+# Project data - Project Personnel - remove
+```
+
+
 # 3. Transform to a Darwin Core Archive
 
 ```{r}
-camtrapdp::write_dwc(rounded_data, here("data", "processed", name_exportfolder))
+camtrapdp::write_dwc(muntjac, here::here("data", "processed", name_exportfolder))
 ```
+
+# 4. Write and transform EML
+```{r}
+eml <- camtrapdp::write_eml(muntjac, here::here("data", "processed", name_exportfolder), derived_paragraph = TRUE)
+
+eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
+eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- "<![CDATA[ The target species for this dataset is Chinese muntjac (<i>Muntiacus reevesi</i>), but other species of mammals and birds have been observed as well. ]]>"
+
+eml$dataset$metadataProvider <- EML::set_responsibleParty(
+  givenName = "Sanne",
+  surName = "Govaert",
+  organizationName = "Research Institute for Nature and Forest (INBO)",
+  electronicMailAddress = "sanne.govaert@inbo.be",
+  userId = "https://orcid.org/0000-0002-8939-1305"
+)
+
+EML::write_eml(eml, here::here("data", "processed", name_exportfolder, "eml.xml"))
+```
+
