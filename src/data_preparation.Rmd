@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 
 ```{r prep packages}
 library(here)
-library(camtraptor)
 library(camtrapdp)
 library(dplyr) 
 library(lubridate)
@@ -336,7 +335,7 @@ clean_data %>%
 # filtering and rounding
 rounded_data <-
   clean_data %>% 
-  camtraptor::round_coordinates(digits = 3)
+  camtrapdp::round_coordinates(digits = 3)
 
 # check
 rounded_data %>% 
