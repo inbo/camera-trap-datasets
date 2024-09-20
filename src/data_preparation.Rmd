@@ -287,31 +287,20 @@ clean_data <-
 
 # 2. Get data ready for publication
 
-Geospatial coordinates are rounded to 0.001 degrees.
+## 2.1 Data
 
-```{r}
-# inspection
-clean_data %>% 
-  camtrapdp::deployments() %>% 
-  dplyr::select(latitude, longitude)
-clean_data %>%
-  camtrapdp::observations() %>% 
-  dplyr::select(observationType) %>% 
-  unique()
+### 2.1.1 Geospatial coordinates are rounded to 0.001 degrees
 
-# filtering and rounding
+```{r round coordinates}
 rounded_data <-
   clean_data %>% 
   camtrapdp::round_coordinates(digits = 3)
-
-# check
-rounded_data %>% 
-  camtrapdp::deployments() %>% 
-  dplyr::select(latitude, longitude)
 ```
+### 2.1.2 Privacy settings
+
 Exclude the media of dogs for privacy reasons, but keep the observations.
 
-```{r}
+```{r remove media of dogs}
 mediaID_dogs <- rounded_data %>% 
   camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris", "Canis lupus")) %>% 
   camtrapdp::media() %>% 
@@ -324,11 +313,20 @@ camtrapdp::media(rounded_data) <-
   dplyr::filter(!mediaID %in% mediaID_dogs)
 ```
 
-Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
+To do: Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
 
-Add Metadata
+## 2.2 Metadata
 
-```{r}
+Add:
+- title
+- license
+- abstract (description)
+- keywords
+
+Adjust:
+- contributors
+
+```{r add metadata}
 muntjac <- rounded_data
 
 # Basic metadata
@@ -404,17 +402,22 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 # Project data - Project Personnel - remove
 ```
 
-
 # 3. Transform to a Darwin Core Archive
-
-```{r}
+```{r write dwc}
 camtrapdp::write_dwc(muntjac, here::here("data", "processed", name_exportfolder))
 ```
 
 # 4. Write and transform EML
-```{r}
+```{r write EML}
 eml <- camtrapdp::write_eml(muntjac, here::here("data", "processed", name_exportfolder), derived_paragraph = TRUE)
+```
 
+Add:
+- geographic description
+- taxonomic description
+- metadata provider
+
+```{r update EML}
 eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
 eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- "<![CDATA[ The target species for this dataset is Chinese muntjac (<i>Muntiacus reevesi</i>), but other species of mammals and birds have been observed as well. ]]>"
 
@@ -423,9 +426,14 @@ eml$dataset$metadataProvider <- EML::set_responsibleParty(
   surName = "Govaert",
   organizationName = "Research Institute for Nature and Forest (INBO)",
   electronicMailAddress = "sanne.govaert@inbo.be",
-  userId = "https://orcid.org/0000-0002-8939-1305"
+  onlineUrl = "https://orcid.org/",
+  userId = "0000-0002-8939-1305"
 )
+```
 
+Write EML again.
+
+```{r overwrite EML}
 EML::write_eml(eml, here::here("data", "processed", name_exportfolder, "eml.xml"))
 ```
 
