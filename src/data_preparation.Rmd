@@ -253,6 +253,20 @@ purrr::map(deployment_ids, ~ {
 })
 ```
 
+### 1.3.4 Correct species names
+
+Dogs (*Canis lupus*) are incorrectly identified as wolves (*Canis lupus familiaris*). This mistake is fixed.
+
+```{r correct wolves to dogs}
+camtrapdp::observations(clean_data) <- 
+  camtrapdp::observations(clean_data) %>% 
+  dplyr::mutate(scientificName = ifelse(
+    scientificName == "Canis lupus",
+    "Canis lupus familiaris",
+    scientificName
+  )) 
+```
+
 ## 1.4 Inaccurate data that need to be removed
 
 DeploymentID | LocationName | Time range | Issue
@@ -292,7 +306,7 @@ Exclude the media of dogs for privacy reasons, but keep the observations.
 
 ```{r remove media of dogs}
 mediaID_dogs <- rounded_data %>% 
-  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris", "Canis lupus")) %>% 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
   camtrapdp::media() %>% 
   dplyr::pull(mediaID)
 
