@@ -226,7 +226,7 @@ purrr::map(deployment_ids, ~ {
   clean_data <<- clean_data %>%
     camtrapdp::shift_time(
       deployment_id = .x,
-      duration = duration_PEE11
+      duration = duration
     )
 })
 ```
@@ -248,7 +248,7 @@ purrr::map(deployment_ids, ~ {
   clean_data <<- clean_data %>%
     camtrapdp::shift_time(
       deployment_id = .x,
-      duration = duration_PEE11
+      duration = duration
     )
 })
 ```
@@ -403,7 +403,6 @@ muntjac$contributors <-
 
 # Keywords
 muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacus reevesi", "invasive alien species")
-# Project data - Project Personnel - remove
 ```
 
 # 3. Transform to a Darwin Core Archive
