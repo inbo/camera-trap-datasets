@@ -400,7 +400,7 @@ muntjac$contributors <-
   )
 
 # Keywords
-muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacux reevesi", "invasive alien species")
+muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacus reevesi", "invasive alien species")
 # Project data - Project Personnel - remove
 ```
 
