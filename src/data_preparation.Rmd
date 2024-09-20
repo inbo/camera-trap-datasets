@@ -419,6 +419,10 @@ Add:
 - geographic description
 - taxonomic description
 - metadata provider
+- sampling methods
+
+Remove:
+- project data
 
 ```{r update EML}
 eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
@@ -429,9 +433,31 @@ eml$dataset$metadataProvider <- EML::set_responsibleParty(
   surName = "Govaert",
   organizationName = "Research Institute for Nature and Forest (INBO)",
   electronicMailAddress = "sanne.govaert@inbo.be",
-  onlineUrl = "https://orcid.org/",
-  userId = "0000-0002-8939-1305"
+  userID = list(directory = "https://orcid.org/", "0000-0002-8939-1305")
 )
+
+study_extent <- "Several forest areas east of Antwerp were sampled for animal wildlife; since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein; a government-owned woodland park that is open to the public."
+
+sampling_description <- "Camera traps were installed per forest area; in northerly direction at about 50 cm of height. The number of camera traps varied per area and per year. Images from the camera traps were loaded into Agouti for data annotation."
+
+quality_control <- "All observations of muntjac were double-checked in the framework of further analyses."
+
+steps <- c(
+  "Allocation of camera trap locations.",
+  "Deployment of cameras.",
+  "Reading out of images.",
+  "Annotation of images.",
+  "Analysis and data publication."
+)
+
+eml$dataset$methods <- list(
+  studyExtent = study_extent,
+  samplingDescription = sampling_description,
+  qualityControl = quality_control,
+  methodStep = steps
+)
+
+eml$dataset$project <- NULL
 ```
 
 Write EML again.
