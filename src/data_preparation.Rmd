@@ -433,7 +433,7 @@ eml$dataset$metadataProvider <- EML::set_responsibleParty(
   surName = "Govaert",
   organizationName = "Research Institute for Nature and Forest (INBO)",
   electronicMailAddress = "sanne.govaert@inbo.be",
-  userID = list(directory = "https://orcid.org/", "0000-0002-8939-1305")
+  userId = list(directory = "https://orcid.org/", "0000-0002-8939-1305")
 )
 
 study_extent <- "Several forest areas east of Antwerp were sampled for animal wildlife; since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein; a government-owned woodland park that is open to the public."
@@ -450,12 +450,14 @@ steps <- c(
   "Analysis and data publication."
 )
 
-eml$dataset$methods <- list(
-  studyExtent = study_extent,
-  samplingDescription = sampling_description,
-  qualityControl = quality_control,
-  methodStep = steps
-)
+eml$dataset$methods <- purrr::map(
+  steps, ~ list(description = list(para = .x))
+  ) %>% 
+  purrr::set_names("methodStep")
+
+eml$dataset$methods$sampling$studyExtent$description$para <- study_extent
+eml$dataset$methods$sampling$samplingDescription$para <- sampling_description
+eml$dataset$methods$qualityControl$description$para <- quality_control
 
 eml$dataset$project <- NULL
 ```
