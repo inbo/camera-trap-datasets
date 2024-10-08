@@ -325,12 +325,14 @@ To do: Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in
 ## Metadata
 
 Add:
+
 - title
 - license
 - abstract (description)
 - keywords
 
 Adjust:
+
 - contributors
 
 ```{r add metadata}
@@ -340,8 +342,16 @@ muntjac <- rounded_data
 muntjac$title <- "AGOUTI_MUNTJAC_OCCURRENCES - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
 muntjac$licenses <- list(
-  list(name = "CC0-1.0", scope = "data"), 
-  list(path = "http://creativecommons.org/licenses/by/4.0/", scope = "media")
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
   )
 
 muntjac$description <- c(
@@ -419,12 +429,14 @@ eml <- camtrapdp::write_eml(muntjac, here::here("data", "processed", name_export
 ```
 
 Add:
+
 - geographic description
 - taxonomic description
 - metadata provider
 - sampling methods
 
 Remove:
+
 - project data
 
 ```{r update EML}
