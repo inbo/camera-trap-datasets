@@ -116,12 +116,12 @@ correct_depID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 camtrapdp::observations(clean_data) <-
   camtrapdp::observations(clean_data) %>%
   dplyr::mutate(
-    deploymentID = ifelse(
+    deploymentID = dplyr::if_else(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
       correct_depID,
       deploymentID
     ),
-    observationComments = ifelse(
+    observationComments = dplyr::if_else(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
       NA,
       observationComments
@@ -172,7 +172,7 @@ camtrapdp::deployments(clean_data) <-
   dplyr::mutate(
     deploymentEnd =
       as.POSIXct(
-        ifelse(
+        dplyr::if_else(
           deploymentID == deploymentID_storm,
           new_deploymentEnd,
           deploymentEnd
