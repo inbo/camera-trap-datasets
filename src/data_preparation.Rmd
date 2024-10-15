@@ -181,13 +181,27 @@ camtrapdp::deployments(clean_data) <-
       )
   )
 
-# Update observations and media
-clean_data <-
+# Identify observations and media to remove
+to_remove <-
   clean_data %>%
-  camtrapdp::filter_observations(eventEnd <= new_deploymentEnd)
+  camtrapdp::filter_observations(deploymentID == deploymentID_storm, eventEnd >= new_deploymentEnd)
+  
+observations_to_remove <- observations(to_remove)
+media_to_remove <- media(to_remove)
+
+# Update observations and media
+observations(clean_data) <- 
+  observations(clean_data) %>% 
+  dplyr::anti_join(observations_to_remove)
+
+media(clean_data) <-
+  media(clean_data) %>% 
+  dplyr::anti_join(media_to_remove)
 
 # Update metadata
-clean_data <- camtrapdp:::update_temporal(clean_data)
+clean_data <- clean_data %>% 
+  camtrapdp:::update_temporal() %>% 
+  camtrapdp:::update_taxonomic()
 ```
 
 ```{r check fix BHN13 -- 2022-02--2022-03}
