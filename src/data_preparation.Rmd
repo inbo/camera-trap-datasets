@@ -26,7 +26,7 @@ library(EML)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjak-vlaanderen-20240606110007"
+name_exportfolder <- "muntjak-vlaanderen-20241010093834"
 file <- here::here("data", "raw", name_exportfolder, "datapackage.json")
 raw_data <- camtrapdp::read_camtrapdp(file)
 ```
