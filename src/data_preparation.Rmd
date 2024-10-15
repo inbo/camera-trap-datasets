@@ -119,10 +119,11 @@ camtrapdp::observations(clean_data) <-
     deploymentID = dplyr::if_else(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
       correct_depID,
-      deploymentID
+      deploymentID,
+      missing = deploymentID
     ),
     observationComments = dplyr::if_else(
-      observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
+      .data$observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
       NA,
       observationComments
     )
@@ -139,7 +140,7 @@ eventID_misassigned <-
 camtrapdp::media(clean_data) <-
   camtrapdp::media(clean_data) %>% 
   dplyr::mutate(
-    deploymentID = ifelse(
+    deploymentID = dplyr::if_else(
       eventID %in% eventID_misassigned,
       correct_depID,
       deploymentID
@@ -262,7 +263,7 @@ Dogs (*Canis lupus*) are incorrectly identified as wolves (*Canis lupus familiar
 ```{r correct wolves to dogs}
 camtrapdp::observations(clean_data) <- 
   camtrapdp::observations(clean_data) %>% 
-  dplyr::mutate(scientificName = ifelse(
+  dplyr::mutate(scientificName = dplyr::if_else(
     scientificName == "Canis lupus",
     "Canis lupus familiaris",
     scientificName
