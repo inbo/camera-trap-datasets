@@ -335,6 +335,7 @@ camtrapdp::media(rounded_data) <-
   dplyr::filter(!mediaID %in% mediaID_dogs)
 ```
 
+
 To do: Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
 
 ## Metadata
@@ -436,6 +437,12 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 # Transform to a Darwin Core Archive
 ```{r write dwc}
 camtrapdp::write_dwc(muntjac, here::here("data", "processed", name_exportfolder))
+```
+
+# Write Camera Trap Data Package
+
+```{r write camtrap DP}
+camtrapdp::write_camtrapdp(muntjac, here::here("data", "processed", name_exportfolder))
 ```
 
 # Write and transform EML
