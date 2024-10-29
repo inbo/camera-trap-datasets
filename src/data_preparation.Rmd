@@ -442,6 +442,7 @@ camtrapdp::write_dwc(muntjac, here::here("data", "processed", name_exportfolder)
 # Write Camera Trap Data Package
 
 ```{r write camtrap DP}
+camtrapdp:::version(muntjac) <- "1.0.0"
 camtrapdp::write_camtrapdp(muntjac, here::here("data", "processed", name_exportfolder))
 ```
 
