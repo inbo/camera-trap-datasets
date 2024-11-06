@@ -26,8 +26,8 @@ library(EML)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjak-vlaanderen-20241010093834"
-file <- here::here("data", "raw", name_exportfolder, "datapackage.json")
+name_exportfolder <- "muntjak-vlaanderen-20241105085239"
+file <- here::here("data", name_exportfolder, "raw", "datapackage.json")
 raw_data <- camtrapdp::read_camtrapdp(file)
 ```
 
@@ -270,20 +270,6 @@ purrr::map(deployment_ids, ~ {
 })
 ```
 
-### Correct species names
-
-Dogs (*Canis lupus*) are incorrectly identified as wolves (*Canis lupus familiaris*). This mistake is fixed.
-
-```{r correct wolves to dogs}
-camtrapdp::observations(clean_data) <- 
-  camtrapdp::observations(clean_data) %>% 
-  dplyr::mutate(scientificName = dplyr::if_else(
-    scientificName == "Canis lupus",
-    "Canis lupus familiaris",
-    scientificName
-  )) 
-```
-
 ## Inaccurate data that need to be removed
 
 DeploymentID | LocationName | Time range | Issue
@@ -335,8 +321,6 @@ camtrapdp::media(rounded_data) <-
   dplyr::filter(!mediaID %in% mediaID_dogs)
 ```
 
-
-To do: Correct 'canis lupus' to 'canis lupus familiaris' (preferably upstream in Agouti, obs per obs :-/)
 
 ## Metadata
 
@@ -436,7 +420,7 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 
 # Transform to a Darwin Core Archive
 ```{r write dwc}
-camtrapdp::write_dwc(muntjac, here::here("data", "processed", name_exportfolder))
+camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed"))
 ```
 
 # Write Camera Trap Data Package
@@ -503,6 +487,6 @@ eml$dataset$project <- NULL
 Write EML again.
 
 ```{r overwrite EML}
-EML::write_eml(eml, here::here("data", "processed", name_exportfolder, "eml.xml"))
+EML::write_eml(eml, here::here("data", name_exportfolder, "processed", "eml.xml"))
 ```
 
