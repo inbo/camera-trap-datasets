@@ -306,7 +306,7 @@ rounded_data <-
 
 ### Privacy settings
 
-Exclude the media of dogs for privacy reasons, but keep the observations.
+Hide the media of dogs for privacy reasons.
 
 ```{r remove media of dogs}
 mediaID_dogs <- rounded_data %>% 
@@ -314,11 +314,23 @@ mediaID_dogs <- rounded_data %>%
   camtrapdp::media() %>% 
   dplyr::pull(mediaID)
 
-
 camtrapdp::media(rounded_data) <-
-  rounded_data %>% 
-  camtrapdp::media() %>% 
-  dplyr::filter(!mediaID %in% mediaID_dogs)
+  rounded_data %>%
+  camtrapdp::media() %>%
+  dplyr::mutate(
+    filePath = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      "private",
+      filePath,
+      missing = filePath
+    ),
+    filePublic = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      FALSE,
+      filePublic,
+      missing = filePublic
+    )
+  )
 ```
 
 
