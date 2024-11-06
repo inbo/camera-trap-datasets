@@ -439,12 +439,12 @@ camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed")
 
 ```{r write camtrap DP}
 camtrapdp:::version(muntjac) <- "1.0"
-camtrapdp::write_camtrapdp(muntjac, here::here("data", "processed", name_exportfolder))
+camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed"))
 ```
 
 # Write and transform EML
 ```{r write EML}
-eml <- camtrapdp::write_eml(muntjac, here::here("data", "processed", name_exportfolder), derived_paragraph = TRUE)
+eml <- camtrapdp::write_eml(muntjac, here::here("data", name_exportfolder, "processed"), derived_paragraph = TRUE)
 ```
 
 Add:
