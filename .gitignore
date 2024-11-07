@@ -37,4 +37,4 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-/data/muntjak-vlaanderen-20241105085239
+/data/*/raw
