@@ -26,7 +26,7 @@ library(EML)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjak-vlaanderen-20241105085239"
+name_exportfolder <- "muntjak-vlaanderen-20241107102959"
 file <- here::here("data", name_exportfolder, "raw", "datapackage.json")
 raw_data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -143,7 +143,8 @@ camtrapdp::media(clean_data) <-
     deploymentID = dplyr::if_else(
       eventID %in% eventID_misassigned,
       correct_depID,
-      deploymentID
+      deploymentID,
+      missing = deploymentID
     )
   )
 
@@ -351,7 +352,7 @@ Adjust:
 muntjac <- rounded_data
 
 # Basic metadata
-muntjac$title <- "AGOUTI_MUNTJAC_OCCURRENCES - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
+muntjac$title <- "AGOUTI_MUNTJAC_ANTWERP_AREA - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
 muntjac$licenses <- list(
   list(
@@ -369,7 +370,7 @@ muntjac$licenses <- list(
 muntjac$description <- c(
   "<![CDATA[ This camera trap dataset is derived from INBO’s <a href=\"https://www.agouti.eu/\">Agouti</a> project on the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>). ]]>",
   "This is an occurrence dataset published by the Research Institute of Nature and Forest (INBO). It is part of a project to monitor muntjac in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forests (ANB).",
-  "Issues with the dataset can be reported at <a href=\"https://github.com/inbo/mica-occurrences/issues\">https://github.com/inbo/mica-occurrences/issues</a>",
+  "Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>",
   "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
   "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
 )
@@ -423,6 +424,11 @@ muntjac$contributors <-
       path = "https://orcid.org/0000-0002-8939-1305",
       role = "principalInvestigator",
       organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Research Institute for Nature and Forest (INBO)",
+      path = "https://www.inbo.be",
+      role = "rightsHolder"
     )
   )
 
@@ -432,36 +438,37 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 
 # Transform to a Darwin Core Archive
 ```{r write dwc}
-camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed"))
+camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed", "dwc"))
 ```
 
 # Write Camera Trap Data Package
 
 ```{r write camtrap DP}
+# Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
 camtrapdp:::version(muntjac) <- "1.0"
-camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed"))
+camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed", "package"))
 ```
 
 # Write and transform EML
+
 ```{r write EML}
-eml <- camtrapdp::write_eml(muntjac, here::here("data", name_exportfolder, "processed"), derived_paragraph = TRUE)
+eml <- camtrapdp::write_eml(muntjac, here::here("data", name_exportfolder, "processed", "dwc"), derived_paragraph = TRUE)
 ```
 
 Add:
 
+- metadata provider
 - geographic description
 - taxonomic description
-- metadata provider
 - sampling methods
+- Bibliographic Citations
 
 Remove:
 
 - project data
 
 ```{r update EML}
-eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
-eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- "<![CDATA[ The target species for this dataset is Chinese muntjac (<i>Muntiacus reevesi</i>), but other species of mammals and birds have been observed as well. ]]>"
-
+# Metadata provider
 eml$dataset$metadataProvider <- EML::set_responsibleParty(
   givenName = "Sanne",
   surName = "Govaert",
@@ -470,6 +477,28 @@ eml$dataset$metadataProvider <- EML::set_responsibleParty(
   userId = list(directory = "https://orcid.org/", "0000-0002-8939-1305")
 )
 
+# Set geographic description
+eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
+
+# Set taxonomic coverage
+taxonomic_coverage <- data.frame(
+  scientificName = c("Aves", "Mammalia"),
+  taxonRank = c("class", "class")
+)
+eml$dataset$coverage$taxonomicCoverage <-
+  list(
+    taxonomicClassification =
+      purrr::map(1:nrow(taxonomic_coverage), function(i) {
+        current_row <- taxonomic_coverage[i, ]
+        list(
+          taxonRankName = current_row$taxonRank,
+          taxonRankValue = current_row$scientificName
+        )
+      })
+  )
+eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- "<![CDATA[ The target species for this dataset is Chinese muntjac (<i>Muntiacus reevesi</i>), but other species of mammals and birds have been observed as well. ]]>"
+
+# Sampling methods
 study_extent <- "Several forest areas east of Antwerp were sampled for animal wildlife; since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein; a government-owned woodland park that is open to the public."
 
 sampling_description <- "Camera traps were installed per forest area; in northerly direction at about 50 cm of height. The number of camera traps varied per area and per year. Images from the camera traps were loaded into Agouti for data annotation."
@@ -493,12 +522,16 @@ eml$dataset$methods$sampling$studyExtent$description$para <- study_extent
 eml$dataset$methods$sampling$samplingDescription$para <- sampling_description
 eml$dataset$methods$qualityControl$description$para <- quality_control
 
+# Bibliographic Citations
+eml$additionalMetadata$metadata$gbif$bibliography$bibliography$citation <- "D’hondt; B.; Engels; P.; Verbist; B.; Vercammen; J.; Huygens; W.; Adriaens; T.; and Casaer; J. (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. <a href=\"https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf\">https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf</a>"
+
+# Remove project data
 eml$dataset$project <- NULL
 ```
 
 Write EML again.
 
 ```{r overwrite EML}
-EML::write_eml(eml, here::here("data", name_exportfolder, "processed", "eml.xml"))
+EML::write_eml(eml, here::here("data", name_exportfolder, "processed", "dwc", "eml.xml"))
 ```
 
