@@ -352,7 +352,7 @@ Adjust:
 muntjac <- rounded_data
 
 # Basic metadata
-muntjac$title <- "AGOUTI_MUNTJAC_ANTWERP_AREA - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
+muntjac$title <- "MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
 muntjac$licenses <- list(
   list(
@@ -368,9 +368,7 @@ muntjac$licenses <- list(
   )
 
 muntjac$description <- c(
-  "<![CDATA[ This camera trap dataset is derived from INBO’s <a href=\"https://www.agouti.eu/\">Agouti</a> project on the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>). ]]>",
-  "This is an occurrence dataset published by the Research Institute of Nature and Forest (INBO). It is part of a project to monitor muntjac in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forests (ANB).",
-  "Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>",
+  paste0("<i>", muntjac$title, "</i> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains animal tracking data collected for the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forests (ANB). Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
   "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
   "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
 )
