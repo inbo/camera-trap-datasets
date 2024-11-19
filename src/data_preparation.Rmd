@@ -434,10 +434,6 @@ muntjac$contributors <-
 muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacus reevesi", "invasive alien species")
 ```
 
-# Transform to a Darwin Core Archive
-```{r write dwc}
-camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed", "dwc"))
-```
 
 # Write Camera Trap Data Package
 
@@ -445,91 +441,5 @@ camtrapdp::write_dwc(muntjac, here::here("data", name_exportfolder, "processed",
 # Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
 camtrapdp:::version(muntjac) <- "1.0"
 camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed", "package"))
-```
-
-# Write and transform EML
-
-```{r write EML}
-eml <- camtrapdp::write_eml(muntjac, here::here("data", name_exportfolder, "processed", "dwc"), derived_paragraph = TRUE)
-```
-
-Add:
-
-- metadata provider
-- geographic description
-- taxonomic description
-- sampling methods
-- Bibliographic Citations
-
-Remove:
-
-- project data
-
-```{r update EML}
-# Metadata provider
-eml$dataset$metadataProvider <- EML::set_responsibleParty(
-  givenName = "Sanne",
-  surName = "Govaert",
-  organizationName = "Research Institute for Nature and Forest (INBO)",
-  electronicMailAddress = "sanne.govaert@inbo.be",
-  userId = list(directory = "https://orcid.org/", "0000-0002-8939-1305")
-)
-
-# Set geographic description
-eml$dataset$coverage$geographicCoverage$geographicDescription <- "Forest areas east of Antwerp, Flanders (Belgium)."
-
-# Set taxonomic coverage
-taxonomic_coverage <- data.frame(
-  scientificName = c("Aves", "Mammalia"),
-  taxonRank = c("class", "class")
-)
-eml$dataset$coverage$taxonomicCoverage <-
-  list(
-    taxonomicClassification =
-      purrr::map(1:nrow(taxonomic_coverage), function(i) {
-        current_row <- taxonomic_coverage[i, ]
-        list(
-          taxonRankName = current_row$taxonRank,
-          taxonRankValue = current_row$scientificName
-        )
-      })
-  )
-eml$dataset$coverage$taxonomicCoverage$generalTaxonomicCoverage <- "<![CDATA[ The target species for this dataset is Chinese muntjac (<i>Muntiacus reevesi</i>), but other species of mammals and birds have been observed as well. ]]>"
-
-# Sampling methods
-study_extent <- "Several forest areas east of Antwerp were sampled for animal wildlife; since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein; a government-owned woodland park that is open to the public."
-
-sampling_description <- "Camera traps were installed per forest area; in northerly direction at about 50 cm of height. The number of camera traps varied per area and per year. Images from the camera traps were loaded into Agouti for data annotation."
-
-quality_control <- "All observations of muntjac were double-checked in the framework of further analyses."
-
-steps <- c(
-  "Allocation of camera trap locations.",
-  "Deployment of cameras.",
-  "Reading out of images.",
-  "Annotation of images.",
-  "Analysis and data publication."
-)
-
-eml$dataset$methods <- purrr::map(
-  steps, ~ list(description = list(para = .x))
-  ) %>% 
-  purrr::set_names("methodStep")
-
-eml$dataset$methods$sampling$studyExtent$description$para <- study_extent
-eml$dataset$methods$sampling$samplingDescription$para <- sampling_description
-eml$dataset$methods$qualityControl$description$para <- quality_control
-
-# Bibliographic Citations
-eml$additionalMetadata$metadata$gbif$bibliography$bibliography$citation <- "D’hondt; B.; Engels; P.; Verbist; B.; Vercammen; J.; Huygens; W.; Adriaens; T.; and Casaer; J. (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. <a href=\"https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf\">https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf</a>"
-
-# Remove project data
-eml$dataset$project <- NULL
-```
-
-Write EML again.
-
-```{r overwrite EML}
-EML::write_eml(eml, here::here("data", name_exportfolder, "processed", "dwc", "eml.xml"))
 ```
 
