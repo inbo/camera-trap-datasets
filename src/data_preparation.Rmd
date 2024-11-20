@@ -334,6 +334,20 @@ camtrapdp::media(rounded_data) <-
   )
 ```
 
+## Make GBIF-proof
+
+GBIF does not accept negative values in bounding box values, so set negative values to NA
+
+```{r}
+muntjac <- rounded_data
+camtrapdp::observations(muntjac) <- 
+  camtrapdp::observations(muntjac) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    )
+```
+ 
 
 ## Metadata
 
@@ -349,8 +363,6 @@ Adjust:
 - contributors
 
 ```{r add metadata}
-muntjac <- rounded_data
-
 # Basic metadata
 muntjac$title <- "MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
@@ -368,7 +380,7 @@ muntjac$licenses <- list(
   )
 
 muntjac$description <- c(
-  paste0("<i>", muntjac$title, "</i> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains animal tracking data collected for the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forests (ANB). Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
+  paste0("<i>", muntjac$title, "</i> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains camera trapping data collected for the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
   "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
   "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
 )
@@ -429,6 +441,9 @@ muntjac$contributors <-
       role = "rightsHolder"
     )
   )
+
+# Fix mistake in image url
+muntjac$image <- "https://api.agouti.eu/uploads/project-images/20190326131322-muntjak.jpg"
 
 # Keywords
 muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacus reevesi", "invasive alien species")
