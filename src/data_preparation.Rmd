@@ -439,7 +439,7 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 
 ```{r write camtrap DP}
 # Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
-camtrapdp:::version(muntjac) <- "1.0"
-camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed", "package"))
+# camtrapdp:::version(muntjac) <- "1.0"
+camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed"))
 ```
 
