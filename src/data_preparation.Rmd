@@ -398,13 +398,13 @@ muntjac$contributors <-
       title = "Jim Casaer",
       email = "jim.casaer@inbo.be",
       path = "https://orcid.org/0000-0001-6788-5876",
-      role = "principalInvestigator",
+      role = "contributor",
       organization = "Research Institute for Nature and Forest (INBO)"
     ),
     list(
       title = "Jan Vercammen",
       email = "jan.vercammen@inbo.be",
-      role = "principalInvestigator",
+      role = "contributor",
       organization = "Research Institute for Nature and Forest (INBO)"
     ),
     list(
@@ -425,14 +425,14 @@ muntjac$contributors <-
       title = "Peter Desmet",
       email = "peter.desmet@inbo.be",
       path = "https://orcid.org/0000-0002-8442-8025",
-      role = "principalInvestigator",
+      role = "contributor",
       organization = "Research Institute for Nature and Forest (INBO)"
     ),
     list(
       title = "Sanne Govaert",
       email = "sanne.govaert@inbo.be",
       path = "https://orcid.org/0000-0002-8939-1305",
-      role = "principalInvestigator",
+      role = "contributor",
       organization = "Research Institute for Nature and Forest (INBO)"
     ),
     list(
