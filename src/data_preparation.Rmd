@@ -361,6 +361,7 @@ Add:
 Adjust:
 
 - contributors
+- image url
 
 ```{r add metadata}
 # Basic metadata
