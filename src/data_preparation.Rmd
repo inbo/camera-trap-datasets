@@ -21,6 +21,7 @@ library(camtrapdp)
 library(dplyr) 
 library(lubridate)
 library(EML)
+library(zip)
 ```
 
 ## Read data
@@ -462,6 +463,17 @@ muntjac$references <- c(
 ```{r write camtrap DP}
 # Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
 # camtrapdp:::version(muntjac) <- "1.0"
-camtrapdp::write_camtrapdp(muntjac, here::here("data", name_exportfolder, "processed"))
+dir_processed <- here::here("data", name_exportfolder, "processed")
+camtrapdp::write_camtrapdp(muntjac, dir_processed)
+
+# Zip these files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
 ```
 
