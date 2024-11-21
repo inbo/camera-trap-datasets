@@ -399,7 +399,7 @@ muntjac$contributors <-
       title = "Jim Casaer",
       email = "jim.casaer@inbo.be",
       path = "https://orcid.org/0000-0001-6788-5876",
-      role = "contributor",
+      role = "principalInvestigator",
       organization = "Research Institute for Nature and Forest (INBO)"
     ),
     list(
