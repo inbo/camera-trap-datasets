@@ -453,7 +453,8 @@ muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mam
 
 # References
 muntjac$references <- c(
-  "D’hondt B, Engels P, Verbist B, Vercammen J, Huygens W, Adriaens T, and Casaer J (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf"
+  "D’hondt B, Engels P, Verbist B, Vercammen J, Huygens W, Adriaens T, and Casaer J (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf",
+  ""
 )
 ```
 
