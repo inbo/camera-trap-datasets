@@ -1,10 +1,12 @@
 # Camera trap datasets
 
-This repository contains the functionality to standardize camera trap data from [Agouti](https://agouti.eu) and the [LifeWatch camera trap research infrastructure (CATREIN)](https://www.lifewatch.be/en/camera-trap-research-infrastructure-catrein) so these can be published on [GBIF](https://www.gbif.org/). For reusable functions, see the [camtraptor](https://inbo.github.io/camtraptor) R package.
+This repository contains the functionality to standardize camera trap data from [Agouti](https://agouti.eu) and the [LifeWatch camera trap research infrastructure](https://www.lifewatch.be/bio-logging-and-camera-trapping-services), so these can be published on [GBIF](https://www.gbif.org/). For reusable functions, see the [camtrapdp](https://inbo.github.io/camtrapdp) R package.
 
 ## Datasets
 
-
+Title (and Github repository) | IPT | GBIF
+-- | -- | --
+[MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)](https://github.com/inbo/camera-trap-datasets/tree/main/datasets/MUNTJAC_ANTWERP) | [muntjac_antwerp](https://ipt.inbo.be/resource?r=muntjac_antwerp) | [https://doi.org/10.15468/pequ4z](https://doi.org/10.15468/gn87d6)]
 
 ## Repo structure
 
@@ -12,10 +14,9 @@ The structure for each dataset in [datasets](datasets) is based on [Cookiecutter
 
 ```
 ├── data
-│   ├── raw                  : Source data, input for mapping script
-│   ├── interim              : Derived data for verification GENERATED
-│   └── processed            : Darwin Core output of mapping script GENERATED
+│   ├── raw                      : Source data, input for script
+│   └── processed                : Darwin Core output of script GENERATED
 │
 └── src
-    └── dwc_mapping.Rmd      : Darwin Core mapping script
+    └── data_preparation.Rmd     : Data cleaning and preparation script
 ```
