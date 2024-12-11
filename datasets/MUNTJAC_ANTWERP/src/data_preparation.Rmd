@@ -1,0 +1,484 @@
+---
+title: "Clean and filter muntjac dataset"
+author: 
+- Bram D'hondt
+- Sanne Govaert
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r prep packages}
+library(here)
+library(camtrapdp)
+library(dplyr) 
+library(lubridate)
+library(EML)
+library(zip)
+```
+
+## Read data
+
+```{r camtrap data}
+name_exportfolder <- "muntjacantwerp-20241209131903"
+file <- here::here("datasets", "MUNTJAC_ANTWERP", "data", "raw", name_exportfolder, "datapackage.json")
+raw_data <- camtrapdp::read_camtrapdp(file)
+```
+
+# Notes on cameras and solutions
+
+## To do: issue that still need a fix
+
+### VOR15b -- 2023-04-06 -- 2023-05-12
+
+Issue: This sequence is from a muntjac, not a calibration. 
+
+YET TO BE CORRECTED, in Agouti, as soon as possible (24-05-16 still not possible).
+
+```{r issue VOR15b -- 2023-04-06 -- 2023-05-12}
+camtrapdp::deployments(raw_data) %>%
+  dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
+  dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
+```
+
+## Issues without fix (accept as they are)
+
+### Defects
+
+Cannot be remedied. Accepted as a methodological limitation.
+
+Location | Time range | Comment
+-------- | ---------- | -------
+VOR16a | 2021-11 -- 2022-01 | Prematurely failed.
+VOR18b | 2022-12 -- 2023-01 | Defective. No sequence obtained.
+VOR21b | 2022-12 -- 2023-01 | Defective. No sequence obtained.
+PEE01 | 2023-11 -- 2024-01 | Defective. No sequence obtained.
+PEE16 | 2024-01 -- 2024-02 | Defective. No sequence obtained.
+INS07 | 2024-02 -- 2024-04 | Prematurely failed.
+INS12 | 2024-02 -- 2024-04 | Defective. No sequence obtained.
+VOR06b | 2024-04-05 -- 2024-04-25 | No camera was installed (none available).
+VOR20b | 2024-04 -- 2024-05 | Prematurely failed.
+VOR22b | 2024-04 -- 2024-05 | Prematurely failed.
+INS12 | 2024-04 -- 2024-05 | Prematurely failed.
+INS14 | 2024-04 -- 2024-05 | Prematurely failed.
+
+### Slight image abnormalities
+
+Issue: the position of the camera was slightly shifted compared to the previous or subsequent deployment. Ignored. Accepted as noise
+
+Location | Time range | Comment
+-------- | ---------- | -------
+VOR16a | 2022-01 -- 2022-02 | Temporary branch for the camera.
+VOR16a | 2022-02 -- 2022-03 | Temporary branch for the camera.
+VOR16a | 2022-05 -- 2022-05 | Slight shift.
+VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
+
+### Other issues
+
+Location | Time range | Issue | Conclusion
+-------- | ---------- | ----- | ----------
+VOR16a | 2021-11-29 -- 2021-12-13 | Each image became a single sequence, and the series also stopped abruptly. | Ignored. Accepted as noise. The end date of the deployment reflects the premature stop.
+VOR15a -- VOR18a | 2021 - 2011 | Not set up to take a photo at noon and midnight. | No action required.
+BHN13 | 2022-05-03 -- 2022-05-31 | (1) image not identical to deployments before the storm; (2) image not stable during deployment. | Ignored. Accepted as noise.
+VOR18a | 2022-05-03 -- 2022-05-31 | Failed prematurely on 2022-05-07. | No action required.
+INS11 | 2024-04 -- 2024-05 | Problematic in various aspects. (1) Set to daylight saving time instead of standard time (but the correction has already been made in Agouti); (2) Sequence creation is incorrect (sequences of 10 are often split). | Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
+
+## Inaccurate data that can be fixed
+
+```{r rename data}
+clean_data <- raw_data
+```
+
+### Fix missassigned observations
+
+Issue: 5 observations have been assigned to the wrong deployment. They belong to VOR08a instead of BHN12.
+
+```{r show missassigned observations}
+misassigned <- 
+  clean_data %>%
+  camtrapdp::filter_observations(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") 
+
+misassigned %>% 
+  camtrapdp::observations() %>% 
+  dplyr::select(eventID, deploymentID, observationComments, eventEnd)
+```
+
+```{r fix missassigned observations}
+correct_depID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
+
+# Correct deploymentID in observations and update observationComment
+camtrapdp::observations(clean_data) <-
+  camtrapdp::observations(clean_data) %>%
+  dplyr::mutate(
+    deploymentID = dplyr::if_else(
+      observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
+      correct_depID,
+      deploymentID,
+      missing = deploymentID
+    ),
+    observationComments = dplyr::if_else(
+      .data$observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
+      NA,
+      observationComments
+    )
+  )
+
+# Extract eventIDs of media related to misassigned observations
+eventID_misassigned <-
+  misassigned %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(eventID) %>% 
+  unique()
+
+# Correct deploymentID in these media
+camtrapdp::media(clean_data) <-
+  camtrapdp::media(clean_data) %>% 
+  dplyr::mutate(
+    deploymentID = dplyr::if_else(
+      eventID %in% eventID_misassigned,
+      correct_depID,
+      deploymentID,
+      missing = deploymentID
+    )
+  )
+
+# Inspect fix
+camtrapdp::observations(clean_data) %>%
+  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+  dplyr::select(eventID, deploymentID, observationComments)
+
+camtrapdp::media(clean_data) %>% 
+  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+  dplyr::select(eventID, deploymentID)
+```
+
+### Correct deploymentEnd
+
+Issue: BHN13 is damaged in a storm on 2022-02-18-17-31. But it initially continued to operate.
+
+DeploymentEnd is adjusted, and observations and related media after this time are removed.
+
+```{r fix BHN13 -- 2022-02--2022-03}
+deploymentID_storm <- "f27bd070-d28c-45f0-a888-5b97835bf796"
+new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
+
+# Mutate deploymentEnd
+camtrapdp::deployments(clean_data) <-
+  camtrapdp::deployments(clean_data) %>%
+  dplyr::mutate(
+    deploymentEnd =
+      as.POSIXct(
+        dplyr::if_else(
+          deploymentID == deploymentID_storm,
+          new_deploymentEnd,
+          deploymentEnd
+        )
+      )
+  )
+
+# Identify observations and media to remove
+to_remove <-
+  clean_data %>%
+  camtrapdp::filter_observations(deploymentID == deploymentID_storm, eventEnd >= new_deploymentEnd)
+  
+observations_to_remove <- observations(to_remove)
+media_to_remove <- media(to_remove)
+
+# Update observations and media
+observations(clean_data) <- 
+  observations(clean_data) %>% 
+  dplyr::anti_join(observations_to_remove)
+
+media(clean_data) <-
+  media(clean_data) %>% 
+  dplyr::anti_join(media_to_remove)
+
+# Update metadata
+clean_data <- clean_data %>% 
+  camtrapdp:::update_temporal() %>% 
+  camtrapdp:::update_taxonomic()
+```
+
+```{r check fix BHN13 -- 2022-02--2022-03}
+# Inspect deployment
+camtrapdp::deployments(clean_data) %>%
+  dplyr::filter(deploymentID == deploymentID_storm) %>%
+  dplyr::select(deploymentID, deploymentStart, deploymentEnd)
+
+# Inspect observations
+camtrapdp::observations(clean_data) %>% 
+  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+  dplyr::summarise(last_eventEnd = max(eventEnd))
+
+# Inspect media
+camtrapdp::media(clean_data) %>% 
+  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+  dplyr::summarise(last_timestamp = max(timestamp))
+
+# Inspect metadata
+clean_data$temporal
+```
+
+### Correct time
+
+1) Issue: incorrect time setting throughout the deployment of VOR23b -- 2022--2023. Retroactively determined, it must have been installed at approximately "2022-12-05 13:40:00" (+ 11.87361 hours) during the initial setup.
+
+```{r fix VOR23b -- 2022--2023}
+current <- "2022-12-05 01:47:35"
+new <- "2022-12-05 13:40:00"
+deployment_ids <- c(
+  "8de6a0a1-9308-4d99-8a71-e2a2c710739d",
+  "c8008e80-3684-4ee0-a491-0e11a7d55918",
+  "83784cd8-107a-4219-82bd-05da22d7abf1",
+  "96dc5829-22e9-4532-ba0f-0d891e74051a"
+)
+
+duration <- lubridate::as.duration(lubridate::interval(current, new))
+purrr::map(deployment_ids, ~ {
+  clean_data <<- clean_data %>%
+    camtrapdp::shift_time(
+      deployment_id = .x,
+      duration = duration
+    )
+})
+```
+
+2) Issue: incorrect time setting throughout the deployment of PEE11=INS05 -- 2023--2024. Retroactively determined, it must have been installed at approximately "2023-11-21 11:44:00" during the initial setup.
+
+```{r fix PEE11-INS05 -- 2023--2024}
+current <- "2023-11-22 00:04:41"
+new <- "2023-11-21 11:44:00"
+deployment_ids <- c(
+  "e6f5df99-30a8-4969-b432-eaf88d1d780e",
+  "9c94441d-dc0b-4e83-bdee-d4b847b6f003",
+  "71e601db-fbfe-4468-8e40-6cd0d2047a2a",
+  "6acb2575-65f7-411d-b5b1-a8b466127a43"
+  )
+
+duration <- lubridate::as.duration(lubridate::interval(current, new))
+purrr::map(deployment_ids, ~ {
+  clean_data <<- clean_data %>%
+    camtrapdp::shift_time(
+      deployment_id = .x,
+      duration = duration
+    )
+})
+```
+
+## Inaccurate data that need to be removed
+
+DeploymentID | LocationName | Time range | Issue
+-- | -- | -- | --
+"7a85b0ea-6ed8-4d1e-801f-78082cb660ec" | BHN12 | 2022-02--2022-03 | The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
+"91ae688c-818c-4e74-8c02-8bc2f8c842be" | VOR08b | 2023-11--2024-01 | A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10. This is almost the entire sequence, so it would be easiest to remove it completely.
+"72633b07-b39c-4827-ae35-ffcc1cb02607 | VOR06b | 2024-02--2024-04 | Although there were recordings up until the last readout, the clock has stopped since 2024-03-14. Problematic. Pros and cons. → It would be wisest to remove it completely (?)
+
+Remove these deployments:
+
+```{r remove deployments}
+deploymentID_to_remove <- c(
+  "7a85b0ea-6ed8-4d1e-801f-78082cb660ec",
+  "91ae688c-818c-4e74-8c02-8bc2f8c842be",
+  "72633b07-b39c-4827-ae35-ffcc1cb02607"
+)
+
+clean_data <-
+  clean_data %>% 
+  camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
+```
+
+# Get data ready for publication
+
+## Data
+
+### Geospatial coordinates are rounded to 0.001 degrees
+
+```{r round coordinates}
+rounded_data <-
+  clean_data %>% 
+  camtrapdp::round_coordinates(digits = 3)
+```
+
+### Privacy settings
+
+Hide the media of dogs for privacy reasons.
+
+```{r remove media of dogs}
+mediaID_dogs <- rounded_data %>% 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(mediaID)
+
+camtrapdp::media(rounded_data) <-
+  rounded_data %>%
+  camtrapdp::media() %>%
+  dplyr::mutate(
+    filePath = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      "private",
+      filePath,
+      missing = filePath
+    ),
+    filePublic = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      FALSE,
+      filePublic,
+      missing = filePublic
+    )
+  )
+```
+
+## Make GBIF-proof
+
+GBIF does not accept negative values in bounding box values, so set negative values to NA
+
+```{r}
+muntjac <- rounded_data
+camtrapdp::observations(muntjac) <- 
+  camtrapdp::observations(muntjac) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    )
+```
+ 
+
+## Metadata
+
+Add:
+
+- title
+- license
+- abstract (description)
+- keywords
+- references
+- project path
+
+Adjust:
+
+- contributors
+- image url
+
+```{r add metadata}
+# Basic metadata
+muntjac$title <- "MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
+
+muntjac$licenses <- list(
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
+  )
+
+muntjac$description <- c(
+  paste0("<em>", muntjac$title, "</em> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains camera trapping data collected for the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <a href=\"https://www.agouti.eu\">Agouti</a> for data annotation. All observations of muntjac were double-checked in the framework of further analyses. Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
+)
+
+muntjac$contributors <-
+  list(
+    list(
+      title = "Bram D'hondt",
+      email = "bram.dhondt@inbo.be",
+      path = "https://orcid.org/0000-0002-1330-1457",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jim Casaer",
+      email = "jim.casaer@inbo.be",
+      path = "https://orcid.org/0000-0001-6788-5876",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jan Vercammen",
+      email = "jan.vercammen@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Lynn Pallemaerts",
+      email = "lynn.pallemaerts@inbo.be",
+      path = "https://orcid.org/0000-0002-5034-5416",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Tim Adriaens",
+      email = "tim.adriaens@inbo.be",
+      path = "https://orcid.org/0000-0001-7268-4200",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Peter Desmet",
+      email = "peter.desmet@inbo.be",
+      path = "https://orcid.org/0000-0002-8442-8025",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Sanne Govaert",
+      email = "sanne.govaert@inbo.be",
+      path = "https://orcid.org/0000-0002-8939-1305",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Research Institute for Nature and Forest (INBO)",
+      path = "https://www.inbo.be",
+      role = "rightsHolder"
+    )
+  )
+
+# Fix mistake in image url
+muntjac$image <- "https://api.agouti.eu/uploads/project-images/20190326131322-muntjak.jpg"
+
+# Keywords
+muntjac$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "Chinese muntjac", "Muntiacus reevesi", "invasive alien species")
+
+# References
+muntjac$references <- c(
+  "D’hondt B, Engels P, Verbist B, Vercammen J, Huygens W, Adriaens T, and Casaer J (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf",
+  ""
+)
+
+# Add project path
+muntjac$project$path <- "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c"
+```
+
+
+# Write Camera Trap Data Package
+
+```{r write camtrap DP}
+# Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
+# camtrapdp:::version(muntjac) <- "1.0"
+dir_processed <- here::here("data", name_exportfolder, "processed")
+camtrapdp::write_camtrapdp(muntjac, dir_processed)
+
+# Zip these files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
+```
+
