@@ -27,7 +27,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjak-vlaanderen-20241107102959"
+name_exportfolder <- "muntjacantwerp-20241209131903"
 file <- here::here("data", name_exportfolder, "raw", "datapackage.json")
 raw_data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -359,6 +359,7 @@ Add:
 - abstract (description)
 - keywords
 - references
+- project path
 
 Adjust:
 
@@ -456,6 +457,9 @@ muntjac$references <- c(
   "D’hondt B, Engels P, Verbist B, Vercammen J, Huygens W, Adriaens T, and Casaer J (2023). Monitoring van een Vlaamse populatie van Chinese muntjak (Muntiacus reevesi) in het kader van bestrijding. Lutra 66: 105-121. https://pureportal.inbo.be/files/101748474/Lutra_66_2_D_hondt_et_al_2023.pdf",
   ""
 )
+
+# Add project path
+muntjac$project$path <- "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c"
 ```
 
 
