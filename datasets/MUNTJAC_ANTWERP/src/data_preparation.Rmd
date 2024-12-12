@@ -392,7 +392,7 @@ muntjac$description <- c(
 muntjac$contributors <-
   list(
     list(
-      title = "Bram D'hondt",
+      title = "Bram D‘hondt",
       email = "bram.dhondt@inbo.be",
       path = "https://orcid.org/0000-0002-1330-1457",
       role = "principalInvestigator",
@@ -468,7 +468,7 @@ muntjac$project$path <- "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-
 ```{r write camtrap DP}
 # Set version to 1.0 to use the exported Camera Trap Data Package with camtrapDensity (temporary hack)
 # camtrapdp:::version(muntjac) <- "1.0"
-dir_processed <- here::here("data", name_exportfolder, "processed")
+dir_processed <- here::here("datasets",  "MUNTJAC_ANTWERP", "data", "processed")
 camtrapdp::write_camtrapdp(muntjac, dir_processed)
 
 # Zip these files
