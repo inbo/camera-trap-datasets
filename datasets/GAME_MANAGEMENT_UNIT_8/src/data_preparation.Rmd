@@ -1,0 +1,243 @@
+---
+title: "Prepare Agouti project GMU8 (Camtrap DP) for publication on GBIF"
+author: 
+- Sanne Govaert
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r prep packages}
+library(here)
+library(camtrapdp)
+library(dplyr) 
+library(lubridate)
+library(EML)
+library(zip)
+```
+
+## Read data
+
+```{r camtrap data}
+name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250204110956"
+file <- here::here("datasets", "GAME_MANAGEMENT_UNIT_8", "data", "raw", name_exportfolder, "datapackage.json")
+data <- camtrapdp::read_camtrapdp(file)
+```
+
+# Get data ready for publication
+
+## Data
+
+### Geospatial coordinates are rounded to 0.001 degrees
+
+```{r round coordinates}
+rounded_data <-
+  data %>% 
+  camtrapdp::round_coordinates(digits = 3) # Jim: beslissing
+```
+
+### Set embargo
+
+Set an embargo on the last 6 months. Before this date, all data is public. After this date, only exotic observations are kept.
+
+```{r}
+today <- Sys.Date()
+embargo_date <- today %m-% months(6)
+exotic_species <- c("Muntiacus reevesi", "Procyon lotor", "Aix galericulata", "Cervus nippon", "Dama dama")
+embargo_data <- 
+  rounded_data %>% 
+  camtrapdp::filter_observations(
+    eventStart <= embargo_date
+    |
+    scientificName %in% exotic_species
+  )
+```
+
+Check which species are maintained after the embargo data:
+
+```{r}
+embargo_data %>%
+  camtrapdp::filter_observations(eventStart >= embargo_date) %>% 
+  camtrapdp::taxa()
+```
+
+
+### Privacy settings
+
+Hide the media of dogs for privacy reasons.
+
+```{r remove media of dogs}
+mediaID_dogs <- embargo_data %>% 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(mediaID)
+
+camtrapdp::media(embargo_data) <-
+  rounded_data %>%
+  camtrapdp::media() %>%
+  dplyr::mutate(
+    filePath = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      "private",
+      filePath,
+      missing = filePath
+    ),
+    filePublic = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      FALSE,
+      filePublic,
+      missing = filePublic
+    )
+  )
+```
+
+## Make GBIF-proof
+
+GBIF does not accept negative values in bounding box values, so set negative values to NA
+
+```{r}
+gmu8 <- embargo_data
+camtrapdp::observations(gmu8) <- 
+  camtrapdp::observations(gmu8) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    )
+```
+ 
+
+## Metadata
+
+Add:
+
+- title
+- license
+- abstract (description)
+- keywords
+- references
+- project path
+
+Adjust:
+
+- contributors
+- image url
+
+```{r add metadata}
+# Basic metadata
+gmu8$title <- "GAME_MANAGEMENT_UNIT_8 - Camera trap observations in region Hallerbos - Hoegaarden, Belgium" # Jim: aanpassen
+
+gmu8$licenses <- list(
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
+  )
+
+gmu8$description <- c( # Jim: aanpassen
+  paste0("<em>", gmu8$title, "</em> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains camera trapping data collected for the monitoring of Chinese gmu8 (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese gmu8 is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <a href=\"https://www.agouti.eu\">Agouti</a> for data annotation. All observations of gmu8 were double-checked in the framework of further analyses. Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
+)
+
+gmu8$contributors <- # Jim: aanpassen
+  list(
+    list(
+      title = "Bram D'hondt",
+      email = "bram.dhondt@inbo.be",
+      path = "https://orcid.org/0000-0002-1330-1457",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jim Casaer",
+      email = "jim.casaer@inbo.be",
+      path = "https://orcid.org/0000-0001-6788-5876",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jan Vercammen",
+      email = "jan.vercammen@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Lynn Pallemaerts",
+      email = "lynn.pallemaerts@inbo.be",
+      path = "https://orcid.org/0000-0002-5034-5416",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Tim Adriaens",
+      email = "tim.adriaens@inbo.be",
+      path = "https://orcid.org/0000-0001-7268-4200",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Peter Desmet",
+      email = "peter.desmet@inbo.be",
+      path = "https://orcid.org/0000-0002-8442-8025",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Sanne Govaert",
+      email = "sanne.govaert@inbo.be",
+      path = "https://orcid.org/0000-0002-8939-1305",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Research Institute for Nature and Forest (INBO)",
+      path = "https://www.inbo.be",
+      role = "rightsHolder"
+    )
+  )
+
+# Fix mistake in image url
+gmu8$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
+
+# Keywords
+gmu8$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species")
+
+# References
+gmu8$references <- NULL
+
+# Add project path
+#gmu8$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
+# Uncommment the line above if your project is allowed to be visible on the public homepage and portal of Agouti (need to be checked off in the settings)
+```
+
+
+# Write Camera Trap Data Package
+
+```{r write camtrap DP}
+dir_processed <- here::here("datasets",  "GAME_MANAGEMENT_UNIT_8", "data", "processed")
+camtrapdp::write_camtrapdp(gmu8, dir_processed)
+
+# Zip these files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
+```
+
