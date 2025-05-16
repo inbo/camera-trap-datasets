@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(here)
 library(camtrapdp)
 library(dplyr) 
-library(lubridate)
+#library(lubridate)
 library(EML)
 library(zip)
 ```
@@ -26,7 +26,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250204110956"
+name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250515135034"
 file <- here::here("datasets", "GAME_MANAGEMENT_UNIT_8", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -100,7 +100,7 @@ camtrapdp::media(embargo_data) <-
 
 ## Make GBIF-proof
 
-GBIF does not accept negative values in bounding box values, so set negative values to NA
+GBIF does not accept negative values in bounding box values, so set negative values to NA.
 
 ```{r}
 gmu8 <- embargo_data
@@ -146,68 +146,9 @@ gmu8$licenses <- list(
     )
   )
 
-gmu8$description <- c( # Jim: aanpassen
-  paste0("<em>", gmu8$title, "</em> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It contains camera trapping data collected for the monitoring of Chinese gmu8 (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese gmu8 is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <a href=\"https://www.agouti.eu\">Agouti</a> for data annotation. All observations of gmu8 were double-checked in the framework of further analyses. Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
-  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
-  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
-)
+gmu8$description <- NULL
 
-gmu8$contributors <- # Jim: aanpassen
-  list(
-    list(
-      title = "Bram D'hondt",
-      email = "bram.dhondt@inbo.be",
-      path = "https://orcid.org/0000-0002-1330-1457",
-      role = "principalInvestigator",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Jim Casaer",
-      email = "jim.casaer@inbo.be",
-      path = "https://orcid.org/0000-0001-6788-5876",
-      role = "principalInvestigator",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Jan Vercammen",
-      email = "jan.vercammen@inbo.be",
-      role = "contributor",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Lynn Pallemaerts",
-      email = "lynn.pallemaerts@inbo.be",
-      path = "https://orcid.org/0000-0002-5034-5416",
-      role = "contributor",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Tim Adriaens",
-      email = "tim.adriaens@inbo.be",
-      path = "https://orcid.org/0000-0001-7268-4200",
-      role = "contributor",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Peter Desmet",
-      email = "peter.desmet@inbo.be",
-      path = "https://orcid.org/0000-0002-8442-8025",
-      role = "contributor",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Sanne Govaert",
-      email = "sanne.govaert@inbo.be",
-      path = "https://orcid.org/0000-0002-8939-1305",
-      role = "contributor",
-      organization = "Research Institute for Nature and Forest (INBO)"
-    ),
-    list(
-      title = "Research Institute for Nature and Forest (INBO)",
-      path = "https://www.inbo.be",
-      role = "rightsHolder"
-    )
-  )
+gmu8$contributors <- NULL
 
 # Fix mistake in image url
 gmu8$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
