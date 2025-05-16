@@ -1,0 +1,350 @@
+---
+title: "Prepare Agouti project MICA for publication on GBIF as Camtrap DP"
+author: 
+- Sanne Govaert
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r prep packages}
+library(here)
+library(camtrapdp)
+library(dplyr) 
+library(EML)
+library(zip)
+```
+
+## Read data
+
+```{r camtrap data}
+name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250128082118"
+file <- here::here("datasets", "MICA", "data", "raw", name_exportfolder, "datapackage.json")
+data <- camtrapdp::read_camtrapdp(file)
+```
+
+# Get data ready for publication
+
+## Data
+
+### Geospatial coordinates are rounded to 0.001 degrees
+
+```{r round coordinates}
+rounded_data <-
+  data %>% 
+  camtrapdp::round_coordinates(digits = 3)
+# Error because of 4 empty deployments
+```
+
+
+## Make GBIF-proof
+
+GBIF does not accept negative values in bounding box values, so set negative values to NA.
+
+```{r}
+camtrapdp::observations(rounded_data) <- 
+  camtrapdp::observations(rounded_data) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    )
+```
+ 
+
+## Metadata
+
+### Extract metadata from eml file from published occurrence dataset (dwc)
+
+```{r}
+eml <- read_eml(here::here("datasets", "MICA", "data", "raw", "eml.xml"))
+```
+
+### Add metadata to data package
+
+Add:
+
+- title
+- license
+- abstract (description)
+- keywords
+- references
+- project path
+
+Adjust:
+
+- contributors
+- image url
+
+```{r add metadata}
+mica <- rounded_data
+# Basic metadata
+mica$title <- "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany"
+
+mica$licenses <- list(
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
+  )
+
+mica$description <- eml$dataset$abstract
+
+mica$contributors <-  list(
+    list(
+      title = "Emma Cartuyvels",
+      email = "emma.cartuyvels@inbo.be",
+      path = "https://orcid.org/0000-0001-7856-6360",
+      role = "principalInvestigator",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Tim Adriaens",
+      email = "tim.adriaens@inbo.be",
+      path = "https://orcid.org/0000-0001-7268-4200",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Kristof Baert",
+      email = "kristof.baert@inbo.be",
+      path = "https://orcid.org/0000-0003-2015-5731",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Warre Baert",
+      role = "contributor",
+    ),
+    list(
+      title = "Gust Boiten",
+      email = "gustboiten@hotmail.com",
+      role = "contributor",
+    ),
+    list(
+      title = "Dimitri Brosens",
+      email = "dimitri.brosens@inbo.be",
+      path = "https://orcid.org/0000-0002-0846-9116",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Jim Casaer",
+      email = "jim.casaer@inbo.be",
+      path = "https://orcid.org/0000-0001-6788-5876",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Bram D'hondt",
+      email = "bram.dhondt@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Abel De Boer",
+      email = "adeboer@wetterskipfryslan.nl",
+      role = "contributor"
+    ),
+    list(
+      title = "Manon Debrabandere",
+      email = "manon.debrabandere@hotmail.com",
+      role = "contributor"
+    ),
+    list(
+      title = "Sander Devisscher",
+      email = "sander.devisscher@inbo.be",
+      path = "https://orcid.org/0000-0002-0846-9116",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Dennis Donckers",
+      email = "dennis.donckers2@telenet.be",
+      role = "contributor"
+    ),
+    list(
+      title = "Silke Dupont",
+      email = "silke.dupont@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Wouter Franceus",
+      role = "contributor",
+    ),
+    list(
+      title = "Heiko Fritz",
+      role = "contributor",
+      email = "foersterheiko@gmx.de"
+    ),
+    list(
+      title = "Lilja Fromme",
+      role = "contributor",
+      email = "lilja.fromme@gmail.com"
+    ),
+    list(
+      title = "Friederike Gethöffer",
+      role = "contributor",
+      email = "friederike.gethoeffer@tiho-hannover.de"
+    ),
+    list(
+      title = "Jan Gouwy",
+      email = "jan.gouwy@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Casper Herbots"
+    ),
+    list(
+      title = "Frank Huysentruyt",
+      email = "frank.huysentruyt@inbo.be",
+      path = "https://orcid.org/0000-0002-3071-9126",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Leo Kehl",
+      email = "leo.kehl@tiho-hannover.de",
+      role = "contributor"
+    ),
+    list(
+      title = "Liam Letheren",
+      email = "ljletheren@hotmail.co.uk",
+      role = "contributor"
+    ),
+    list(
+      title = "Lydia Liebgott",
+      email = "lydia.liebgott@tiho-hannover.de",
+      role = "contributor"
+    ),
+    list(
+      title = "Yorick Liefting",
+      email = "yorick.liefting@wur.nl",
+      role = "contributor",
+      organization = "Wageningen University"
+    ),
+    list(
+      title = "Jan Lodewijkx",
+      email = "j.lodewijkx@vmm.be",
+      role = "contributor"
+    ),
+    list(
+      title = "Claudia Maistrelli",
+      email = "claudia.maistrelli@tiho-hannover.de",
+      role = "contributor"
+    ),
+    list(
+      title = "Björn Matthies",
+      email = "bjoern.matthies@lwk-niedersachsen.de",
+      role = "contributor"
+    ),
+    list(
+      title = "Kelly Meijvisch",
+      email = "kelly.meijvisch@outlook.be",
+      role = "contributor"
+    ),
+    list(
+      title = "Dolf Moerkens",
+      email = "dmoerkens@uvw.nl",
+      role = "contributor",
+      organization = "Unie van Waterschappen",
+      path = "https://www.uvw.nl/"
+    ),
+    list(
+      title = "Axel Neukermans",
+      email = "axel.neukermans@inbo.be",
+      path = "https://orcid.org/0000-0003-0272-9180",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Brecht Neukermans",
+      role = "contributor"
+    ),
+    list(
+      title = "Jelle Ronsijn",
+      role = "contributor"
+    ),
+    list(
+      title = "Kurt Schamp",
+      email = "kurt.schamp@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Dan Slootmaekers",
+      email = "d.slootmaekers@vmm.be",
+      role = "contributor"
+    ),
+    list(
+      title = "Linda Tiggelman",
+      email = "l.tiggelman@wsrl.nl",
+      role = "contributor"
+    ),
+    list(
+      title = "Sanne Van Donink",
+      email = "sanne.vandonink@inbo.be",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Danny Van der beeck",
+      role = "contributor",
+      email = "daniel.vanderbeeck@gmail.com"
+    ),
+    list(
+      title = "Peter Desmet",
+      email = "peter.desmet@inbo.be",
+      path = "https://orcid.org/0000-0002-8442-8025",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
+      title = "Research Institute for Nature and Forest (INBO)",
+      path = "https://www.inbo.be",
+      role = "rightsHolder"
+    )
+)
+
+# Fix mistake in image url
+mica$image <- "https://api.agouti.eu/uploads/project-images/20210131065158-WhatsApp Image 2021-01-22 at 15.23.24.jpeg"
+
+# Keywords
+mica$keywords <- c("muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps")
+
+# Add project path
+mica$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
+```
+
+
+# Write Camera Trap Data Package
+
+```{r write camtrap DP}
+dir_processed <- here::here("datasets",  "MICA", "data", "processed")
+camtrapdp::write_camtrapdp(mica, dir_processed)
+
+# Zip these files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
+```
+
