@@ -45,7 +45,7 @@ rounded_data <-
 
 ### Set embargo
 
-Set an embargo on the last 6 months. Before this date, all data is public. After this date, only exotic observations are kept.
+Set an embargo on the last 6 months. Before this date, all data is public. After this date, only observations of exotic species are kept.
 
 ```{r}
 today <- Sys.Date()
