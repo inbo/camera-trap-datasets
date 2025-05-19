@@ -154,7 +154,7 @@ gmu8$contributors <- NULL
 gmu8$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
 
 # Keywords
-gmu8$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species")
+gmu8$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Brabantse Wouden")
 
 # References
 gmu8$references <- NULL
