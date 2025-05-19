@@ -40,7 +40,7 @@ data <- camtrapdp::read_camtrapdp(file)
 ```{r round coordinates}
 rounded_data <-
   data %>% 
-  camtrapdp::round_coordinates(digits = 3) # Jim: beslissing
+  camtrapdp::round_coordinates(digits = 2) # Jim: beslissing
 ```
 
 ### Set embargo
