@@ -148,7 +148,68 @@ gmu8$licenses <- list(
 
 gmu8$description <- NULL
 
-gmu8$contributors <- NULL
+gmu8$contributors <- list(
+  list(
+    title = "Jim Casaer",
+    email = "jim.casaer@inbo.be",
+    path = "https://orcid.org/0000-0001-6788-5876",
+    role = "principalInvestigator",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Niko Boone",
+    email = "niko.boone@inbo.be",
+    path = " https://orcid.org/0000-0001-7334-2819 ",
+    role = "principalInvestigator",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Jan Vercammen",
+    email = "jan.vercammen@inbo.be",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Sander Devisscher",
+    email = "sander.devisscher@inbo.be",
+    path = " https://orcid.org/0000-0003-2015-5731",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Lynn Pallemaerts",
+    email = "lynn.pallemaerts@inbo.be",
+    path = "https://orcid.org/0000-0002-5034-5416",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Anneleen Rutten",
+    email = "anneleen.rutten@inbo.be",
+    path = "https://orcid.org/0000-0002-4025-5265",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Peter Desmet",
+    email = "peter.desmet@inbo.be",
+    path = "https://orcid.org/0000-0002-8442-8025",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Sanne Govaert",
+    email = "sanne.govaert@inbo.be",
+    path = "https://orcid.org/0000-0002-8939-1305",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Research Institute for Nature and Forest (INBO)",
+    path = "https://www.inbo.be",
+    role = "rightsHolder"
+  )
+)
 
 # Fix mistake in image url
 gmu8$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
