@@ -40,9 +40,8 @@ data <- camtrapdp::read_camtrapdp(file)
 
 ```{r round coordinates}
 rounded_data <-
-  data #%>% 
-# waiting for new export without empty deployments for this code to work
-#  camtrapdp::round_coordinates(digits = 2)
+  data %>% 
+  camtrapdp::round_coordinates(digits = 2)
 ```
 
 ### Set embargo
