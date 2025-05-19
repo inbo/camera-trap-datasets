@@ -3,6 +3,75 @@
   "name": "gmu8-monitoring-faunabeheerzone-8-20250515135034",
   "id": "801b940f-261d-44da-979a-4f52e852cb69",
   "created": "2025-05-15T13:50:34Z",
+  "contributors": [
+    {
+      "title": "Jim Casaer",
+      "email": "jim.casaer@inbo.be",
+      "path": "https://orcid.org/0000-0001-6788-5876",
+      "role": "principalInvestigator",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Niko Boone",
+      "email": "niko.boone@inbo.be",
+      "path": " https://orcid.org/0000-0001-7334-2819 ",
+      "role": "principalInvestigator",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Jan Vercammen",
+      "email": "jan.vercammen@inbo.be",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Sander Devisscher",
+      "email": "sander.devisscher@inbo.be",
+      "path": " https://orcid.org/0000-0003-2015-5731",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Lynn Pallemaerts",
+      "email": "lynn.pallemaerts@inbo.be",
+      "path": "https://orcid.org/0000-0002-5034-5416",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Anneleen Rutten",
+      "email": "anneleen.rutten@inbo.be",
+      "path": "https://orcid.org/0000-0002-4025-5265",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Martijn Bollen",
+      "email": "martijn.bollen@inbo.be",
+      "path": "https://orcid.org/0000-0002-1621-6258",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Peter Desmet",
+      "email": "peter.desmet@inbo.be",
+      "path": "https://orcid.org/0000-0002-8442-8025",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Sanne Govaert",
+      "email": "sanne.govaert@inbo.be",
+      "path": "https://orcid.org/0000-0002-8939-1305",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Research Institute for Nature and Forest (INBO)",
+      "path": "https://www.inbo.be",
+      "role": "rightsHolder"
+    }
+  ],
   "image": "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG",
   "sources": [
     {
@@ -25,11 +94,11 @@
     "type": "Polygon",
     "coordinates": [
       [
-        [4.573, 50.744],
-        [4.748, 50.744],
-        [4.748, 50.864],
-        [4.573, 50.864],
-        [4.573, 50.744]
+        [4.57, 50.74],
+        [4.75, 50.74],
+        [4.75, 50.86],
+        [4.57, 50.86],
+        [4.57, 50.74]
       ]
     ]
   },
@@ -204,17 +273,6 @@
       }
     },
     {
-      "scientificName": "Branta leucopsis",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/N74C",
-      "taxonRank": "species",
-      "order": "Anseriformes",
-      "family": "Anatidae",
-      "vernacularNames": {
-        "eng": "barnacle goose",
-        "nld": "brandgans"
-      }
-    },
-    {
       "scientificName": "Buteo buteo",
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/NYV7",
       "taxonRank": "species",
@@ -358,17 +416,6 @@
       }
     },
     {
-      "scientificName": "Cygnus olor",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/32ZQB",
-      "taxonRank": "species",
-      "order": "Anseriformes",
-      "family": "Anatidae",
-      "vernacularNames": {
-        "eng": "mute swan",
-        "nld": "knobbelzwaan"
-      }
-    },
-    {
       "scientificName": "Dama dama",
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/342N9",
       "taxonRank": "species",
@@ -432,17 +479,6 @@
       "vernacularNames": {
         "eng": "European robin",
         "nld": "roodborst"
-      }
-    },
-    {
-      "scientificName": "Falco tinnunculus",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3DTGW",
-      "taxonRank": "species",
-      "order": "Falconiformes",
-      "family": "Falconidae",
-      "vernacularNames": {
-        "eng": "common kestrel",
-        "nld": "torenvalk"
       }
     },
     {
@@ -520,17 +556,6 @@
       "vernacularNames": {
         "eng": "European hare",
         "nld": "haas"
-      }
-    },
-    {
-      "scientificName": "Lophophanes cristatus",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3W3VB",
-      "taxonRank": "species",
-      "order": "Passeriformes",
-      "family": "Paridae",
-      "vernacularNames": {
-        "eng": "European crested tit",
-        "nld": "kuifmees"
       }
     },
     {
@@ -655,17 +680,6 @@
       }
     },
     {
-      "scientificName": "Pernis apivorus",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4F6YZ",
-      "taxonRank": "species",
-      "order": "Accipitriformes",
-      "family": "Accipitridae",
-      "vernacularNames": {
-        "eng": "European honey buzzard",
-        "nld": "Wespendief"
-      }
-    },
-    {
       "scientificName": "Phasianus colchicus",
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4FWMN",
       "taxonRank": "species",
@@ -740,17 +754,6 @@
       "vernacularNames": {
         "eng": "raccoon",
         "nld": "gewone wasbeer"
-      }
-    },
-    {
-      "scientificName": "Prunella modularis",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4N8CC",
-      "taxonRank": "species",
-      "order": "Passeriformes",
-      "family": "Prunellidae",
-      "vernacularNames": {
-        "eng": "dunnock",
-        "nld": "heggenmus"
       }
     },
     {
@@ -992,8 +995,8 @@
       "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/observations-table-schema.json"
     }
   ],
-  "coordinatePrecision": 0.001,
-  "title": "GAME_MANAGEMENT_UNIT_8 - Camera trap observations in region Hallerbos - Hoegaarden, Belgium",
+  "coordinatePrecision": 0.01,
+  "title": "GMU8 - Camera trap observations in natural habitats south of Leuven (Belgium)",
   "licenses": [
     {
       "scope": "data",
@@ -1006,5 +1009,5 @@
       "path": "http://creativecommons.org/licenses/by/4.0/"
     }
   ],
-  "keywords": ["camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species"]
+  "keywords": ["camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife", "Nationaal Park Brabantse Wouden"]
 }
