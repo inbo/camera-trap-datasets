@@ -206,6 +206,13 @@ gmu8$contributors <- list(
     organization = "Research Institute for Nature and Forest (INBO)"
   ),
   list(
+    title = "Martijn Bollen",
+    email = "martijn.bollen@inbo.be",
+    path = "https://orcid.org/0000-0002-1621-6258",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
     title = "Peter Desmet",
     email = "peter.desmet@inbo.be",
     path = "https://orcid.org/0000-0002-8442-8025",
