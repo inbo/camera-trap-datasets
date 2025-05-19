@@ -40,7 +40,7 @@ data <- camtrapdp::read_camtrapdp(file)
 ```{r round coordinates}
 rounded_data <-
   data %>% 
-  camtrapdp::round_coordinates(digits = 2) # Jim: beslissing
+  camtrapdp::round_coordinates(digits = 2)
 ```
 
 ### Set embargo
@@ -131,7 +131,7 @@ Adjust:
 
 ```{r add metadata}
 # Basic metadata
-gmu8$title <- "GAME_MANAGEMENT_UNIT_8 - Camera trap observations in region Hallerbos - Hoegaarden, Belgium" # Jim: aanpassen
+gmu8$title <- "GMU8 - Camera trap observations in natural habitats south of Leuven (Belgium)" 
 
 gmu8$licenses <- list(
   list(
