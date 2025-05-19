@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 library(here)
 library(camtrapdp)
 library(dplyr) 
+library(rgbif)
 library(lubridate)
 library(EML)
 library(zip)
@@ -47,10 +48,23 @@ rounded_data <-
 
 Set an embargo on the last year. Before this date, all data is public. After this date, only observations of exotic species are kept.
 
+First, construct a vector with the alien mammals and birds of Belgium.
+
+```{r}
+taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
+taxa_birds <- rgbif::name_usage(datasetKey = "e1c3be64-2799-4342-8312-49d076993132", limit = 99999)$data
+
+exotic_species <- c(
+  dplyr::pull(taxa_mammals, species),
+  dplyr::pull(taxa_birds, species)
+) %>% 
+  na.omit()
+```
+
+
 ```{r}
 today <- Sys.Date()
 embargo_date <- today %m-% months(12)
-exotic_species <- c("Muntiacus reevesi", "Procyon lotor", "Aix galericulata", "Cervus nippon", "Dama dama")
 embargo_data <- 
   rounded_data %>% 
   camtrapdp::filter_observations(
