@@ -1,7 +1,7 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/camtrap-dp-profile.json",
   "name": "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250519123531",
-  "id": "43ab8406-4aaf-44eb-a5b6-c5070d7e279f",
+  "id": "https://doi.org/10.15468/5tb6ze",
   "created": "2025-05-19T12:35:31Z",
   "contributors": [
     {
