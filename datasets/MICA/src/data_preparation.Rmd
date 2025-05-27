@@ -25,7 +25,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250128082118"
+name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250519123531"
 file <- here::here("datasets", "MICA", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -40,7 +40,6 @@ data <- camtrapdp::read_camtrapdp(file)
 rounded_data <-
   data %>% 
   camtrapdp::round_coordinates(digits = 3)
-# Error because of 4 empty deployments
 ```
 
 
@@ -131,12 +130,12 @@ mica$contributors <-  list(
     ),
     list(
       title = "Warre Baert",
-      role = "contributor",
+      role = "contributor"
     ),
     list(
       title = "Gust Boiten",
       email = "gustboiten@hotmail.com",
-      role = "contributor",
+      role = "contributor"
     ),
     list(
       title = "Dimitri Brosens",
@@ -188,7 +187,7 @@ mica$contributors <-  list(
     ),
     list(
       title = "Wouter Franceus",
-      role = "contributor",
+      role = "contributor"
     ),
     list(
       title = "Heiko Fritz",
@@ -340,7 +339,7 @@ mica$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a
 # Write Camera Trap Data Package
 
 ```{r write camtrap DP}
-dir_processed <- here::here("datasets",  "MICA", "data", "processed")
+dir_processed <- here::here("datasets", "MICA", "data", "processed")
 camtrapdp::write_camtrapdp(mica, dir_processed)
 
 # Zip these files
