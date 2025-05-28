@@ -81,6 +81,7 @@ Adjust:
 
 - contributors
 - image url
+- observationLevel
 
 ```{r add metadata}
 mica <- rounded_data
@@ -101,7 +102,7 @@ mica$licenses <- list(
   )
 mica$description <- paste0("<em>", mica$title, "</em> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>.
 We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.
-This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility."
+This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.")
 
 
 # Contributors
@@ -332,6 +333,9 @@ mica$keywords <- c("muskrat", "invasive alien species", "coypu", "public awarene
 # Add project path
 mica$project$acronym <- "MICA"
 mica$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
+
+# Fix observationLevel (bug from Agouti, it must be an array, not a string)
+mica$project$observationLevel <- list(c("event"))
 ```
 
 

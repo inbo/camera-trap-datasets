@@ -236,7 +236,9 @@
     "samplingDesign": "targeted",
     "captureMethod": ["activityDetection", "timeLapse"],
     "individualAnimals": false,
-    "observationLevel": "event",
+    "observationLevel": [
+      "event"
+    ],
     "acronym": "MICA",
     "path": "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
   },
