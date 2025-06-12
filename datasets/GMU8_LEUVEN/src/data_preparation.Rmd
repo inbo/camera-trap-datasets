@@ -145,7 +145,7 @@ Adjust:
 
 ```{r add metadata}
 # Basic metadata
-gmu8$title <- "GMU8 - Camera trap observations in natural habitats south of Leuven (Belgium)" 
+gmu8$title <- "GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)" 
 
 gmu8$licenses <- list(
   list(
