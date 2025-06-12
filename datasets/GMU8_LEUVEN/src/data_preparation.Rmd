@@ -36,7 +36,7 @@ data <- camtrapdp::read_camtrapdp(file)
 
 ## Data
 
-### Geospatial coordinates are rounded to 0.001 degrees
+### Geospatial coordinates are rounded to 0.01 degrees
 
 ```{r round coordinates}
 rounded_data <-
