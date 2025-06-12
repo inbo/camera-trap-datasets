@@ -15,7 +15,7 @@ The structure for each dataset in [datasets](datasets) is based on [Cookiecutter
 ```
 ├── data
 │   ├── raw                      : Source data, input for script
-│   └── processed                : Darwin Core output of script GENERATED
+│   └── processed                : Camtrap DP output of script GENERATED
 │
 └── src
     └── data_preparation.Rmd     : Data cleaning and preparation script
