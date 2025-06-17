@@ -249,8 +249,7 @@ gmu8$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammal
 gmu8$references <- NULL
 
 # Add project path
-#gmu8$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
-# Uncommment the line above if your project is allowed to be visible on the public homepage and portal of Agouti (need to be checked off in the settings)
+gmu8$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
 ```
 
 
