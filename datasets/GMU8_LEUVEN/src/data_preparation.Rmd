@@ -36,12 +36,12 @@ data <- camtrapdp::read_camtrapdp(file)
 
 ## Data
 
-### Geospatial coordinates are rounded to 0.01 degrees
+### Geospatial coordinates are rounded to 0.001 degrees
 
 ```{r round coordinates}
 rounded_data <-
   data %>% 
-  camtrapdp::round_coordinates(digits = 2)
+  camtrapdp::round_coordinates(digits = 3)
 ```
 
 ### Set embargo
@@ -123,6 +123,10 @@ camtrapdp::observations(gmu8_leuven) <-
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    ) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX > 1, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY > 1, NA, bboxY)
     )
 ```
  
