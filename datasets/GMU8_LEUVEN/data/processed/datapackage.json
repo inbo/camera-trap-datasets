@@ -1,5 +1,5 @@
 {
-  "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/camtrap-dp-profile.json",
+  "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
   "name": "gmu8-monitoring-faunabeheerzone-8-20250515135034",
   "id": "801b940f-261d-44da-979a-4f52e852cb69",
   "created": "2025-05-15T13:50:34Z",
@@ -88,7 +88,8 @@
     "samplingDesign": "systematicRandom",
     "captureMethod": ["activityDetection", "timeLapse"],
     "individualAnimals": false,
-    "observationLevel": ["event", "media"]
+    "observationLevel": ["event", "media"],
+    "path": "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
   },
   "spatial": {
     "type": "Polygon",
@@ -996,7 +997,7 @@
       "format": "csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/deployments-table-schema.json"
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/deployments-table-schema.json"
     },
     {
       "name": "media",
@@ -1005,7 +1006,7 @@
       "format": "csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/media-table-schema.json"
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/media-table-schema.json"
     },
     {
       "name": "observations",
@@ -1014,7 +1015,7 @@
       "format": "csv",
       "mediatype": "text/csv",
       "encoding": "utf-8",
-      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.1/observations-table-schema.json"
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/observations-table-schema.json"
     }
   ],
   "coordinatePrecision": 0.01,
