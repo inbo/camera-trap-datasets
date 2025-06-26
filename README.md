@@ -4,10 +4,10 @@ This repository contains the functionality to standardize camera trap data from 
 
 ## Datasets
 
-Title (and Github repository) | IPT | GBIF
--- | -- | --
-[MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)](https://github.com/inbo/camera-trap-datasets/tree/main/datasets/MUNTJAC_ANTWERP) | [muntjac_antwerp](https://ipt.inbo.be/resource?r=muntjac_antwerp) | <https://doi.org/10.15468/pequ4z>
-MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany | | <https://doi.org/10.15468/5tb6ze>
+Title | IPT | GBIF
+--- | --- | ---
+MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium) | [muntjac_antwerp](https://ipt.inbo.be/resource?r=muntjac_antwerp) | [DOI](https://doi.org/10.15468/pequ4z)
+MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany | [mica-agouti](https://ipt.inbo.be/resource?r=mica-agouti) | [DOI](https://doi.org/10.15468/5tb6ze)
 
 ## Repo structure
 
