@@ -69,9 +69,11 @@ dataset$licenses <- list(
     path = "http://creativecommons.org/licenses/by/4.0/"
     )
   )
-dataset$description <- paste0(
-  "<emphasis>", dataset$title, "</emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle><Research Institute of Nature and Forest (INBO)</citetitle></ulink>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues\n
-This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.")
+dataset$description <- paste(
+  "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany is a camera trap dataset published by the Research Institute of Nature and Forest (INBO). It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues",
+  "This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.",
+  sep = "\n"
+)
 
 # Contributors
 dataset$contributors <-
