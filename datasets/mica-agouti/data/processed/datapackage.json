@@ -239,7 +239,6 @@
     "observationLevel": [
       "event"
     ],
-    "acronym": "MICA",
     "path": "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
   },
   "spatial": {
@@ -1401,7 +1400,7 @@
     }
   ],
   "coordinatePrecision": 0.001,
-  "title": "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany",
+  "title": "mica-agouti - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany",
   "licenses": [
     {
       "scope": "data",
@@ -1414,6 +1413,6 @@
       "path": "http://creativecommons.org/licenses/by/4.0/"
     }
   ],
-  "description": "<emphasis>MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany<\/emphasis> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)<\/a>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues<\/citetitle><\/ulink>\nWe have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use<\/citetitle><\/ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.\nThis dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.",
+  "description": "<emphasis>mica-agouti - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany<\/emphasis> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)<\/a>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues<\/citetitle><\/ulink>\nWe have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use<\/citetitle><\/ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.\nThis dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.",
   "keywords": ["muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps"]
 }
