@@ -62,7 +62,7 @@ camtrapdp::observations(rounded_data) <-
 ### Extract metadata from eml file from published occurrence dataset (dwc)
 
 ```{r}
-eml <- read_eml(here::here("datasets", "mica-agouti", "data", "raw", "eml.xml"))
+#eml <- read_eml(here::here("datasets", "mica-agouti", "data", "raw", "eml.xml"))
 ```
 
 ### Add metadata to data package
