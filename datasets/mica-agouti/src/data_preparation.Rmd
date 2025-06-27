@@ -27,68 +27,37 @@ library(zip)
 ```{r camtrap data}
 name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250519123531"
 file <- here::here("datasets", "mica-agouti", "data", "raw", name_exportfolder, "datapackage.json")
-data <- camtrapdp::read_camtrapdp(file)
+dataset <- camtrapdp::read_camtrapdp(file)
 ```
 
-# Get data ready for publication
+# Prepare data
 
-## Data
-
-### Geospatial coordinates are rounded to 0.001 degrees
+Round geospatial coordinates to 0.001 degrees:
 
 ```{r round coordinates}
-rounded_data <-
-  data %>% 
+dataset <-
+  dataset %>% 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
-
-## Make GBIF-proof
-
-GBIF does not accept negative values in bounding box values, so set negative values to NA.
+Camtrap DP does not accept negative values in bounding box values, so those to `NA`:
 
 ```{r}
-camtrapdp::observations(rounded_data) <- 
-  camtrapdp::observations(rounded_data) %>%
+camtrapdp::observations(dataset) <- 
+  camtrapdp::observations(dataset) %>%
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
-    )
+  )
 ```
  
+# Prepare metadata
 
-## Metadata
-
-### Extract metadata from eml file from published occurrence dataset (dwc)
-
-```{r}
-#eml <- read_eml(here::here("datasets", "mica-agouti", "data", "raw", "eml.xml"))
-```
-
-### Add metadata to data package
-
-Add:
-
-- title
-- license
-- abstract (description)
-- keywords
-- references
-- project acronym
-- project path
-
-Adjust:
-
-- contributors
-- image url
-- observationLevel
-
-```{r add metadata}
-mica <- rounded_data
+```{r add-metadata}
 # Basic metadata
-mica$id <- "https://doi.org/10.15468/5tb6ze"
-mica$title <- "mica-agouti - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany"
-mica$licenses <- list(
+dataset$id <- "https://doi.org/10.15468/5tb6ze"
+dataset$title <- "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany"
+dataset$licenses <- list(
   list(
     scope = "data", 
     name = "CC0-1.0", 
@@ -100,13 +69,13 @@ mica$licenses <- list(
     path = "http://creativecommons.org/licenses/by/4.0/"
     )
   )
-mica$description <- paste0("<emphasis>", mica$title, "</emphasis> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute of Nature and Forest (INBO)</a>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>
-We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.
+dataset$description <- paste0(
+  "<emphasis>", dataset$title, "</emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle><Research Institute of Nature and Forest (INBO)</citetitle></ulink>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues\n
 This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.")
 
-
 # Contributors
-mica$contributors <-  list(
+dataset$contributors <-
+  list(
     list(
       title = "Emma Cartuyvels",
       email = "emma.cartuyvels@inbo.be",
@@ -311,6 +280,13 @@ mica$contributors <-  list(
       email = "daniel.vanderbeeck@gmail.com"
     ),
     list(
+      title = "Sanne Govaert",
+      email = "sanne.govaert@inbo.be",
+      path = "https://orcid.org/0000-0002-8939-1305",
+      role = "contributor",
+      organization = "Research Institute for Nature and Forest (INBO)"
+    ),
+    list(
       title = "Peter Desmet",
       email = "peter.desmet@inbo.be",
       path = "https://orcid.org/0000-0002-8442-8025",
@@ -322,29 +298,28 @@ mica$contributors <-  list(
       path = "https://www.inbo.be",
       role = "rightsHolder"
     )
-)
+  )
 
 # Fix mistake in image url
-mica$image <- "https://api.agouti.eu/uploads/project-images/20210131065158-WhatsApp Image 2021-01-22 at 15.23.24.jpeg"
+dataset$image <- "https://api.agouti.eu/uploads/project-images/20210131065158-WhatsApp Image 2021-01-22 at 15.23.24.jpeg"
 
 # Keywords
-mica$keywords <- c("muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps")
+dataset$keywords <- c("muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps")
 
-# Add project path
-mica$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
+# Project path
+dataset$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
 
-# Fix observationLevel (bug from Agouti, it must be an array, not a string)
-mica$project$observationLevel <- list(c("event"))
+# Fix observationLevel (bug from camtrapdp, it must be an array, not a string)
+dataset$project$observationLevel <- list(c("event"))
 ```
 
-
-# Write Camera Trap Data Package
+# Write dataset
 
 ```{r write camtrap DP}
-dir_processed <- here::here("datasets", "MICA", "data", "processed")
-camtrapdp::write_camtrapdp(mica, dir_processed)
+dir_processed <- here::here("datasets", "mica-agouti", "data", "processed")
+camtrapdp::write_camtrapdp(dataset, dir_processed)
 
-# Zip these files
+# Zip files
 zipfile <-  paste0(dir_processed, "/datapackage.zip")
 files2zip <- c(
   "datapackage.json",
@@ -354,4 +329,3 @@ files2zip <- c(
 )
 zip::zip(zipfile, files = files2zip, root = dir_processed)
 ```
-
