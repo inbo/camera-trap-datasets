@@ -28,7 +28,7 @@ library(zip)
 
 ```{r camtrap data}
 name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250619075522"
-file <- here::here("datasets", "GMU8_LEUVEN", "data", "raw", name_exportfolder, "datapackage.json")
+file <- here::here("datasets", "gmu8_leuven", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
 
@@ -260,7 +260,7 @@ gmu8_leuven$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-4
 # Write Camera Trap Data Package
 
 ```{r write camtrap DP}
-dir_processed <- here::here("datasets", "GMU8_LEUVEN", "data", "processed")
+dir_processed <- here::here("datasets", "gmu8_leuven", "data", "processed")
 camtrapdp::write_camtrapdp(gmu8_leuven, dir_processed)
 
 # Zip these files
