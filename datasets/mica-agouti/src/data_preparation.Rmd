@@ -1,5 +1,5 @@
 ---
-title: "Prepare Agouti project MICA for publication on GBIF as Camtrap DP"
+title: "Prepare mica-agouti dataset for publication to GBIF"
 author: 
 - Sanne Govaert
 date: "`r Sys.Date()`"
