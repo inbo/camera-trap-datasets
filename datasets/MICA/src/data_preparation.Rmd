@@ -331,7 +331,6 @@ mica$image <- "https://api.agouti.eu/uploads/project-images/20210131065158-Whats
 mica$keywords <- c("muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps")
 
 # Add project path
-mica$project$acronym <- "MICA"
 mica$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
 
 # Fix observationLevel (bug from Agouti, it must be an array, not a string)
