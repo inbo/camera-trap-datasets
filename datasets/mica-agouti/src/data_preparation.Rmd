@@ -1,6 +1,6 @@
 ---
 title: "Prepare mica-agouti dataset for publication to GBIF"
-author: 
+author:
 - Sanne Govaert
 date: "`r Sys.Date()`"
 output:
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```{r prep packages}
 library(here)
 library(camtrapdp)
-library(dplyr) 
+library(dplyr)
 library(EML)
 library(zip)
 ```
@@ -30,7 +30,7 @@ file <- here::here("datasets", "mica-agouti", "data", "raw", name_exportfolder, 
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
 
-# Prepare data
+## Prepare data
 
 Round geospatial coordinates to 0.001 degrees:
 
@@ -51,7 +51,7 @@ camtrapdp::observations(dataset) <-
   )
 ```
  
-# Prepare metadata
+## Prepare metadata
 
 ```{r add-metadata}
 # Basic metadata
@@ -316,7 +316,7 @@ dataset$project$path <- "https://lifemica.eu"
 dataset$project$observationLevel <- list(c("event"))
 ```
 
-# Write dataset
+## Write dataset
 
 ```{r write camtrap DP}
 dir_processed <- here::here("datasets", "mica-agouti", "data", "processed")
