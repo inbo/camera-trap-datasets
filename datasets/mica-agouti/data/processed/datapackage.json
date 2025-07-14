@@ -246,7 +246,7 @@
     "observationLevel": [
       "event"
     ],
-    "path": "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
+    "path": "https://lifemica.eu"
   },
   "spatial": {
     "type": "Polygon",
@@ -1408,6 +1408,7 @@
   ],
   "coordinatePrecision": 0.001,
   "title": "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany",
+  "homepage": "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e",
   "licenses": [
     {
       "scope": "data",
@@ -1420,6 +1421,6 @@
       "path": "http://creativecommons.org/licenses/by/4.0/"
     }
   ],
-  "description": "<emphasis>MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany<\/emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle><Research Institute of Nature and Forest (INBO)<\/citetitle><\/ulink>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues\n\nThis dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.",
+  "description": "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany is a camera trap dataset published by the Research Institute for Nature and Forest (INBO). It contains camera trapping data collected for the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The camera traps were deployed using a standardized protocol (https://lifemica.eu/wp-content/uploads/2021/03/Protocol-camera-traps.pdf) at four locations in Flanders (26 cameras) and one in Germany (7 cameras) where the presence of muskrat and/or coypu was suspected. Images from the camera traps were uploaded to Agouti for annotation by project members. Bycatch species were also recorded. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues.\nThis dataset was collected and processed with funding by the EU (LIFE18 NAT/NL/001047), Research Foundation - Flanders (LifeWatch) and NLBIF - Netherlands Biodiversity Information Facility.",
   "keywords": ["muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps"]
 }

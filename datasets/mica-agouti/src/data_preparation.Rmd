@@ -1,6 +1,6 @@
 ---
 title: "Prepare mica-agouti dataset for publication to GBIF"
-author: 
+author:
 - Sanne Govaert
 date: "`r Sys.Date()`"
 output:
@@ -17,7 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```{r prep packages}
 library(here)
 library(camtrapdp)
-library(dplyr) 
+library(dplyr)
 library(EML)
 library(zip)
 ```
@@ -30,7 +30,7 @@ file <- here::here("datasets", "mica-agouti", "data", "raw", name_exportfolder, 
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
 
-# Prepare data
+## Prepare data
 
 Round geospatial coordinates to 0.001 degrees:
 
@@ -51,12 +51,13 @@ camtrapdp::observations(dataset) <-
   )
 ```
  
-# Prepare metadata
+## Prepare metadata
 
 ```{r add-metadata}
 # Basic metadata
 dataset$id <- "https://doi.org/10.15468/5tb6ze"
 dataset$title <- "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany"
+dataset$homepage <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
 dataset$licenses <- list(
   list(
     scope = "data", 
@@ -69,9 +70,12 @@ dataset$licenses <- list(
     path = "http://creativecommons.org/licenses/by/4.0/"
     )
   )
-dataset$description <- paste0(
-  "<emphasis>", dataset$title, "</emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute of Nature and Forest (INBO)</citetitle></ulink>. It is part of the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The dataset contains camera trap observations of muskrat and coypu, as well as many other observed species. Geospatial coordinates are rounded to 0.001 degrees. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues.\n
-This dataset was collected using infrastructure provided by INBO and funded by Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch. The data were collected as part of the MICA project, which received funding from the European Union’s LIFE Environment sub-programme under the grant agreement LIFE18 NAT/NL/001047. The dataset was published with funding from Stichting NLBIF - Netherlands Biodiversity Information Facility.")
+
+dataset$description <- paste(
+  "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany is a camera trap dataset published by the Research Institute for Nature and Forest (INBO). It contains camera trapping data collected for the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The camera traps were deployed using a standardized protocol (https://lifemica.eu/wp-content/uploads/2021/03/Protocol-camera-traps.pdf) at four locations in Flanders (26 cameras) and one in Germany (7 cameras) where the presence of muskrat and/or coypu was suspected. Images from the camera traps were uploaded to Agouti for annotation by project members. Bycatch species were also recorded. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues.",
+  "This dataset was collected and processed with funding by the EU (LIFE18 NAT/NL/001047), Research Foundation - Flanders (LifeWatch) and NLBIF - Netherlands Biodiversity Information Facility.",
+  sep = "\n"
+)
 
 # Contributors
 dataset$contributors <-
@@ -307,13 +311,13 @@ dataset$image <- "https://api.agouti.eu/uploads/project-images/20210131065158-Wh
 dataset$keywords <- c("muskrat", "invasive alien species", "coypu", "public awareness campaign", "damage prevention", "flood control", "flood protection", "animal damage", "pest control", "camera traps")
 
 # Project path
-dataset$project$path <- "https://agouti.eu/#/explore/project/86cabc14-d475-4439-98a7-e7b590bed60e"
+dataset$project$path <- "https://lifemica.eu"
 
 # Fix observationLevel (bug from camtrapdp, it must be an array, not a string)
 dataset$project$observationLevel <- list(c("event"))
 ```
 
-# Write dataset
+## Write dataset
 
 ```{r write camtrap DP}
 dir_processed <- here::here("datasets", "mica-agouti", "data", "processed")
