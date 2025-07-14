@@ -285,6 +285,17 @@
       }
     },
     {
+      "scientificName": "Branta leucopsis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/N74C",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "barnacle goose",
+        "nld": "brandgans"
+      }
+    },
+    {
       "scientificName": "Buteo buteo",
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/NYV7",
       "taxonRank": "species",
