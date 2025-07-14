@@ -1,8 +1,8 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
-  "name": "gmu8-monitoring-faunabeheerzone-8-20250619075522",
-  "id": "bd9f43f9-0995-4157-9341-a747cebd25f4",
-  "created": "2025-06-19T07:55:22Z",
+  "name": "gmu8-monitoring-faunabeheerzone-8-20250630044144",
+  "id": "49a4a3e7-2f2c-4c35-99b3-0f64fbc9bfda",
+  "created": "2025-06-30T04:41:44Z",
   "contributors": [
     {
       "title": "Jim Casaer",
@@ -104,7 +104,7 @@
     ]
   },
   "temporal": {
-    "start": "1999-12-31",
+    "start": "2018-03-25",
     "end": "2025-06-03"
   },
   "taxonomic": [
@@ -203,7 +203,6 @@
       "order": "Rodentia",
       "family": "Muridae",
       "vernacularNames": {
-        "eng": null,
         "nld": "bosmuizen"
       }
     },

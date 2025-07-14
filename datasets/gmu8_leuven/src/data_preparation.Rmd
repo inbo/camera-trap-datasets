@@ -27,7 +27,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250619075522"
+name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250630044144"
 file <- here::here("datasets", "gmu8_leuven", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -46,7 +46,7 @@ rounded_data <-
 
 ### Set embargo
 
-Set an embargo on the last year. Before this date, all data is public. After this date, only observations of exotic species are kept.
+Set an embargo on the last year. Before this date, all data is public. After this date, only observations of non-native species are kept.
 
 First, construct a vector with the alien mammals and birds of Belgium.
 
