@@ -1,0 +1,205 @@
+---
+title: "Prepare Agouti project NPHK (Camtrap DP) for publication on GBIF"
+author: 
+- Sanne Govaert
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r prep packages}
+library(here)
+library(camtrapdp)
+library(dplyr) 
+library(rgbif)
+library(lubridate)
+library(EML)
+library(zip)
+```
+
+## Read data
+
+```{r camtrap data}
+name_exportfolder <- "nphk-national-park-hoge-kempen-20250714132334"
+file <- here::here("datasets", "nphk", "data", "raw", name_exportfolder, "datapackage.json")
+data <- camtrapdp::read_camtrapdp(file)
+```
+
+# Get data ready for publication
+
+## Data
+
+### Geospatial coordinates are rounded to 0.001 degrees
+
+```{r round coordinates}
+rounded_data <-
+  data %>% 
+  camtrapdp::round_coordinates(digits = 3)
+# currently not working because of invalid coordinates in the data
+```
+
+### Set embargo
+
+Set an embargo on the last year. Before this date, all data is public. After this date, only observations of non-native species are kept.
+
+First, construct a vector with the alien mammals and birds of Belgium.
+
+```{r}
+taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
+taxa_birds <- rgbif::name_usage(datasetKey = "e1c3be64-2799-4342-8312-49d076993132", limit = 99999)$data
+
+exotic_species <- c(
+  dplyr::pull(taxa_mammals, species),
+  dplyr::pull(taxa_birds, species)
+) %>% 
+  na.omit()
+```
+
+
+```{r}
+today <- Sys.Date()
+embargo_date <- today %m-% months(12)
+embargo_data <- 
+  data %>% 
+  camtrapdp::filter_observations(
+    eventStart <= embargo_date
+    |
+    scientificName %in% exotic_species
+  )
+```
+
+Check which species are maintained after the embargo data:
+
+```{r}
+embargo_data %>%
+  camtrapdp::filter_observations(eventStart >= embargo_date) %>% 
+  camtrapdp::taxa()
+```
+
+## Make GBIF-proof
+
+GBIF does not accept negative values in bounding box values, so set negative values to NA.
+
+``` {r}
+nphk <- embargo_data
+camtrapdp::observations(nphk) <- 
+  camtrapdp::observations(nphk) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    ) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX > 1, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY > 1, NA, bboxY)
+    )
+```
+ 
+
+## Metadata
+
+Add:
+
+- title
+- license
+- abstract (description)
+- keywords
+- references
+- project path
+
+Adjust:
+
+- contributors
+- image url
+
+```{r add metadata}
+# Basic metadata
+nphk$title <- NULL
+
+nphk$licenses <- list(
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
+  )
+
+nphk$description <- c(
+  paste(
+    nphk$title, "is a dataset published by the Research Institute of Nature and Forest (INBO). It contains camera trap data [.............]",
+    "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be.",
+    "This dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
+    sep = "\n"
+  )
+)
+
+nphk$contributors <- list(
+  list(
+    title = "Jim Casaer",
+    email = "jim.casaer@inbo.be",
+    path = "https://orcid.org/0000-0001-6788-5876",
+    role = "principalInvestigator",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Peter Desmet",
+    email = "peter.desmet@inbo.be",
+    path = "https://orcid.org/0000-0002-8442-8025",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Sanne Govaert",
+    email = "sanne.govaert@inbo.be",
+    path = "https://orcid.org/0000-0002-8939-1305",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Research Institute for Nature and Forest (INBO)",
+    path = "https://www.inbo.be",
+    role = "rightsHolder"
+  )
+)
+
+# Fix mistake in image url
+nphk$image <- "https://api.agouti.eu/uploads/project-images/20170629073351-Capture.JPG"
+
+# Keywords
+nphk$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Hoge Kempen")
+
+# References
+nphk$references <- NULL
+
+# Add project path
+nphk$project$path <- "https://agouti.eu/#/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
+```
+
+
+# Write Camera Trap Data Package
+
+```{r write camtrap DP}
+dir_processed <- here::here("datasets", "nphk", "data", "processed")
+camtrapdp::write_camtrapdp(nphk, dir_processed)
+
+# Zip these files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
+```
