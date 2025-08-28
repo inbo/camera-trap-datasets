@@ -12,6 +12,7 @@ MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands an
 ## Repo structure
 
 The structure for each dataset in [datasets](datasets) is based on [Cookiecutter Data Science](http://drivendata.github.io/cookiecutter-data-science/) and the [Checklist recipe](https://github.com/trias-project/checklist-recipe). Files and directories indicated with `GENERATED` should not be edited manually.
+Raw data is not synchronized with Github. The raw data must be downloaded from Agouti and placed in the correct local folder.
 
 ```
 ├── data
