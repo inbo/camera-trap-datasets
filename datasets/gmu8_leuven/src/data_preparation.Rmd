@@ -1,5 +1,5 @@
 ---
-title: "Prepare dataset dataset for publication to GBIF"
+title: "Prepare dataset for publication to GBIF"
 author: 
 - Sanne Govaert
 - Jim Casaer
@@ -123,7 +123,7 @@ camtrapdp::media(dataset) <-
 
 ### Remove out-of-bound values
 
-Camtrap DP does not accept negative values in bounding box values, so those to `NA`:
+Camtrap DP does not accept negative values in bounding box values, so set those to `NA`:
 
 ```{r}
 camtrapdp::observations(dataset) <- 
