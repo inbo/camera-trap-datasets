@@ -245,7 +245,7 @@ dataset$contributors <- list(
 dataset$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
 
 # Keywords
-dataset$keywords <- c("camera traps","ungulates","roe deer","wild boar","widllife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Brabantse Wouden")
+dataset$keywords <- c("camera traps", "ungulates", "roe deer", "wild boar", "wildlife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife", "Nationaal Park Brabantse Wouden")
 
 # References
 dataset$references <- NULL
