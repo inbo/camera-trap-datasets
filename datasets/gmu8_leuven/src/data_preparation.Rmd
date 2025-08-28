@@ -69,7 +69,7 @@ exotic_species <- c(
 Define embargo date:
 
 ```{r}
-embargo_date <- Sys.Date() %m-% months(12)
+embargo_date <- Sys.Date() %m-% months(12) # Last one used: "2024-07-16"
 ```
 
 Filter data:
