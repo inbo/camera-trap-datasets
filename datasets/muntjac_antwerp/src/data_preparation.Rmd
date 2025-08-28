@@ -331,7 +331,7 @@ camtrapdp::observations(dataset) <-
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
-    )
+  )
 ```
 
 ## Prepare metadata

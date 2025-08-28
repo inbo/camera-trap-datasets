@@ -1,7 +1,8 @@
 ---
-title: "Prepare Agouti project GMU8_LEUVEN (Camtrap DP) for publication on GBIF"
+title: "Prepare dataset dataset for publication to GBIF"
 author: 
 - Sanne Govaert
+- Jim Casaer
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -17,11 +18,11 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```{r prep packages}
 library(here)
 library(camtrapdp)
-library(dplyr) 
-library(rgbif)
+library(dplyr)
 library(lubridate)
 library(EML)
 library(zip)
+library(rgbif)
 ```
 
 ## Read data
@@ -29,26 +30,30 @@ library(zip)
 ```{r camtrap data}
 name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250630044144"
 file <- here::here("datasets", "gmu8_leuven", "data", "raw", name_exportfolder, "datapackage.json")
-data <- camtrapdp::read_camtrapdp(file)
+dataset <- camtrapdp::read_camtrapdp(file)
 ```
 
-# Get data ready for publication
+## Fix issues
 
-## Data
+No issues to be fixed.
 
-### Geospatial coordinates are rounded to 0.001 degrees
+## Prepare data
+
+### Round coordinates
+
+Round geospatial coordinates to 0.001 degrees:
 
 ```{r round coordinates}
-rounded_data <-
-  data %>% 
+dataset <-
+  dataset %>% 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
 ### Set embargo
 
-Set an embargo on the last year. Before this date, all data is public. After this date, only observations of non-native species are kept.
+Set an embargo on the last year. All data before this date are kept, all data after removed (except for observations of non-native species).
 
-First, construct a vector with the alien mammals and birds of Belgium.
+Construct a vector with the alien mammals and birds of Belgium.
 
 ```{r}
 taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
@@ -61,12 +66,17 @@ exotic_species <- c(
   na.omit()
 ```
 
+Define embargo date:
 
 ```{r}
-today <- Sys.Date()
-embargo_date <- today %m-% months(12)
-embargo_data <- 
-  rounded_data %>% 
+embargo_date <- Sys.Date() %m-% months(12)
+```
+
+Filter data:
+
+```{r}
+dataset <- 
+  dataset %>%
   camtrapdp::filter_observations(
     eventStart <= embargo_date
     |
@@ -77,24 +87,23 @@ embargo_data <-
 Check which species are maintained after the embargo data:
 
 ```{r}
-embargo_data %>%
+dataset %>%
   camtrapdp::filter_observations(eventStart >= embargo_date) %>% 
   camtrapdp::taxa()
 ```
 
+### Hide images of dogs
 
-### Privacy settings
-
-Hide the media of dogs for privacy reasons.
+Hide the media of dogs for privacy reasons:
 
 ```{r remove media of dogs}
-mediaID_dogs <- embargo_data %>% 
+mediaID_dogs <- dataset %>% 
   camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
   camtrapdp::media() %>% 
   dplyr::pull(mediaID)
 
-camtrapdp::media(embargo_data) <-
-  rounded_data %>%
+camtrapdp::media(dataset) <-
+  dataset %>%
   camtrapdp::media() %>%
   dplyr::mutate(
     filePath = dplyr::if_else(
@@ -112,14 +121,13 @@ camtrapdp::media(embargo_data) <-
   )
 ```
 
-## Make GBIF-proof
+### Remove out-of-bound values
 
-GBIF does not accept negative values in bounding box values, so set negative values to NA.
+Camtrap DP does not accept negative values in bounding box values, so those to `NA`:
 
 ```{r}
-gmu8_leuven <- embargo_data
-camtrapdp::observations(gmu8_leuven) <- 
-  camtrapdp::observations(gmu8_leuven) %>%
+camtrapdp::observations(dataset) <- 
+  camtrapdp::observations(dataset) %>%
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
@@ -130,28 +138,13 @@ camtrapdp::observations(gmu8_leuven) <-
     )
 ```
  
-
-## Metadata
-
-Add:
-
-- title
-- license
-- abstract (description)
-- keywords
-- references
-- project path
-
-Adjust:
-
-- contributors
-- image url
+## Prepare metadata
 
 ```{r add metadata}
 # Basic metadata
-gmu8_leuven$title <- "GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)" 
+dataset$title <- "GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)" 
 
-gmu8_leuven$licenses <- list(
+dataset$licenses <- list(
   list(
     scope = "data", 
     name = "CC0-1.0", 
@@ -164,9 +157,9 @@ gmu8_leuven$licenses <- list(
     )
   )
 
-gmu8_leuven$description <- c(
+dataset$description <- c(
   paste(
-    gmu8_leuven$title, "is a dataset published by the Research Institute of Nature and Forest (INBO). It contains camera trap data primarily collected within the framework of monitoring the recolonization of wild boar in natural areas south of Leuven. However, the dataset includes all recorded observations of mammals and birds captured during the monitoring period.",
+    dataset$title, "is a dataset published by the Research Institute of Nature and Forest (INBO). It contains camera trap data primarily collected within the framework of monitoring the recolonization of wild boar in natural areas south of Leuven. However, the dataset includes all recorded observations of mammals and birds captured during the monitoring period.",
     "This monitoring was conducted in close collaboration with hunters and members of local nature conservation associations active in the area. Several forest and nature areas south of Leuven were sampled, with the main forest complexes being Meerdaalwoud, Heverleebos, and Egenhovenbos. Additionally, camera traps were placed in the valleys of the Dijle, Laan, and Yse rivers. Each camera trap was installed facing north at a height of approximately 50 cm. No bait was used during the monitoring. 
     
     The sampling design was based on a grid of 250 x 250 meter cells. Camera locations were determined by randomly selecting a subset of these grid cells, and the coordinates used for placement corresponded to the center point of each selected cell. A total of 32 camera traps were used. These were relocated monthly, with each selected grid cell being monitored once during the winter and once during the summer. 
@@ -178,7 +171,7 @@ gmu8_leuven$description <- c(
   )
 )
 
-gmu8_leuven$contributors <- list(
+dataset$contributors <- list(
   list(
     title = "Jim Casaer",
     email = "jim.casaer@inbo.be",
@@ -249,26 +242,25 @@ gmu8_leuven$contributors <- list(
 )
 
 # Fix mistake in image url
-gmu8_leuven$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
+dataset$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
 
 # Keywords
-gmu8_leuven$keywords <- c("camera traps","ungulates","roe deer","wild boar","widllife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Brabantse Wouden")
+dataset$keywords <- c("camera traps","ungulates","roe deer","wild boar","widllife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Brabantse Wouden")
 
 # References
-gmu8_leuven$references <- NULL
+dataset$references <- NULL
 
 # Add project path
-gmu8_leuven$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
+dataset$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
 ```
 
-
-# Write Camera Trap Data Package
+## Write dataset
 
 ```{r write camtrap DP}
 dir_processed <- here::here("datasets", "gmu8_leuven", "data", "processed")
-camtrapdp::write_camtrapdp(gmu8_leuven, dir_processed)
+camtrapdp::write_camtrapdp(dataset, dir_processed)
 
-# Zip these files
+# Zip files
 zipfile <-  paste0(dir_processed, "/datapackage.zip")
 files2zip <- c(
   "datapackage.json",
@@ -278,4 +270,3 @@ files2zip <- c(
 )
 zip::zip(zipfile, files = files2zip, root = dir_processed)
 ```
-
