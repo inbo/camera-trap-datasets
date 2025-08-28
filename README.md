@@ -15,8 +15,8 @@ The structure for each dataset in [datasets](datasets) is based on [Cookiecutter
 
 ```
 ├── data
-│   ├── raw                      : Source data, input for script
-│   └── processed                : Camtrap DP output of script GENERATED
+│   ├── raw                      : Source data (an Agouti export), input for script IGNORED
+│   └── processed                : Publication-ready data, output of script GENERATED, with CSV files IGNORED
 │
 └── src
     └── data_preparation.Rmd     : Data cleaning and preparation script
