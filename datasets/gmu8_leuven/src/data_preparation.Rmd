@@ -53,7 +53,7 @@ dataset <-
 
 Set an embargo on the last year. All data before this date are kept, all data after removed (except for observations of non-native species).
 
-Construct a vector with the alien mammals and birds of Belgium.
+Construct a vector with the alien mammals and birds of Belgium:
 
 ```{r}
 taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
@@ -64,6 +64,13 @@ exotic_species <- c(
   dplyr::pull(taxa_birds, species)
 ) %>% 
   na.omit()
+```
+
+Remove exotic species that are also game species:
+
+```{r}
+game_species <- c("Branta canadensis", "Dama dama", "Phasianus colchicus")
+exotic_species <- exotic_species[!exotic_species %in% game_species]
 ```
 
 Define embargo date:
