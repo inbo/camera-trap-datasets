@@ -28,7 +28,7 @@ library(rgbif)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "gmu8-monitoring-faunabeheerzone-8-20250630044144"
+name_exportfolder <- "gmu8leuven-20250903075259"
 file <- here::here("datasets", "gmu8_leuven", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
