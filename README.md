@@ -6,7 +6,7 @@ This repository contains the functionality to standardize camera trap data from 
 
 Title | Started | Ended | IPT | GBIF
 --- | --- | --- | --- | ---
-GMU8_LEUVEN - Camera trap observations in region Hallerbos - Hoegaarden, Belgium | 2018 | active | |
+GMU8_LEUVEN - Camera trap observations in region Hallerbos - Hoegaarden, Belgium | 2018 | active | [gmu8_leuven](https://ipt.inbo.be/resource?r=gmu8_leuven) | [DOI](https://doi.org/10.15468/4u3wm4)
 MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany | 2019 | 2023 | [mica-agouti](https://ipt.inbo.be/resource?r=mica-agouti) | [DOI](https://doi.org/10.15468/5tb6ze)
 MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium) | 2024 | active | [muntjac_antwerp](https://ipt.inbo.be/resource?r=muntjac_antwerp) | [DOI](https://doi.org/10.15468/pequ4z)
 
