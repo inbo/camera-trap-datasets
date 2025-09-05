@@ -1,0 +1,1069 @@
+{
+  "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
+  "name": "gmu8leuven-20250904102618",
+  "id": "fcef2ff7-8439-4453-b136-47ad9d2afb3d",
+  "created": "2025-09-04T10:26:18Z",
+  "contributors": [
+    {
+      "title": "Jim Casaer",
+      "email": "jim.casaer@inbo.be",
+      "path": "https://orcid.org/0000-0001-6788-5876",
+      "role": "principalInvestigator",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Niko Boone",
+      "email": "niko.boone@inbo.be",
+      "path": " https://orcid.org/0000-0001-7334-2819 ",
+      "role": "principalInvestigator",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Jan Vercammen",
+      "email": "jan.vercammen@inbo.be",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Sander Devisscher",
+      "email": "sander.devisscher@inbo.be",
+      "path": " https://orcid.org/0000-0003-2015-5731",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Lynn Pallemaerts",
+      "email": "lynn.pallemaerts@inbo.be",
+      "path": "https://orcid.org/0000-0002-5034-5416",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Anneleen Rutten",
+      "email": "anneleen.rutten@inbo.be",
+      "path": "https://orcid.org/0000-0002-4025-5265",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Martijn Bollen",
+      "email": "martijn.bollen@inbo.be",
+      "path": "https://orcid.org/0000-0002-1621-6258",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Peter Desmet",
+      "email": "peter.desmet@inbo.be",
+      "path": "https://orcid.org/0000-0002-8442-8025",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Sanne Govaert",
+      "email": "sanne.govaert@inbo.be",
+      "path": "https://orcid.org/0000-0002-8939-1305",
+      "role": "contributor",
+      "organization": "Research Institute for Nature and Forest (INBO)"
+    },
+    {
+      "title": "Research Institute for Nature and Forest (INBO)",
+      "path": "https://www.inbo.be",
+      "role": "rightsHolder"
+    }
+  ],
+  "image": "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG",
+  "sources": [
+    {
+      "title": "Agouti",
+      "path": "https://www.agouti.eu",
+      "email": "agouti@wur.nl",
+      "version": "v4"
+    }
+  ],
+  "project": {
+    "id": "91e1e104-a296-461e-af79-eeb6cb3e6c7f",
+    "title": "GMU8_LEUVEN",
+    "description": "This project monitors natural habitats south of Leuven (Belgium). It mainly focuses on the interaction between human activities (e.g. recreation, hunting) and the population dynamics as well as geographical and temporal distribution of roe deer (Capreolus capreolus) and wild boar (Sus scrofa). Researchers can request more detailed information by contacting jim.casaer@inbo.be.",
+    "samplingDesign": "systematicRandom",
+    "captureMethod": ["activityDetection", "timeLapse"],
+    "individualAnimals": false,
+    "observationLevel": ["event", "media"],
+    "path": "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
+  },
+  "spatial": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [4.573, 50.744],
+        [4.748, 50.744],
+        [4.748, 50.864],
+        [4.573, 50.864],
+        [4.573, 50.744]
+      ]
+    ]
+  },
+  "temporal": {
+    "start": "2018-03-25",
+    "end": "2025-09-02"
+  },
+  "taxonomic": [
+    {
+      "scientificName": "Accipiter gentilis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/93V5",
+      "taxonRank": "species",
+      "order": "Accipitriformes",
+      "family": "Accipitridae",
+      "vernacularNames": {
+        "eng": "northern goshawk",
+        "nld": "havik"
+      }
+    },
+    {
+      "scientificName": "Accipiter nisus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/93VP",
+      "taxonRank": "species",
+      "order": "Accipitriformes",
+      "family": "Accipitridae",
+      "vernacularNames": {
+        "eng": "Eurasian sparrowhawk",
+        "nld": "sperwer"
+      }
+    },
+    {
+      "scientificName": "Aix galericulata",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5TV4F",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "mandarin duck",
+        "nld": "mandarijneend"
+      }
+    },
+    {
+      "scientificName": "Alcedo atthis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/667V7",
+      "taxonRank": "species",
+      "order": "Coraciiformes",
+      "family": "Alcedinidae",
+      "vernacularNames": {
+        "eng": "common kingfisher",
+        "nld": "ijsvogel"
+      }
+    },
+    {
+      "scientificName": "Alopochen aegyptiaca",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/C5KM",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "Egyptian goose",
+        "nld": "nijlgans"
+      }
+    },
+    {
+      "scientificName": "Anas crecca",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/DGND",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "Eurasian teal",
+        "nld": "wintertaling"
+      }
+    },
+    {
+      "scientificName": "Anas platyrhynchos",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/DGP6",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "mallard",
+        "nld": "wilde eend"
+      }
+    },
+    {
+      "scientificName": "Anas strepera",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/DGPL",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "gadwall",
+        "nld": "krakeend"
+      }
+    },
+    {
+      "scientificName": "Apodemus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/YVR",
+      "taxonRank": "genus",
+      "order": "Rodentia",
+      "family": "Muridae",
+      "vernacularNames": {
+        "nld": "bosmuizen"
+      }
+    },
+    {
+      "scientificName": "Apodemus sylvaticus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/FRJJ",
+      "taxonRank": "species",
+      "order": "Rodentia",
+      "family": "Muridae",
+      "vernacularNames": {
+        "eng": "wood mouse",
+        "nld": "bosmuis"
+      }
+    },
+    {
+      "scientificName": "Ardea alba",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/GCHR",
+      "taxonRank": "species",
+      "order": "Pelecaniformes",
+      "family": "Ardeidae",
+      "vernacularNames": {
+        "eng": "great egret",
+        "nld": "grote zilverreiger"
+      }
+    },
+    {
+      "scientificName": "Ardea cinerea",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/GCHS",
+      "taxonRank": "species",
+      "order": "Pelecaniformes",
+      "family": "Ardeidae",
+      "vernacularNames": {
+        "eng": "grey heron",
+        "nld": "blauwe reiger"
+      }
+    },
+    {
+      "scientificName": "Asio otus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6866L",
+      "taxonRank": "species",
+      "order": "Strigiformes",
+      "family": "Strigidae",
+      "vernacularNames": {
+        "eng": "long-eared owl",
+        "nld": "ransuil"
+      }
+    },
+    {
+      "scientificName": "Aves",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/V2",
+      "taxonRank": "class",
+      "order": "",
+      "family": "",
+      "vernacularNames": {
+        "eng": "bird sp.",
+        "nld": "vogel"
+      }
+    },
+    {
+      "scientificName": "Bos taurus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/MLQ5",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Bovidae",
+      "vernacularNames": {
+        "eng": "cattle",
+        "nld": "koe"
+      }
+    },
+    {
+      "scientificName": "Branta canadensis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5WRC3",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "Canada goose",
+        "nld": "grote Canadese gans"
+      }
+    },
+    {
+      "scientificName": "Branta leucopsis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/N74C",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "barnacle goose",
+        "nld": "brandgans"
+      }
+    },
+    {
+      "scientificName": "Buteo buteo",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/NYV7",
+      "taxonRank": "species",
+      "order": "Accipitriformes",
+      "family": "Accipitridae",
+      "vernacularNames": {
+        "eng": "common buzzard",
+        "nld": "buizerd"
+      }
+    },
+    {
+      "scientificName": "Canis lupus familiaris",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5G6ZJ",
+      "taxonRank": "subspecies",
+      "order": "Carnivora",
+      "family": "Canidae",
+      "vernacularNames": {
+        "eng": "dog",
+        "nld": "hond"
+      }
+    },
+    {
+      "scientificName": "Capreolus capreolus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/QSF3",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Cervidae",
+      "vernacularNames": {
+        "eng": "roe deer",
+        "nld": "ree"
+      }
+    },
+    {
+      "scientificName": "Castor fiber",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/RQPW",
+      "taxonRank": "species",
+      "order": "Rodentia",
+      "family": "Castoridae",
+      "vernacularNames": {
+        "eng": "Eurasian beaver",
+        "nld": "bever"
+      }
+    },
+    {
+      "scientificName": "Certhia brachydactyla",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/69N9M",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Certhiidae",
+      "vernacularNames": {
+        "eng": "short-toed treecreeper",
+        "nld": "boomkruiper"
+      }
+    },
+    {
+      "scientificName": "Cervus nippon",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/T56N",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Cervidae",
+      "vernacularNames": {
+        "eng": "sika deer",
+        "nld": "sikahert"
+      }
+    },
+    {
+      "scientificName": "Coccothraustes coccothraustes",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/WLXJ",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Fringillidae",
+      "vernacularNames": {
+        "eng": "hawfinch",
+        "nld": "appelvink"
+      }
+    },
+    {
+      "scientificName": "Columba oenas",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5ZQ9C",
+      "taxonRank": "species",
+      "order": "Columbiformes",
+      "family": "Columbidae",
+      "vernacularNames": {
+        "eng": "stock dove",
+        "nld": "holenduif"
+      }
+    },
+    {
+      "scientificName": "Columba palumbus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/XBGG",
+      "taxonRank": "species",
+      "order": "Columbiformes",
+      "family": "Columbidae",
+      "vernacularNames": {
+        "eng": "common wood pigeon",
+        "nld": "houtduif"
+      }
+    },
+    {
+      "scientificName": "Corvus corax",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/YNHG",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Corvidae",
+      "vernacularNames": {
+        "eng": "common raven",
+        "nld": "raaf"
+      }
+    },
+    {
+      "scientificName": "Corvus corone",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/YNHJ",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Corvidae",
+      "vernacularNames": {
+        "eng": "carrion crow",
+        "nld": "zwarte kraai"
+      }
+    },
+    {
+      "scientificName": "Cricetidae",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/8P5",
+      "taxonRank": "family",
+      "order": "Rodentia",
+      "family": "Cricetidae",
+      "vernacularNames": {
+        "eng": "hamsters, voles, lemmings, and New World rats and mice",
+        "nld": "hamsters, woelmuizen, lemmingen"
+      }
+    },
+    {
+      "scientificName": "Cyanistes caeruleus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/32NH2",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Paridae",
+      "vernacularNames": {
+        "eng": "Eurasian blue tit",
+        "nld": "pimpelmees"
+      }
+    },
+    {
+      "scientificName": "Cygnus olor",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/32ZQB",
+      "taxonRank": "species",
+      "order": "Anseriformes",
+      "family": "Anatidae",
+      "vernacularNames": {
+        "eng": "mute swan",
+        "nld": "knobbelzwaan"
+      }
+    },
+    {
+      "scientificName": "Dama dama",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/342N9",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Cervidae",
+      "vernacularNames": {
+        "eng": "fallow deer",
+        "nld": "damhert"
+      }
+    },
+    {
+      "scientificName": "Dendrocopos major",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6CJDB",
+      "taxonRank": "species",
+      "order": "Piciformes",
+      "family": "Picidae",
+      "vernacularNames": {
+        "eng": "great spotted woodpecker",
+        "nld": "grote bonte specht"
+      }
+    },
+    {
+      "scientificName": "Dryocopus martius",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/37VCZ",
+      "taxonRank": "species",
+      "order": "Piciformes",
+      "family": "Picidae",
+      "vernacularNames": {
+        "eng": "black woodpecker",
+        "nld": "zwarte specht"
+      }
+    },
+    {
+      "scientificName": "Equus caballus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6FYBT",
+      "taxonRank": "species",
+      "order": "Perissodactyla",
+      "family": "Equidae",
+      "vernacularNames": {
+        "eng": "horse",
+        "nld": "paard"
+      }
+    },
+    {
+      "scientificName": "Erinaceus europaeus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3B2C2",
+      "taxonRank": "species",
+      "order": "Erinaceomorpha",
+      "family": "Erinaceidae",
+      "vernacularNames": {
+        "eng": "European hedgehog",
+        "nld": "egel"
+      }
+    },
+    {
+      "scientificName": "Erithacus rubecula",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6H2XM",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Muscicapidae",
+      "vernacularNames": {
+        "eng": "European robin",
+        "nld": "roodborst"
+      }
+    },
+    {
+      "scientificName": "Felis catus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3DXV3",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Felidae",
+      "vernacularNames": {
+        "eng": "domestic cat",
+        "nld": "kat"
+      }
+    },
+    {
+      "scientificName": "Fringilla coelebs",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6JPSJ",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Fringillidae",
+      "vernacularNames": {
+        "eng": "common chaffinch",
+        "nld": "vink"
+      }
+    },
+    {
+      "scientificName": "Fringilla montifringilla",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6JPSG",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Fringillidae",
+      "vernacularNames": {
+        "eng": "brambling",
+        "nld": "keep"
+      }
+    },
+    {
+      "scientificName": "Fulica atra",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6K3W6",
+      "taxonRank": "species",
+      "order": "Gruiformes",
+      "family": "Rallidae",
+      "vernacularNames": {
+        "eng": "Eurasian coot",
+        "nld": "meerkoet"
+      }
+    },
+    {
+      "scientificName": "Garrulus glandarius",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6JYHZ",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Corvidae",
+      "vernacularNames": {
+        "eng": "Eurasian jay",
+        "nld": "gaai"
+      }
+    },
+    {
+      "scientificName": "Homo sapiens",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6MB3T",
+      "taxonRank": "species",
+      "order": "Primates",
+      "family": "Hominidae",
+      "vernacularNames": {
+        "eng": "human",
+        "nld": "mens"
+      }
+    },
+    {
+      "scientificName": "Lepus europaeus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6PPYF",
+      "taxonRank": "species",
+      "order": "Lagomorpha",
+      "family": "Leporidae",
+      "vernacularNames": {
+        "eng": "European hare",
+        "nld": "haas"
+      }
+    },
+    {
+      "scientificName": "Martes",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5LMD",
+      "taxonRank": "genus",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "martens",
+        "nld": "marters"
+      }
+    },
+    {
+      "scientificName": "Martes foina",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3Y9VW",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "beech marten",
+        "nld": "steenmarter"
+      }
+    },
+    {
+      "scientificName": "Martes martes",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3Y9W2",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "European pine marten",
+        "nld": "boommarter"
+      }
+    },
+    {
+      "scientificName": "Meles meles",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3ZDRX",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "European badger",
+        "nld": "das"
+      }
+    },
+    {
+      "scientificName": "Mustela erminea",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/44QWG",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "stoat",
+        "nld": "hermelijn"
+      }
+    },
+    {
+      "scientificName": "Mustela putorius",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/44QYC",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Mustelidae",
+      "vernacularNames": {
+        "eng": "European polecat",
+        "nld": "bunzing"
+      }
+    },
+    {
+      "scientificName": "Myodes glareolus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/454Q4",
+      "taxonRank": "species",
+      "order": "Rodentia",
+      "family": "Cricetidae",
+      "vernacularNames": {
+        "eng": "bank vole",
+        "nld": "rosse woelmuis"
+      }
+    },
+    {
+      "scientificName": "Oryctolagus cuniculus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/74ZBP",
+      "taxonRank": "species",
+      "order": "Lagomorpha",
+      "family": "Leporidae",
+      "vernacularNames": {
+        "eng": "European rabbit",
+        "nld": "Europees konijn"
+      }
+    },
+    {
+      "scientificName": "Ovis aries",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4B9VF",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Bovidae",
+      "vernacularNames": {
+        "eng": "domestic sheep",
+        "nld": "schaap"
+      }
+    },
+    {
+      "scientificName": "Parus major",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/75SVV",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Paridae",
+      "vernacularNames": {
+        "eng": "great tit",
+        "nld": "koolmees"
+      }
+    },
+    {
+      "scientificName": "Periparus ater",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4F2VB",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Paridae",
+      "vernacularNames": {
+        "eng": "coal tit",
+        "nld": "zwarte mees"
+      }
+    },
+    {
+      "scientificName": "Pernis apivorus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4F6YZ",
+      "taxonRank": "species",
+      "order": "Accipitriformes",
+      "family": "Accipitridae",
+      "vernacularNames": {
+        "eng": "European honey buzzard",
+        "nld": "Wespendief"
+      }
+    },
+    {
+      "scientificName": "Phasianus colchicus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4FWMN",
+      "taxonRank": "species",
+      "order": "Galliformes",
+      "family": "Phasianidae",
+      "vernacularNames": {
+        "eng": "common pheasant",
+        "nld": "fazant"
+      }
+    },
+    {
+      "scientificName": "Phylloscopus trochilus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/77FNC",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Phylloscopidae",
+      "vernacularNames": {
+        "eng": "willow warbler",
+        "nld": "fitis"
+      }
+    },
+    {
+      "scientificName": "Pica pica",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4HPXM",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Corvidae",
+      "vernacularNames": {
+        "eng": "Eurasian magpie",
+        "nld": "ekster"
+      }
+    },
+    {
+      "scientificName": "Picus viridis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4HR3F",
+      "taxonRank": "species",
+      "order": "Piciformes",
+      "family": "Picidae",
+      "vernacularNames": {
+        "eng": "European green woodpecker",
+        "nld": "groene specht"
+      }
+    },
+    {
+      "scientificName": "Podiceps cristatus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/782YB",
+      "taxonRank": "species",
+      "order": "Podicipediformes",
+      "family": "Podicipedidae",
+      "vernacularNames": {
+        "eng": "great crested grebe",
+        "nld": "fuut"
+      }
+    },
+    {
+      "scientificName": "Poecile palustris",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4KSC9",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Paridae",
+      "vernacularNames": {
+        "eng": "marsh tit",
+        "nld": "glanskop"
+      }
+    },
+    {
+      "scientificName": "Procyon lotor",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4MPXY",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Procyonidae",
+      "vernacularNames": {
+        "eng": "raccoon",
+        "nld": "gewone wasbeer"
+      }
+    },
+    {
+      "scientificName": "Prunella modularis",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4N8CC",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Prunellidae",
+      "vernacularNames": {
+        "eng": "dunnock",
+        "nld": "heggenmus"
+      }
+    },
+    {
+      "scientificName": "Pyrrhula pyrrhula",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4QW2H",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Fringillidae",
+      "vernacularNames": {
+        "eng": "Eurasian bullfinch",
+        "nld": "goudvink"
+      }
+    },
+    {
+      "scientificName": "Rattus norvegicus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4RM67",
+      "taxonRank": "species",
+      "order": "Rodentia",
+      "family": "Muridae",
+      "vernacularNames": {
+        "eng": "brown rat",
+        "nld": "bruine rat"
+      }
+    },
+    {
+      "scientificName": "Rodentia",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3Z5",
+      "taxonRank": "order",
+      "order": "Rodentia",
+      "family": "",
+      "vernacularNames": {
+        "eng": "rodents",
+        "nld": "knaagdieren"
+      }
+    },
+    {
+      "scientificName": "Sciurus vulgaris",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/79Y2K",
+      "taxonRank": "species",
+      "order": "Rodentia",
+      "family": "Sciuridae",
+      "vernacularNames": {
+        "eng": "red squirrel",
+        "nld": "rode eekhoorn"
+      }
+    },
+    {
+      "scientificName": "Scolopax rusticola",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/4VS4Z",
+      "taxonRank": "species",
+      "order": "Charadriiformes",
+      "family": "Scolopacidae",
+      "vernacularNames": {
+        "eng": "Eurasian woodcock",
+        "nld": "houtsnip"
+      }
+    },
+    {
+      "scientificName": "Sitta europaea",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/6Z52Z",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Sittidae",
+      "vernacularNames": {
+        "eng": "Eurasian nuthatch",
+        "nld": "boomklever"
+      }
+    },
+    {
+      "scientificName": "Strix aluco",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/532G9",
+      "taxonRank": "species",
+      "order": "Strigiformes",
+      "family": "Strigidae",
+      "vernacularNames": {
+        "eng": "tawny owl",
+        "nld": "bosuil"
+      }
+    },
+    {
+      "scientificName": "Sturnus vulgaris",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5384V",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Sturnidae",
+      "vernacularNames": {
+        "eng": "common starling",
+        "nld": "spreeuw"
+      }
+    },
+    {
+      "scientificName": "Sus scrofa",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/53HGR",
+      "taxonRank": "species",
+      "order": "Artiodactyla",
+      "family": "Suidae",
+      "vernacularNames": {
+        "eng": "wild boar",
+        "nld": "everzwijn"
+      }
+    },
+    {
+      "scientificName": "Sylvia atricapilla",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/53N3J",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Sylviidae",
+      "vernacularNames": {
+        "eng": "Eurasian blackcap",
+        "nld": "zwartkop"
+      }
+    },
+    {
+      "scientificName": "Syrmaticus reevesii",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/542SH",
+      "taxonRank": "species",
+      "order": "Galliformes",
+      "family": "Phasianidae",
+      "vernacularNames": {
+        "eng": "Reevess pheasant",
+        "nld": "koningsfazant"
+      }
+    },
+    {
+      "scientificName": "Troglodytes troglodytes",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/598TT",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Troglodytidae",
+      "vernacularNames": {
+        "eng": "Eurasian wren",
+        "nld": "winterkoning"
+      }
+    },
+    {
+      "scientificName": "Turdus iliacus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/59PLT",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "vernacularNames": {
+        "eng": "redwing",
+        "nld": "koperwiek"
+      }
+    },
+    {
+      "scientificName": "Turdus merula",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/7CYVX",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "vernacularNames": {
+        "eng": "common blackbird",
+        "nld": "merel"
+      }
+    },
+    {
+      "scientificName": "Turdus philomelos",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/59PMR",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "vernacularNames": {
+        "eng": "song thrush",
+        "nld": "zanglijster"
+      }
+    },
+    {
+      "scientificName": "Turdus pilaris",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/59PMS",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "vernacularNames": {
+        "eng": "fieldfare",
+        "nld": "kramsvogel"
+      }
+    },
+    {
+      "scientificName": "Turdus viscivorus",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/59PNF",
+      "taxonRank": "species",
+      "order": "Passeriformes",
+      "family": "Turdidae",
+      "vernacularNames": {
+        "eng": "mistle thrush",
+        "nld": "grote lijster"
+      }
+    },
+    {
+      "scientificName": "Tyto alba",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/59ZVQ",
+      "taxonRank": "species",
+      "order": "Strigiformes",
+      "family": "Tytonidae",
+      "vernacularNames": {
+        "eng": "western barn owl",
+        "nld": "kerkuil"
+      }
+    },
+    {
+      "scientificName": "Vulpes vulpes",
+      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/5BSG3",
+      "taxonRank": "species",
+      "order": "Carnivora",
+      "family": "Canidae",
+      "vernacularNames": {
+        "eng": "red fox",
+        "nld": "vos"
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "deployments",
+      "path": "deployments.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/deployments-table-schema.json"
+    },
+    {
+      "name": "media",
+      "path": "media.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/media-table-schema.json"
+    },
+    {
+      "name": "observations",
+      "path": "observations.csv",
+      "profile": "tabular-data-resource",
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "schema": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/observations-table-schema.json"
+    }
+  ],
+  "coordinatePrecision": 0.001,
+  "title": "GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)",
+  "licenses": [
+    {
+      "scope": "data",
+      "name": "CC0-1.0",
+      "path": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    {
+      "scope": "media",
+      "name": "CC-BY-4.0",
+      "path": "http://creativecommons.org/licenses/by/4.0/"
+    }
+  ],
+  "description": "<emphasis>GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)<\/emphasis> is a dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)<\/citetitle><\/ulink>. It contains camera trap data primarily collected to monitor the interaction between human activities (e.g. recreation, hunting) and the population dynamics as well as geographical and temporal distribution of roe deer (Capreolus capreolus) and wild boar (Sus scrofa) in natural areas south of Leuven. However, the dataset also includes all recorded observations of mammals and birds captured during the monitoring period. Observations later than 2024-09-05 are under embargo, unless they are observations of non-native species.\n\nMonitoring started in March 2018 and was conducted in close collaboration with hunters and members of local nature conservation associations active in the area. Several forest and nature areas south of Leuven were sampled, with the main forest complexes being Meerdaalwoud, Heverleebos, and Egenhovenbos. Additionally, camera traps were placed in the valleys of the Dijle, Laan, and Yse rivers. Each camera trap was installed facing north at a height of approximately 50 cm. No bait was used during the monitoring.\n\nThe sampling design was based on a grid of 250 x 250 meter cells. Camera locations were determined by randomly selecting a subset of these grid cells, and the coordinates used for placement corresponded to the center point of each selected cell. A total of 32 camera traps were used. These were relocated monthly, with each selected grid cell being monitored once during the winter and once during the summer. Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti<\/citetitle><\/ulink> for data annotation. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues<\/citetitle><\/ulink>.\n\nWe have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use<\/citetitle><\/ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be.\n\nThis dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
+  "keywords": ["camera traps", "ungulates", "roe deer", "wild boar", "wildlife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife", "Nationaal Park Brabantse Wouden"]
+}
