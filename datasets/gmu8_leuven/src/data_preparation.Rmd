@@ -1,0 +1,274 @@
+---
+title: "Prepare dataset for publication to GBIF"
+author: 
+- Sanne Govaert
+- Jim Casaer
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    number_sections: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Load libraries
+
+```{r prep packages}
+library(here)
+library(camtrapdp)
+library(dplyr)
+library(lubridate)
+library(EML)
+library(zip)
+library(rgbif)
+```
+
+## Read data
+
+```{r camtrap data}
+name_exportfolder <- "gmu8leuven-20250904102618"
+file <- here::here("datasets", "gmu8_leuven", "data", "raw", name_exportfolder, "datapackage.json")
+dataset <- camtrapdp::read_camtrapdp(file)
+```
+
+## Fix issues
+
+No issues to be fixed.
+
+## Prepare data
+
+### Round coordinates
+
+Round geospatial coordinates to 0.001 degrees:
+
+```{r round coordinates}
+dataset <-
+  dataset %>% 
+  camtrapdp::round_coordinates(digits = 3)
+```
+
+### Set embargo
+
+Set an embargo on the last year. All data before this date are kept, all data after removed (except for observations of non-native species).
+
+Construct a vector with the alien mammals and birds of Belgium:
+
+```{r}
+taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
+taxa_birds <- rgbif::name_usage(datasetKey = "e1c3be64-2799-4342-8312-49d076993132", limit = 99999)$data
+
+exotic_species <- c(
+  dplyr::pull(taxa_mammals, species),
+  dplyr::pull(taxa_birds, species)
+) %>% 
+  na.omit()
+```
+
+Remove exotic species that are also game species:
+
+```{r}
+game_species <- c("Branta canadensis", "Dama dama", "Phasianus colchicus")
+exotic_species <- exotic_species[!exotic_species %in% game_species]
+```
+
+Define embargo date:
+
+```{r}
+embargo_date <- Sys.Date() %m-% months(12) # Last one used: "2024-09-05"
+```
+
+Filter data:
+
+```{r}
+dataset <- 
+  dataset %>%
+  camtrapdp::filter_observations(
+    eventStart <= embargo_date
+    |
+    scientificName %in% exotic_species
+  )
+```
+
+Check which species are maintained after the embargo data:
+
+```{r}
+dataset %>%
+  camtrapdp::filter_observations(eventStart >= embargo_date) %>% 
+  camtrapdp::taxa()
+```
+
+### Hide images of dogs
+
+Hide the media of dogs for privacy reasons:
+
+```{r remove media of dogs}
+mediaID_dogs <- dataset %>% 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
+  camtrapdp::media() %>% 
+  dplyr::pull(mediaID)
+
+camtrapdp::media(dataset) <-
+  dataset %>%
+  camtrapdp::media() %>%
+  dplyr::mutate(
+    filePath = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      "private",
+      filePath,
+      missing = filePath
+    ),
+    filePublic = dplyr::if_else(
+      mediaID %in% mediaID_dogs,
+      FALSE,
+      filePublic,
+      missing = filePublic
+    )
+  )
+```
+
+### Remove out-of-bound values
+
+Camtrap DP does not accept negative values in bounding box values, so set those to `NA`:
+
+```{r}
+camtrapdp::observations(dataset) <- 
+  camtrapdp::observations(dataset) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
+    ) %>%
+  dplyr::mutate(
+    bboxX = dplyr::if_else(.data$bboxX > 1, NA, bboxX),
+    bboxY = dplyr::if_else(.data$bboxY > 1, NA, bboxY)
+    )
+```
+ 
+## Prepare metadata
+
+```{r add metadata}
+# Basic metadata
+dataset$title <- "GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)" 
+
+dataset$licenses <- list(
+  list(
+    scope = "data", 
+    name = "CC0-1.0", 
+    path = "https://creativecommons.org/publicdomain/zero/1.0/"
+    ), 
+  list(
+    scope = "media",
+    name = "CC-BY-4.0",
+    path = "http://creativecommons.org/licenses/by/4.0/"
+    )
+  )
+
+dataset$description <- paste(
+    paste0("<emphasis>GMU8_LEUVEN - Camera trap observations in natural habitats south of Leuven (Belgium)</emphasis> is a dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)</citetitle></ulink>. It contains camera trap data primarily collected to monitor the interaction between human activities (e.g. recreation, hunting) and the population dynamics as well as geographical and temporal distribution of roe deer (Capreolus capreolus) and wild boar (Sus scrofa) in natural areas south of Leuven. However, the dataset also includes all recorded observations of mammals and birds captured during the monitoring period. Observations later than ", embargo_date, " are under embargo, unless they are observations of non-native species.\n\nMonitoring started in March 2018 and was conducted in close collaboration with hunters and members of local nature conservation associations active in the area. Several forest and nature areas south of Leuven were sampled, with the main forest complexes being Meerdaalwoud, Heverleebos, and Egenhovenbos. Additionally, camera traps were placed in the valleys of the Dijle, Laan, and Yse rivers. Each camera trap was installed facing north at a height of approximately 50 cm. No bait was used during the monitoring."),
+  "The sampling design was based on a grid of 250 x 250 meter cells. Camera locations were determined by randomly selecting a subset of these grid cells, and the coordinates used for placement corresponded to the center point of each selected cell. A total of 32 camera traps were used. These were relocated monthly, with each selected grid cell being monitored once during the winter and once during the summer. Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti</citetitle></ulink> for data annotation. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>.",
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
+  sep = "\n\n"
+)
+
+
+dataset$contributors <- list(
+  list(
+    title = "Jim Casaer",
+    email = "jim.casaer@inbo.be",
+    path = "https://orcid.org/0000-0001-6788-5876",
+    role = "principalInvestigator",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Niko Boone",
+    email = "niko.boone@inbo.be",
+    path = " https://orcid.org/0000-0001-7334-2819 ",
+    role = "principalInvestigator",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Jan Vercammen",
+    email = "jan.vercammen@inbo.be",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Sander Devisscher",
+    email = "sander.devisscher@inbo.be",
+    path = " https://orcid.org/0000-0003-2015-5731",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Lynn Pallemaerts",
+    email = "lynn.pallemaerts@inbo.be",
+    path = "https://orcid.org/0000-0002-5034-5416",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Anneleen Rutten",
+    email = "anneleen.rutten@inbo.be",
+    path = "https://orcid.org/0000-0002-4025-5265",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Martijn Bollen",
+    email = "martijn.bollen@inbo.be",
+    path = "https://orcid.org/0000-0002-1621-6258",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Peter Desmet",
+    email = "peter.desmet@inbo.be",
+    path = "https://orcid.org/0000-0002-8442-8025",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Sanne Govaert",
+    email = "sanne.govaert@inbo.be",
+    path = "https://orcid.org/0000-0002-8939-1305",
+    role = "contributor",
+    organization = "Research Institute for Nature and Forest (INBO)"
+  ),
+  list(
+    title = "Research Institute for Nature and Forest (INBO)",
+    path = "https://www.inbo.be",
+    role = "rightsHolder"
+  )
+)
+
+# Fix mistake in image url
+dataset$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
+
+# Keywords
+dataset$keywords <- c("camera traps", "ungulates", "roe deer", "wild boar", "wildlife management", "alien species", "Flanders, Belgium", "mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife", "Nationaal Park Brabantse Wouden")
+
+# References
+dataset$references <- NULL
+
+# Add project path
+dataset$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
+```
+
+## Write dataset
+
+```{r write camtrap DP}
+dir_processed <- here::here("datasets", "gmu8_leuven", "data", "processed")
+camtrapdp::write_camtrapdp(dataset, dir_processed)
+
+# Zip files
+zipfile <-  paste0(dir_processed, "/datapackage.zip")
+files2zip <- c(
+  "datapackage.json",
+  "deployments.csv",
+  "media.csv",
+  "observations.csv"
+)
+zip::zip(zipfile, files = files2zip, root = dir_processed)
+```

@@ -70,6 +70,7 @@ dataset$licenses <- list(
     path = "http://creativecommons.org/licenses/by/4.0/"
     )
   )
+
 dataset$description <- paste(
   "MICA - Muskrat and coypu camera trap observations in Belgium, the Netherlands and Germany is a camera trap dataset published by the Research Institute for Nature and Forest (INBO). It contains camera trapping data collected for the LIFE project MICA, in which innovative techniques are tested for a more efficient control of muskrat and coypu populations, both invasive species. The camera traps were deployed using a standardized protocol (https://lifemica.eu/wp-content/uploads/2021/03/Protocol-camera-traps.pdf) at four locations in Flanders (26 cameras) and one in Germany (7 cameras) where the presence of muskrat and/or coypu was suspected. Images from the camera traps were uploaded to Agouti for annotation by project members. Bycatch species were also recorded. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues.",
   "This dataset was collected and processed with funding by the EU (LIFE18 NAT/NL/001047), Research Foundation - Flanders (LifeWatch) and NLBIF - Netherlands Biodiversity Information Facility.",
