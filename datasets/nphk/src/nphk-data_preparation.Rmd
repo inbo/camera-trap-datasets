@@ -17,6 +17,7 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```{r prep packages}
 library(here)
 library(camtrapdp)
+library(camtraptor)
 library(dplyr) 
 library(rgbif)
 library(lubridate)
@@ -27,7 +28,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "nphk-national-park-hoge-kempen-20250714132334"
+name_exportfolder <- "nphk-national-park-hoge-kempen-20251117110632"
 file <- here::here("datasets", "nphk", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
