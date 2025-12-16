@@ -156,7 +156,7 @@ nphk$contributors <- list(
   list(
     title = "Natalie Beenaerts",
     email = "natalie.beenaerts@uhasselt.be",
-    path =("https://orcid.org/0000-0001-5655-5943"),
+    path = "https://orcid.org/0000-0001-5655-5943",
     role = "principalInvestigator",
     organization = "CMK, Hasselt University"
     ),
@@ -189,21 +189,21 @@ nphk$contributors <- list(
   list(
     title = "Siebe Indestege",
     email = "siebe.indestege@uhasselt.be",
-    path =("https://orcid.org/0009-0001-0901-6338"),
+    path = "https://orcid.org/0009-0001-0901-6338",
     role = "contributor",
     organization = "CMK, Hasselt University"
     ),
   list(
     title = "Wim Kuypers",
     email = "wim.kuypers@uhasselt.be",
-    path =("https://orcid.org/0000-0001-7264-4073"),
+    path = "https://orcid.org/0000-0001-7264-4073",
     role = "contributor",,
     organization = "CMK, Hasselt University"
     ),
   list(
     title = "Imke Tomsin",
     email = "imke.tomsin@uhasselt.be",
-    path =("https://orcid.org/0009-0009-4894-1487"),
+    path = "https://orcid.org/0009-0009-4894-1487",
     role = "contributor",
     organization = "CMK, Hasselt University"
     ),
