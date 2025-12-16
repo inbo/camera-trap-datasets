@@ -137,22 +137,19 @@ nphk$licenses <- list(
     )
   )
 
-nphk$description <- c(
-  paste(
-    nphk$title, "is a dataset published by the Research Institute of Nature and Forest (INBO). It contains camera trap data primarily collected to monitor the interaction between human activities (e.g. recreation, hunting) and the population dynamics as well as geographical and temporal distribution of small and medium-sized mammals (and birds) in the NPHK. Observations of this dataset span a monitoring period of three years, i.e. May 2017 till April 2020. The data were collected through close colloration with Hasselt University. Most of the fieldwork was done by staff and students of Hasselt University." "We used a systematic-random sampling design. We divided the NPHK into 40 compartments of approximately 1.5 km2, and superimposed a grid of 300 m x 300 m on these compartments. Each month, we randomly selected one grid cell within each of the 40 compartments, and used their midpoints as the sampling locations to set up a single camera trap (Reconyx HC600 Hyperfire) at the nearest tree. 
-We did not use bait nor did we select for trails. We placed camera traps on a height of 50 cm facing north without altering the surroundings unless some vegetation was directly in front of the camera. Cameras were set up to the fastest trigger speed for a burst of ten pictures without delay between triggers and with time-lapse pictures every 12 hours to control for malfunction. We deployed camera traps for three consecutive weeks and relocated them in the fourth week, which resulted in 13 deployments per year." ,
+nphk$description <- paste(
+  paste0(
+    "<emphasis>", nphk$title, "</emphasis> is a dataset published the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)</citetitle></ulink>. It contains camera trap data primarily collected to monitor the interaction between human activities (e.g. recreation, hunting) and the population dynamics as well as geographical and temporal distribution of small and medium-sized mammals (and birds) in the NPHK. Observations of this dataset span a monitoring period of three years, i.e. May 2017 till April 2020. The data were collected through close colloration with Hasselt University. Most of the fieldwork was done by staff and students of Hasselt University.",
+    
+    "We used a systematic-random sampling design. We divided the NPHK into 40 compartments of approximately 1.5 km², and superimposed a grid of 300 m x 300 m on these compartments. Each month, we randomly selected one grid cell within each of the 40 compartments, and used their midpoints as the sampling locations to set up a single camera trap (Reconyx HC600 Hyperfire) at the nearest tree. 
+We did not use bait nor did we select for trails. We placed camera traps on a height of 50 cm facing north without altering the surroundings, unless some vegetation was directly in front of the camera. Cameras were set up to the fastest trigger speed for a burst of ten pictures without delay between triggers and with time-lapse pictures every 12 hours to control for malfunction. We deployed camera traps for three consecutive weeks and relocated them in the fourth week, which resulted in 13 deployments per year." ,
 
-"Images from the camera traps were uploaded to Agouti for data annotation. Issues with the dataset can be reported at https://github.com/inbo/camera-trap-datasets/issues.",
+"Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti</citetitle></ulink> for data annotation. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>.",
 
-    "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (https://www.inbo.be/en/norms-data-use) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be., 
-
-Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be or Natalie.beenaerts@uhasselt.be",
+    "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be or Natalie.beenaerts@uhasselt.be",
 
     "This dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
-
- "Data have been standardized to Darwin Core using the camtrapdp R package and only include observations (and associated media) of animals. Excluded are records that document blank or unclassified media, vehicles and observations of humans.",
-
-    sep = "\n"
+    sep = "\n\n"
   )
 )
 
