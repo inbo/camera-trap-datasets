@@ -18,7 +18,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```{r prep packages}
 library(here)
 library(camtrapdp)
-library(camtraptor)
 library(dplyr) 
 library(rgbif)
 library(lubridate)
