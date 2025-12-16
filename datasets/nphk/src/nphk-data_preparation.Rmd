@@ -122,7 +122,7 @@ Adjust:
 
 ```{r add metadata}
 # Basic metadata
-nphk$title <- "2017_20NPHK –Camera trap observations from a structured network in National Park Hoge Kempen (Belgium)"
+nphk$title <- "2017_20NPHK – Camera trap observations from a structured network in National Park Hoge Kempen (Belgium)"
 
 nphk$licenses <- list(
   list(
