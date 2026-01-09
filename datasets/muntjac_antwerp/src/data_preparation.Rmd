@@ -430,6 +430,9 @@ dataset$references <- c(
 
 # Add project path
 dataset$project$path <- "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c"
+
+# Add project acronym
+dataset$project$acronym <- "MUNTJAC_ANTWERP"
 ```
 
 ## Write dataset
