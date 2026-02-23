@@ -64,6 +64,16 @@ VOR20b | 2024-04 -- 2024-05 | Prematurely failed.
 VOR22b | 2024-04 -- 2024-05 | Prematurely failed.
 INS12 | 2024-04 -- 2024-05 | Prematurely failed.
 INS14 | 2024-04 -- 2024-05 | Prematurely failed.
+VOR18b | 2024-11 -- 2025-01 | Prematurely failed.
+INS05 | 2024-11 -- 2025-01 | Prematurely failed.
+INS03 | 2025-01 -- 2025-02 | Defective. No sequence obtained.
+VOR07b | 2025-02 -- 2025-04 | Defective. No sequence obtained.
+INS02 | 2025-02 -- 2025-04 | Prematurely failed (just short of pick-up).
+INS03 | 2025-02 -- 2025-04 | Prematurely failed (just short of pick-up).
+INS07 | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+VOR05b | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+VOR22b | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+INS06 | 2025-04 -- 2025-05 | Prematurely failed (just short of pick-up).
 
 ### Slight image abnormalities
 
@@ -75,6 +85,7 @@ VOR16a | 2022-01 -- 2022-02 | Temporary branch for the camera.
 VOR16a | 2022-02 -- 2022-03 | Temporary branch for the camera.
 VOR16a | 2022-05 -- 2022-05 | Slight shift.
 VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
+VOR06b | 2024-11 -- 2025-01 | Small branch for the camera.
 
 ### Other issues
 
@@ -85,6 +96,7 @@ VOR15a -- VOR18a | 2021 - 2011 | Not set up to take a photo at noon and midnight
 BHN13 | 2022-05-03 -- 2022-05-31 | (1) image not identical to deployments before the storm; (2) image not stable during deployment. | Ignored. Accepted as noise.
 VOR18a | 2022-05-03 -- 2022-05-31 | Failed prematurely on 2022-05-07. | No action required.
 INS11 | 2024-04 -- 2024-05 | Problematic in various aspects. (1) Set to daylight saving time instead of standard time (but the correction has already been made in Agouti); (2) Sequence creation is incorrect (sequences of 10 are often split). | Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
+VOR10b | 2024-12 -- 2025-02 | Many blanks, oddly enough at particular times (XX:03:01, XX:33:01...). Nonetheless, movement is detected. | No action required.
 
 ## Fix issues
 
