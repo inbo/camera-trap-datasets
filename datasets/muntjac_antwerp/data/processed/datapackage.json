@@ -74,7 +74,7 @@
     "captureMethod": ["activityDetection", "timeLapse"],
     "individualAnimals": false,
     "observationLevel": ["event", "media"],
-    "path": "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c",
+    "path": "https://agouti.eu/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c",
     "acronym": "MUNTJAC_ANTWERP"
   },
   "spatial": {
