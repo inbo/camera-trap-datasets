@@ -41,8 +41,8 @@ These issues need to be accepted as they are.
 Fix `VOR15b -- 2023-04-06 -- 2023-05-12` which is a sequence from a muntjac, not a calibration. Should be fixed in Agouti, but not yet done/possible.
 
 ```{r issue VOR15b -- 2023-04-06 -- 2023-05-12}
-camtrapdp::deployments(dataset) %>%
-  dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
+camtrapdp::deployments(dataset) |>
+  dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") |> 
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
 
@@ -106,11 +106,11 @@ Issue: 5 observations have been assigned to the wrong deployment. They belong to
 
 ```{r show missassigned observations}
 misassigned <- 
-  dataset %>%
+  dataset |>
   camtrapdp::filter_observations(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") 
 
-misassigned %>% 
-  camtrapdp::observations() %>% 
+misassigned |> 
+  camtrapdp::observations() |> 
   dplyr::select(eventID, deploymentID, observationComments, eventEnd)
 ```
 
@@ -119,7 +119,7 @@ correct_depID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
 # Correct deploymentID in observations and update observationComment
 camtrapdp::observations(dataset) <-
-  camtrapdp::observations(dataset) %>%
+  camtrapdp::observations(dataset) |>
   dplyr::mutate(
     deploymentID = dplyr::if_else(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
@@ -136,14 +136,14 @@ camtrapdp::observations(dataset) <-
 
 # Extract eventIDs of media related to misassigned observations
 eventID_misassigned <-
-  misassigned %>% 
-  camtrapdp::media() %>% 
-  dplyr::pull(eventID) %>% 
+  misassigned |> 
+  camtrapdp::media() |> 
+  dplyr::pull(eventID) |> 
   unique()
 
 # Correct deploymentID in these media
 camtrapdp::media(dataset) <-
-  camtrapdp::media(dataset) %>% 
+  camtrapdp::media(dataset) |> 
   dplyr::mutate(
     deploymentID = dplyr::if_else(
       eventID %in% eventID_misassigned,
@@ -154,12 +154,12 @@ camtrapdp::media(dataset) <-
   )
 
 # Inspect fix
-camtrapdp::observations(dataset) %>%
-  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+camtrapdp::observations(dataset) |>
+  dplyr::filter(eventID %in% eventID_misassigned) |> 
   dplyr::select(eventID, deploymentID, observationComments)
 
-camtrapdp::media(dataset) %>% 
-  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+camtrapdp::media(dataset) |> 
+  dplyr::filter(eventID %in% eventID_misassigned) |> 
   dplyr::select(eventID, deploymentID)
 ```
 
@@ -175,7 +175,7 @@ new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
 # Mutate deploymentEnd
 camtrapdp::deployments(dataset) <-
-  camtrapdp::deployments(dataset) %>%
+  camtrapdp::deployments(dataset) |>
   dplyr::mutate(
     deploymentEnd =
       as.POSIXct(
@@ -189,7 +189,7 @@ camtrapdp::deployments(dataset) <-
 
 # Identify observations and media to remove
 to_remove <-
-  dataset %>%
+  dataset |>
   camtrapdp::filter_observations(deploymentID == deploymentID_storm, eventEnd >= new_deploymentEnd)
   
 observations_to_remove <- observations(to_remove)
@@ -197,33 +197,33 @@ media_to_remove <- media(to_remove)
 
 # Update observations and media
 observations(dataset) <- 
-  observations(dataset) %>% 
+  observations(dataset) |> 
   dplyr::anti_join(observations_to_remove)
 
 media(dataset) <-
-  media(dataset) %>% 
+  media(dataset) |> 
   dplyr::anti_join(media_to_remove)
 
 # Update metadata
-dataset <- dataset %>% 
-  camtrapdp:::update_temporal() %>% 
+dataset <- dataset |> 
+  camtrapdp:::update_temporal() |> 
   camtrapdp:::update_taxonomic()
 ```
 
 ```{r check fix BHN13 -- 2022-02--2022-03}
 # Inspect deployment
-camtrapdp::deployments(dataset) %>%
-  dplyr::filter(deploymentID == deploymentID_storm) %>%
+camtrapdp::deployments(dataset) |>
+  dplyr::filter(deploymentID == deploymentID_storm) |>
   dplyr::select(deploymentID, deploymentStart, deploymentEnd)
 
 # Inspect observations
-camtrapdp::observations(dataset) %>% 
-  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+camtrapdp::observations(dataset) |> 
+  dplyr::filter(deploymentID == deploymentID_storm) |> 
   dplyr::summarise(last_eventEnd = max(eventEnd))
 
 # Inspect media
-camtrapdp::media(dataset) %>% 
-  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+camtrapdp::media(dataset) |> 
+  dplyr::filter(deploymentID == deploymentID_storm) |> 
   dplyr::summarise(last_timestamp = max(timestamp))
 
 # Inspect metadata
@@ -246,7 +246,7 @@ deployment_ids <- c(
 
 duration <- lubridate::as.duration(lubridate::interval(current, new))
 purrr::map(deployment_ids, ~ {
-  dataset <<- dataset %>%
+  dataset <<- dataset |>
     camtrapdp::shift_time(
       deployment_id = .x,
       duration = duration
@@ -268,7 +268,7 @@ deployment_ids <- c(
 
 duration <- lubridate::as.duration(lubridate::interval(current, new))
 purrr::map(deployment_ids, ~ {
-  dataset <<- dataset %>%
+  dataset <<- dataset |>
     camtrapdp::shift_time(
       deployment_id = .x,
       duration = duration
@@ -296,7 +296,7 @@ deploymentID_to_remove <- c(
 )
 
 dataset <-
-  dataset %>% 
+  dataset |> 
   camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
 ```
 
@@ -306,21 +306,21 @@ Round geospatial coordinates to 0.001 degrees:
 
 ```{r round coordinates}
 dataset <-
-  dataset %>% 
+  dataset |> 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
 Hide the media of dogs for privacy reasons.
 
 ```{r remove media of dogs}
-mediaID_dogs <- dataset %>% 
-  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
-  camtrapdp::media() %>% 
+mediaID_dogs <- dataset |> 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) |> 
+  camtrapdp::media() |> 
   dplyr::pull(mediaID)
 
 camtrapdp::media(dataset) <-
-  dataset %>%
-  camtrapdp::media() %>%
+  dataset |>
+  camtrapdp::media() |>
   dplyr::mutate(
     filePath = dplyr::if_else(
       mediaID %in% mediaID_dogs,
@@ -341,7 +341,7 @@ Camtrap DP does not accept negative values in bounding box values, so those to `
 
 ```{r}
 camtrapdp::observations(dataset) <- 
-  camtrapdp::observations(dataset) %>%
+  camtrapdp::observations(dataset) |>
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
