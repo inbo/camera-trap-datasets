@@ -27,7 +27,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjacantwerp-20241209131903"
+name_exportfolder <- "muntjacantwerp-20260224145209"
 file <- here::here("datasets", "muntjac_antwerp", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
@@ -41,8 +41,8 @@ These issues need to be accepted as they are.
 Fix `VOR15b -- 2023-04-06 -- 2023-05-12` which is a sequence from a muntjac, not a calibration. Should be fixed in Agouti, but not yet done/possible.
 
 ```{r issue VOR15b -- 2023-04-06 -- 2023-05-12}
-camtrapdp::deployments(dataset) %>%
-  dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") %>% 
+camtrapdp::deployments(dataset) |>
+  dplyr::filter(deploymentID == "0427b248-2e3d-4028-b3ce-dc8f5aefbe0c") |> 
   dplyr::select(deploymentID, locationName, deploymentStart, deploymentEnd)
 ```
 
@@ -64,6 +64,16 @@ VOR20b | 2024-04 -- 2024-05 | Prematurely failed.
 VOR22b | 2024-04 -- 2024-05 | Prematurely failed.
 INS12 | 2024-04 -- 2024-05 | Prematurely failed.
 INS14 | 2024-04 -- 2024-05 | Prematurely failed.
+VOR18b | 2024-11 -- 2025-01 | Prematurely failed.
+INS05 | 2024-11 -- 2025-01 | Prematurely failed.
+INS03 | 2025-01 -- 2025-02 | Defective. No sequence obtained.
+VOR07b | 2025-02 -- 2025-04 | Defective. No sequence obtained.
+INS02 | 2025-02 -- 2025-04 | Prematurely failed (just short of pick-up).
+INS03 | 2025-02 -- 2025-04 | Prematurely failed (just short of pick-up).
+INS07 | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+VOR05b | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+VOR22b | 2025-04 -- 2025-05 | Defective. No sequence obtained.
+INS06 | 2025-04 -- 2025-05 | Prematurely failed (just short of pick-up).
 
 ### Slight image abnormalities
 
@@ -75,6 +85,7 @@ VOR16a | 2022-01 -- 2022-02 | Temporary branch for the camera.
 VOR16a | 2022-02 -- 2022-03 | Temporary branch for the camera.
 VOR16a | 2022-05 -- 2022-05 | Slight shift.
 VOR17a | 2021 -- 2022 | Slight shifts throughout the deployment.
+VOR06b | 2024-11 -- 2025-01 | Small branch for the camera.
 
 ### Other issues
 
@@ -85,6 +96,7 @@ VOR15a -- VOR18a | 2021 - 2011 | Not set up to take a photo at noon and midnight
 BHN13 | 2022-05-03 -- 2022-05-31 | (1) image not identical to deployments before the storm; (2) image not stable during deployment. | Ignored. Accepted as noise.
 VOR18a | 2022-05-03 -- 2022-05-31 | Failed prematurely on 2022-05-07. | No action required.
 INS11 | 2024-04 -- 2024-05 | Problematic in various aspects. (1) Set to daylight saving time instead of standard time (but the correction has already been made in Agouti); (2) Sequence creation is incorrect (sequences of 10 are often split). | Marked as 'invalid' in Agouti. Could theoretically be cleaned up (time-consuming).
+VOR10b | 2024-12 -- 2025-02 | Many blanks, oddly enough at particular times (XX:03:01, XX:33:01...). Nonetheless, movement is detected. | No action required.
 
 ## Fix issues
 
@@ -94,11 +106,11 @@ Issue: 5 observations have been assigned to the wrong deployment. They belong to
 
 ```{r show missassigned observations}
 misassigned <- 
-  dataset %>%
+  dataset |>
   camtrapdp::filter_observations(observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"") 
 
-misassigned %>% 
-  camtrapdp::observations() %>% 
+misassigned |> 
+  camtrapdp::observations() |> 
   dplyr::select(eventID, deploymentID, observationComments, eventEnd)
 ```
 
@@ -107,7 +119,7 @@ correct_depID <- "38214914-4c0f-485c-91e7-d080d4c5cd0e"
 
 # Correct deploymentID in observations and update observationComment
 camtrapdp::observations(dataset) <-
-  camtrapdp::observations(dataset) %>%
+  camtrapdp::observations(dataset) |>
   dplyr::mutate(
     deploymentID = dplyr::if_else(
       observationComments == "MISASSIGN_CAM=\"Vordenstein_8\"",
@@ -124,14 +136,14 @@ camtrapdp::observations(dataset) <-
 
 # Extract eventIDs of media related to misassigned observations
 eventID_misassigned <-
-  misassigned %>% 
-  camtrapdp::media() %>% 
-  dplyr::pull(eventID) %>% 
+  misassigned |> 
+  camtrapdp::media() |> 
+  dplyr::pull(eventID) |> 
   unique()
 
 # Correct deploymentID in these media
 camtrapdp::media(dataset) <-
-  camtrapdp::media(dataset) %>% 
+  camtrapdp::media(dataset) |> 
   dplyr::mutate(
     deploymentID = dplyr::if_else(
       eventID %in% eventID_misassigned,
@@ -142,12 +154,12 @@ camtrapdp::media(dataset) <-
   )
 
 # Inspect fix
-camtrapdp::observations(dataset) %>%
-  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+camtrapdp::observations(dataset) |>
+  dplyr::filter(eventID %in% eventID_misassigned) |> 
   dplyr::select(eventID, deploymentID, observationComments)
 
-camtrapdp::media(dataset) %>% 
-  dplyr::filter(eventID %in% eventID_misassigned) %>% 
+camtrapdp::media(dataset) |> 
+  dplyr::filter(eventID %in% eventID_misassigned) |> 
   dplyr::select(eventID, deploymentID)
 ```
 
@@ -163,7 +175,7 @@ new_deploymentEnd <- as.POSIXct("2022-02-18 17:31:00", tz = "Europe/Brussels")
 
 # Mutate deploymentEnd
 camtrapdp::deployments(dataset) <-
-  camtrapdp::deployments(dataset) %>%
+  camtrapdp::deployments(dataset) |>
   dplyr::mutate(
     deploymentEnd =
       as.POSIXct(
@@ -177,7 +189,7 @@ camtrapdp::deployments(dataset) <-
 
 # Identify observations and media to remove
 to_remove <-
-  dataset %>%
+  dataset |>
   camtrapdp::filter_observations(deploymentID == deploymentID_storm, eventEnd >= new_deploymentEnd)
   
 observations_to_remove <- observations(to_remove)
@@ -185,33 +197,33 @@ media_to_remove <- media(to_remove)
 
 # Update observations and media
 observations(dataset) <- 
-  observations(dataset) %>% 
+  observations(dataset) |> 
   dplyr::anti_join(observations_to_remove)
 
 media(dataset) <-
-  media(dataset) %>% 
+  media(dataset) |> 
   dplyr::anti_join(media_to_remove)
 
 # Update metadata
-dataset <- dataset %>% 
-  camtrapdp:::update_temporal() %>% 
+dataset <- dataset |> 
+  camtrapdp:::update_temporal() |> 
   camtrapdp:::update_taxonomic()
 ```
 
 ```{r check fix BHN13 -- 2022-02--2022-03}
 # Inspect deployment
-camtrapdp::deployments(dataset) %>%
-  dplyr::filter(deploymentID == deploymentID_storm) %>%
+camtrapdp::deployments(dataset) |>
+  dplyr::filter(deploymentID == deploymentID_storm) |>
   dplyr::select(deploymentID, deploymentStart, deploymentEnd)
 
 # Inspect observations
-camtrapdp::observations(dataset) %>% 
-  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+camtrapdp::observations(dataset) |> 
+  dplyr::filter(deploymentID == deploymentID_storm) |> 
   dplyr::summarise(last_eventEnd = max(eventEnd))
 
 # Inspect media
-camtrapdp::media(dataset) %>% 
-  dplyr::filter(deploymentID == deploymentID_storm) %>% 
+camtrapdp::media(dataset) |> 
+  dplyr::filter(deploymentID == deploymentID_storm) |> 
   dplyr::summarise(last_timestamp = max(timestamp))
 
 # Inspect metadata
@@ -234,7 +246,7 @@ deployment_ids <- c(
 
 duration <- lubridate::as.duration(lubridate::interval(current, new))
 purrr::map(deployment_ids, ~ {
-  dataset <<- dataset %>%
+  dataset <<- dataset |>
     camtrapdp::shift_time(
       deployment_id = .x,
       duration = duration
@@ -256,7 +268,7 @@ deployment_ids <- c(
 
 duration <- lubridate::as.duration(lubridate::interval(current, new))
 purrr::map(deployment_ids, ~ {
-  dataset <<- dataset %>%
+  dataset <<- dataset |>
     camtrapdp::shift_time(
       deployment_id = .x,
       duration = duration
@@ -271,6 +283,7 @@ DeploymentID | LocationName | Time range | Issue
 "7a85b0ea-6ed8-4d1e-801f-78082cb660ec" | BHN12 | 2022-02--2022-03 | The position of the camera has shifted significantly. It is now pointing mostly upwards, which is problematic.
 "91ae688c-818c-4e74-8c02-8bc2f8c842be" | VOR08b | 2023-11--2024-01 | A large branch fell in front of the camera; it was there from 2023-11-27 to 2024-01-10. This is almost the entire sequence, so it would be easiest to remove it completely.
 "72633b07-b39c-4827-ae35-ffcc1cb02607 | VOR06b | 2024-02--2024-04 | Although there were recordings up until the last readout, the clock has stopped since 2024-03-14. Problematic. Pros and cons. → It would be wisest to remove it completely (?)
+"44db5bbe-2f78-420b-8eb7-1bf462196b47" | INS07 | 2025-02 -- 2025-04 | Although there were recordings up until readout, clock has stopped since 2025-02-21. Problematic. Pros and cons. Seems wisest to remove it completely.
 
 Remove these deployments:
 
@@ -278,11 +291,12 @@ Remove these deployments:
 deploymentID_to_remove <- c(
   "7a85b0ea-6ed8-4d1e-801f-78082cb660ec",
   "91ae688c-818c-4e74-8c02-8bc2f8c842be",
-  "72633b07-b39c-4827-ae35-ffcc1cb02607"
+  "72633b07-b39c-4827-ae35-ffcc1cb02607",
+  "44db5bbe-2f78-420b-8eb7-1bf462196b47"
 )
 
 dataset <-
-  dataset %>% 
+  dataset |> 
   camtrapdp::filter_deployments(!deploymentID %in% deploymentID_to_remove)
 ```
 
@@ -292,21 +306,21 @@ Round geospatial coordinates to 0.001 degrees:
 
 ```{r round coordinates}
 dataset <-
-  dataset %>% 
+  dataset |> 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
 Hide the media of dogs for privacy reasons.
 
 ```{r remove media of dogs}
-mediaID_dogs <- dataset %>% 
-  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) %>% 
-  camtrapdp::media() %>% 
+mediaID_dogs <- dataset |> 
+  camtrapdp::filter_observations(scientificName %in% c("Canis lupus familiaris")) |> 
+  camtrapdp::media() |> 
   dplyr::pull(mediaID)
 
 camtrapdp::media(dataset) <-
-  dataset %>%
-  camtrapdp::media() %>%
+  dataset |>
+  camtrapdp::media() |>
   dplyr::mutate(
     filePath = dplyr::if_else(
       mediaID %in% mediaID_dogs,
@@ -327,7 +341,7 @@ Camtrap DP does not accept negative values in bounding box values, so those to `
 
 ```{r}
 camtrapdp::observations(dataset) <- 
-  camtrapdp::observations(dataset) %>%
+  camtrapdp::observations(dataset) |>
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
@@ -353,10 +367,11 @@ dataset$licenses <- list(
     )
   )
 
-dataset$description <- c(
-  paste0("<em>", dataset$title, "</em> is a camera trap dataset published by the <a href=\"https://www.inbo.be/en\">Research Institute for Nature and Forest (INBO)</a>. It contains camera trapping data collected for the monitoring of Chinese muntjac (<i>Muntiacus reevesi</i>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <a href=\"https://www.agouti.eu\">Agouti</a> for data annotation. All observations of muntjac were double-checked in the framework of further analyses. Issues with the dataset can be reported at <a href=\"https://github.com/inbo/camera-trap-datasets/issues\">https://github.com/inbo/camera-trap-datasets/issues</a>."),
-  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<a href=\"https://www.inbo.be/en/norms-data-use\">https://www.inbo.be/en/norms-data-use</a>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
-  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch."
+dataset$description <- paste(
+  paste0("<emphasis>", dataset$title, "</emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)</citetitle></ulink>. It contains camera trapping data collected for the monitoring of Chinese muntjac (<emphasis>Muntiacus reevesi</emphasis>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti</citetitle></ulink> for data annotation. All observations of muntjac were double-checked in the framework of further analyses. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>."),
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch.",
+  "\n"
 )
 
 dataset$contributors <-
@@ -429,7 +444,10 @@ dataset$references <- c(
 )
 
 # Add project path
-dataset$project$path <- "https://agouti.eu/#/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c"
+dataset$project$path <- "https://agouti.eu/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c"
+
+# Add project acronym
+dataset$project$acronym <- "MUNTJAC_ANTWERP"
 ```
 
 ## Write dataset
