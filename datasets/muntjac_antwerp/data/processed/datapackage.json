@@ -1,8 +1,8 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
-  "name": "muntjacantwerp-20260218112322",
-  "id": "edc3849a-ed79-4f67-8602-37e35f57a690",
-  "created": "2026-02-18T11:23:22Z",
+  "name": "muntjacantwerp-20260224145209",
+  "id": "bef073ae-4d52-4673-8963-37712942fa41",
+  "created": "2026-02-24T14:52:09Z",
   "contributors": [
     {
       "title": "Bram D‘hondt",
@@ -70,6 +70,7 @@
   "project": {
     "id": "52a7408e-b49a-4b80-a427-d1b44b31ac5c",
     "title": "MUNTJAC_ANTWERP",
+    "description": "MUNTJAC_ANTWERP investigates the occurrence and ecology of Chinese muntjac (Muntiacus reevesi) in forested areas around Antwerp (Belgium). The project is coordinated by the Research Institute for Nature and Forest (INBO) in close collaboration with the Agency for Nature and Forest (ANB). Fieldwork is centered on Park Vordenstein and its surroundings, where muntjac have been present since approximately 2012.",
     "samplingDesign": "targeted",
     "captureMethod": ["activityDetection", "timeLapse"],
     "individualAnimals": false,
