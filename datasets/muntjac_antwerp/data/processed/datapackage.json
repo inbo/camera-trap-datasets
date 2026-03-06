@@ -1,8 +1,8 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
-  "name": "muntjacantwerp-20260224145209",
-  "id": "bef073ae-4d52-4673-8963-37712942fa41",
-  "created": "2026-02-24T14:52:09Z",
+  "name": "muntjacantwerp-20260305150639",
+  "id": "2d9b3b35-2b5c-4b46-99a6-158fd5923c06",
+  "created": "2026-03-05T15:06:39Z",
   "contributors": [
     {
       "title": "Bram D‘hondt",
@@ -620,16 +620,6 @@
       "vernacularNames": {
         "eng": "red fox",
         "nld": "vos"
-      }
-    },
-    {
-      "scientificName": "canis familiaris",
-      "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/3d80f1d6-b1df-4966-9ff4-94053c7a902a",
-      "taxonRank": "species",
-      "order": "carnivora",
-      "family": "canidae",
-      "vernacularNames": {
-        "eng": "domestic dog"
       }
     }
   ],
