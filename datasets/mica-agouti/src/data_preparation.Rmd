@@ -313,6 +313,9 @@ dataset$keywords <- c("muskrat", "invasive alien species", "coypu", "public awar
 # Project path
 dataset$project$path <- "https://lifemica.eu"
 
+# Add project acronym
+dataset$project$acronym <- "MICA"
+
 # Fix observationLevel (bug from camtrapdp, it must be an array, not a string)
 dataset$project$observationLevel <- list(c("event"))
 ```
