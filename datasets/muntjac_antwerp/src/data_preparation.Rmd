@@ -27,7 +27,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjacantwerp-20260224145209"
+name_exportfolder <- "muntjacantwerp-20260305150639"
 file <- here::here("datasets", "muntjac_antwerp", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
