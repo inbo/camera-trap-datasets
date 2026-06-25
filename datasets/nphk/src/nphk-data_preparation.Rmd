@@ -231,6 +231,9 @@ nphk$references <- NULL
 
 # Add project path
 nphk$project$path <- "https://agouti.eu/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
+
+# Add project acronym
+dataset$project$acronym <- "NPHK"
 ```
 
 
