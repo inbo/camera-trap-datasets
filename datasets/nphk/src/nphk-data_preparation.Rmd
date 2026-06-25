@@ -41,7 +41,7 @@ data <- camtrapdp::read_camtrapdp(file)
 
 ```{r round coordinates}
 rounded_data <-
-  data %>% 
+  data |> 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
@@ -58,7 +58,7 @@ taxa_birds <- rgbif::name_usage(datasetKey = "e1c3be64-2799-4342-8312-49d0769931
 exotic_species <- c(
   dplyr::pull(taxa_mammals, species),
   dplyr::pull(taxa_birds, species)
-) %>% 
+) |> 
   na.omit()
 ```
 
@@ -67,7 +67,7 @@ exotic_species <- c(
 today <- Sys.Date()
 embargo_date <- today %m-% months(12)
 embargo_data <- 
-  data %>% 
+  data |> 
   camtrapdp::filter_observations(
     eventStart <= embargo_date
     |
@@ -78,8 +78,8 @@ embargo_data <-
 Check which species are maintained after the embargo data:
 
 ```{r}
-embargo_data %>%
-  camtrapdp::filter_observations(eventStart >= embargo_date) %>% 
+embargo_data |>
+  camtrapdp::filter_observations(eventStart >= embargo_date) |> 
   camtrapdp::taxa()
 ```
 
@@ -90,11 +90,11 @@ GBIF does not accept negative values in bounding box values, so set negative val
 ``` {r}
 nphk <- embargo_data
 camtrapdp::observations(nphk) <- 
-  camtrapdp::observations(nphk) %>%
+  camtrapdp::observations(nphk) |>
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX < 0, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY < 0, NA, bboxY)
-    ) %>%
+    ) |>
   dplyr::mutate(
     bboxX = dplyr::if_else(.data$bboxX > 1, NA, bboxX),
     bboxY = dplyr::if_else(.data$bboxY > 1, NA, bboxY)
