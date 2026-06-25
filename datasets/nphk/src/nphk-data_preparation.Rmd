@@ -28,7 +28,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "nphk-national-park-hoge-kempen-20251117110632"
+name_exportfolder <- "nphk-national-park-hoge-kempen-20260624061432"
 file <- here::here("datasets", "nphk", "data", "raw", name_exportfolder, "datapackage.json")
 data <- camtrapdp::read_camtrapdp(file)
 ```
@@ -43,7 +43,6 @@ data <- camtrapdp::read_camtrapdp(file)
 rounded_data <-
   data %>% 
   camtrapdp::round_coordinates(digits = 3)
-# currently not working because of invalid coordinates in the data
 ```
 
 ### Set embargo
