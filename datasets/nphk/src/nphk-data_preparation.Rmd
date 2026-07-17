@@ -203,7 +203,7 @@ list(
     title = "Wim Kuypers",
     email = "wim.kuypers@uhasselt.be",
     path = "https://orcid.org/0000-0001-7264-4073",
-    role = "contributor",,
+    role = "contributor",
     organization = "CMK, Hasselt University"
     ),
   list(
@@ -239,7 +239,7 @@ nphk$references <- NULL
 nphk$project$path <- "https://agouti.eu/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
 
 # Add project acronym
-dataset$project$acronym <- "NPHK"
+nphk$project$acronym <- "NPHK"
 ```
 
 
