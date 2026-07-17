@@ -82,7 +82,7 @@ Adjust:
 
 ```{r add metadata}
 # Basic metadata
-nphk$title <- "2017_20NPHK – Camera trap observations from a structured network in National Park Hoge Kempen (Belgium)"
+nphk$title <- "NPHK1 - Camera trap observations from a structured network in National Park Hoge Kempen, Belgium (up to April 2020)"
 
 nphk$licenses <- list(
   list(
@@ -201,7 +201,7 @@ nphk$references <- NULL
 nphk$project$path <- "https://agouti.eu/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
 
 # Add project acronym
-nphk$project$acronym <- "NPHK"
+nphk$project$acronym <- "NPHK1"
 ```
 
 
