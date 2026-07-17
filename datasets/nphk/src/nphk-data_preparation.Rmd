@@ -45,44 +45,6 @@ rounded_data <-
   camtrapdp::round_coordinates(digits = 3)
 ```
 
-### Set embargo
-
-Set an embargo on the last year. Before this date, all data is public. After this date, only observations of non-native species are kept.
-
-First, construct a vector with the alien mammals and birds of Belgium.
-
-```{r}
-taxa_mammals <- rgbif::name_usage(datasetKey = "9a52d8bf-864a-4abb-95ba-319c4edfca8d", limit = 99999)$data
-taxa_birds <- rgbif::name_usage(datasetKey = "e1c3be64-2799-4342-8312-49d076993132", limit = 99999)$data
-
-exotic_species <- c(
-  dplyr::pull(taxa_mammals, species),
-  dplyr::pull(taxa_birds, species)
-) |> 
-  na.omit()
-```
-
-
-```{r}
-today <- Sys.Date()
-embargo_date <- today %m-% months(12)
-embargo_data <- 
-  data |> 
-  camtrapdp::filter_observations(
-    eventStart <= embargo_date
-    |
-    scientificName %in% exotic_species
-  )
-```
-
-Check which species are maintained after the embargo data:
-
-```{r}
-embargo_data |>
-  camtrapdp::filter_observations(eventStart >= embargo_date) |> 
-  camtrapdp::taxa()
-```
-
 ## Make GBIF-proof
 
 GBIF does not accept negative values in bounding box values, so set negative values to NA.
