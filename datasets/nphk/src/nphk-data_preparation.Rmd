@@ -50,7 +50,7 @@ rounded_data <-
 GBIF does not accept negative values in bounding box values, so set negative values to NA.
 
 ``` {r}
-nphk <- embargo_data
+nphk <- rounded_data
 camtrapdp::observations(nphk) <- 
   camtrapdp::observations(nphk) |>
   dplyr::mutate(
