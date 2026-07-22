@@ -213,7 +213,7 @@ nphk$references <- NULL
 nphk$project$path <- "https://agouti.eu/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
 
 # Add project acronym
-nphk$project$acronym <- "NPHK1"
+nphk$project$acronym <- "NPHK"
 ```
 
 
