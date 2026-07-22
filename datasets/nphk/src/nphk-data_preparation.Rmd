@@ -37,11 +37,23 @@ data <- camtrapdp::read_camtrapdp(file)
 
 ## Data
 
+### Split dataset in NPHK1 and NPHK2
+
+See https://github.com/inbo/camera-trap-datasets/issues/37
+
+```{r}
+data_part1 <- data |>
+  filter_deployments(
+    deploymentStart <= lubridate::as_date("2020-04-30")
+  ) 
+```
+
+
 ### Geospatial coordinates are rounded to 0.001 degrees
 
 ```{r round coordinates}
 rounded_data <-
-  data |> 
+  data_part1 |> 
   camtrapdp::round_coordinates(digits = 3)
 ```
 
