@@ -29,7 +29,7 @@ library(zip)
 
 ```{r camtrap data}
 name_exportfolder <- "nphk-national-park-hoge-kempen-20260727090716"
-file <- here::here("datasets", "nphk", "data", "raw", name_exportfolder, "datapackage.json")
+file <- here::here("datasets", "nphk1", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
 
@@ -160,7 +160,7 @@ dataset$contributors <- list(
     organization = "Research Institute for Nature and Forest (INBO)"
   ),
 list(
-    title = "Milotic Tanja",
+    title = "Tanja Milotic",
     email = "tanja.milotic@inbo.be",
     path = "https://orcid.org/0000-0002-3129-6196",
     role = "contributor",
@@ -220,7 +220,7 @@ dataset$project$acronym <- "NPHK"
 # Write Camera Trap Data Package
 
 ```{r write camtrap DP}
-dir_processed <- here::here("datasets", "nphk", "data", "processed")
+dir_processed <- here::here("datasets", "nphk1", "data", "processed")
 camtrapdp::write_camtrapdp(dataset, dir_processed)
 
 # Zip these files
