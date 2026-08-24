@@ -243,6 +243,9 @@ dataset$contributors <- list(
   )
 )
 
+# Update package id
+dataset$id <- "https://doi.org/10.15468/4u3wm4"
+
 # Fix mistake in image url
 dataset$image <- "https://api.agouti.eu/uploads/project-images/20180430144018-IMG_0612.JPG"
 
