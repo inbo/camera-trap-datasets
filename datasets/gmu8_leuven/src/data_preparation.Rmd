@@ -269,7 +269,7 @@ dataset$keywords <- c(
 dataset$references <- NULL
 
 # Add project path
-dataset$project$path <- "https://agouti.eu/#/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
+dataset$project$path <- "https://agouti.eu/explore/project/91e1e104-a296-461e-af79-eeb6cb3e6c7f"
 ```
 
 ## Write dataset
