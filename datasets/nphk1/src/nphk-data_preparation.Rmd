@@ -203,7 +203,7 @@ list(
 dataset$image <- "https://api.agouti.eu/uploads/project-images/20170629073351-Capture.JPG"
 
 # Keywords
-dataset$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Hoge Kempen")
+dataset$keywords <- c("camera traps", "alien species", "Flanders", "Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Hoge Kempen")
 
 # References
 dataset$references <- c(
