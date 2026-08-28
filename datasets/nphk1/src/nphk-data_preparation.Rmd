@@ -207,7 +207,10 @@ dataset$image <- "https://api.agouti.eu/uploads/project-images/20170629073351-Ca
 dataset$keywords <- c("camera traps", "alien species", "Flanders, Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Hoge Kempen")
 
 # References
-dataset$references <- NULL
+dataset$references <- c(
+  "Wevers J, Fattebert J, Casaer J, Artois T, and Beenaerts N (2020). Trading fear for food in the Anthropocene: How ungulates cope with human disturbance in a multi-use, suburban ecosystem. Science of the Total Environment 740: 140369. https://doi.org/10.1016/j.scitotenv.2020.140369",
+  "Indestege S, Bollen M, Casaer J, and Beenaerts N (2025). Do long-term camera trap sampling designs matter to estimate diel activity? European Journal Of Wildlife Research 71:132. https://doi.org/10.1007/s10344-025-02013-3"
+)
 
 # Add project path
 dataset$project$path <- "https://agouti.eu/explore/project/fed8eb80-9339-44ab-8801-de302be0357b"
