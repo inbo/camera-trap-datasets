@@ -1,7 +1,7 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
   "name": "nphk-national-park-hoge-kempen-20260828104130",
-  "id": "d828daf7-d6b1-48e0-8222-fe2033a80f54",
+  "id": "https://doi.org/10.15468/suawqp",
   "created": "2026-08-28T10:41:30Z",
   "contributors": [
     {

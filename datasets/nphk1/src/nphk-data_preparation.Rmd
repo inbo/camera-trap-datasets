@@ -94,6 +94,8 @@ Adjust:
 
 ```{r add metadata}
 # Basic metadata
+dataset$id <- "https://doi.org/10.15468/suawqp"
+
 dataset$title <- "NPHK1 - Systematic random camera trap observations in National Park Hoge Kempen (Belgium)"
 
 dataset$licenses <- list(
