@@ -1,8 +1,8 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
-  "name": "nphk-national-park-hoge-kempen-20260727090716",
-  "id": "a3d126c6-5b01-401e-82a0-6d28cf5501a1",
-  "created": "2026-07-27T09:07:16Z",
+  "name": "nphk-national-park-hoge-kempen-20260828104130",
+  "id": "d828daf7-d6b1-48e0-8222-fe2033a80f54",
+  "created": "2026-08-28T10:41:30Z",
   "contributors": [
     {
       "title": "Jim Casaer",
@@ -78,7 +78,7 @@
       "role": "rightsHolder"
     }
   ],
-  "image": "https://api.agouti.eu/uploads/project-images/20170629073351-Capture.JPG",
+  "image": "https://api.agouti.eu/uploads/project-images/fed8eb80-9339-44ab-8801-de302be0357b.JPG",
   "sources": [
     {
       "title": "Agouti",

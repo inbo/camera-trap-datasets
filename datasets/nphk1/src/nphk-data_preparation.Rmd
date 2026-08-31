@@ -28,7 +28,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "nphk-national-park-hoge-kempen-20260727090716"
+name_exportfolder <- "nphk-national-park-hoge-kempen-20260828104130"
 file <- here::here("datasets", "nphk1", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
@@ -200,7 +200,7 @@ list(
 )
 
 # Fix mistake in image url
-dataset$image <- "https://api.agouti.eu/uploads/project-images/20170629073351-Capture.JPG"
+dataset$image <- "https://api.agouti.eu/uploads/project-images/fed8eb80-9339-44ab-8801-de302be0357b.JPG"
 
 # Keywords
 dataset$keywords <- c("camera traps", "alien species", "Flanders", "Belgium", "Mammalia", "birds", "Lifewatch", "invasive alien species", "European observatory of wildlife","Nationaal Park Hoge Kempen")
