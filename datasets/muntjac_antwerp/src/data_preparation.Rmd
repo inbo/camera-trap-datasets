@@ -352,6 +352,8 @@ camtrapdp::observations(dataset) <-
 
 ```{r add metadata}
 # Basic metadata
+dataset$id <- "https://doi.org/10.15468/gn87d6"
+  
 dataset$title <- "MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
 dataset$licenses <- list(
