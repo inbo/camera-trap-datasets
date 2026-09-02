@@ -1,8 +1,8 @@
 {
   "profile": "https://raw.githubusercontent.com/tdwg/camtrap-dp/1.0.2/camtrap-dp-profile.json",
-  "name": "muntjacantwerp-20260305150639",
-  "id": "2d9b3b35-2b5c-4b46-99a6-158fd5923c06",
-  "created": "2026-03-05T15:06:39Z",
+  "name": "muntjacantwerp-20260826120325",
+  "id": "https://doi.org/10.15468/gn87d6",
+  "created": "2026-08-26T12:03:25Z",
   "contributors": [
     {
       "title": "Bram D‘hondt",
@@ -72,9 +72,15 @@
     "title": "MUNTJAC_ANTWERP",
     "description": "MUNTJAC_ANTWERP investigates the occurrence and ecology of Chinese muntjac (Muntiacus reevesi) in forested areas around Antwerp (Belgium). The project is coordinated by the Research Institute for Nature and Forest (INBO) in close collaboration with the Agency for Nature and Forest (ANB). Fieldwork is centered on Park Vordenstein and its surroundings, where muntjac have been present since approximately 2012.",
     "samplingDesign": "targeted",
-    "captureMethod": ["activityDetection", "timeLapse"],
+    "captureMethod": [
+      "activityDetection",
+      "timeLapse"
+    ],
     "individualAnimals": false,
-    "observationLevel": ["event", "media"],
+    "observationLevel": [
+      "event",
+      "media"
+    ],
     "path": "https://agouti.eu/explore/project/52a7408e-b49a-4b80-a427-d1b44b31ac5c",
     "acronym": "MUNTJAC_ANTWERP"
   },
@@ -102,8 +108,8 @@
       "order": "Accipitriformes",
       "family": "Accipitridae",
       "vernacularNames": {
-        "eng": "eagles and hawks",
-        "nld": "havikken en sperwers"
+        "eng": "Eagles and hawks",
+        "nld": "Havikken en sperwers"
       }
     },
     {
@@ -113,8 +119,8 @@
       "order": "Anseriformes",
       "family": "Anatidae",
       "vernacularNames": {
-        "eng": "mandarin duck",
-        "nld": "mandarijneend"
+        "eng": "Mandarin duck",
+        "nld": "Mandarijneend"
       }
     },
     {
@@ -125,7 +131,7 @@
       "family": "Anatidae",
       "vernacularNames": {
         "eng": "Egyptian goose",
-        "nld": "nijlgans"
+        "nld": "Nijlgans"
       }
     },
     {
@@ -135,8 +141,8 @@
       "order": "Anseriformes",
       "family": "Anatidae",
       "vernacularNames": {
-        "eng": "mallard",
-        "nld": "wilde eend"
+        "eng": "Mallard",
+        "nld": "Wilde eend"
       }
     },
     {
@@ -146,8 +152,8 @@
       "order": "Rodentia",
       "family": "Muridae",
       "vernacularNames": {
-        "eng": "wood mouse",
-        "nld": "bosmuis"
+        "eng": "Wood mouse",
+        "nld": "Bosmuis"
       }
     },
     {
@@ -157,19 +163,17 @@
       "order": "Pelecaniformes",
       "family": "Ardeidae",
       "vernacularNames": {
-        "eng": "grey heron",
-        "nld": "blauwe reiger"
+        "eng": "Grey heron",
+        "nld": "Blauwe reiger"
       }
     },
     {
       "scientificName": "Aves",
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/V2",
       "taxonRank": "class",
-      "order": "",
-      "family": "",
       "vernacularNames": {
-        "eng": "bird sp.",
-        "nld": "vogel"
+        "eng": "Bird sp.",
+        "nld": "Vogel"
       }
     },
     {
@@ -179,8 +183,8 @@
       "order": "Accipitriformes",
       "family": "Accipitridae",
       "vernacularNames": {
-        "eng": "common buzzard",
-        "nld": "buizerd"
+        "eng": "Common buzzard",
+        "nld": "Buizerd"
       }
     },
     {
@@ -190,8 +194,8 @@
       "order": "Carnivora",
       "family": "Canidae",
       "vernacularNames": {
-        "eng": "dog",
-        "nld": "hond"
+        "eng": "Dog",
+        "nld": "Hond"
       }
     },
     {
@@ -201,8 +205,8 @@
       "order": "Artiodactyla",
       "family": "Cervidae",
       "vernacularNames": {
-        "eng": "roe deer",
-        "nld": "ree"
+        "eng": "Roe deer",
+        "nld": "Ree"
       }
     },
     {
@@ -210,10 +214,9 @@
       "taxonID": "https://www.checklistbank.org/dataset/COL2023/taxon/XC",
       "taxonRank": "order",
       "order": "Chiroptera",
-      "family": "",
       "vernacularNames": {
-        "eng": "bats",
-        "nld": "vleermuizen"
+        "eng": "Bats",
+        "nld": "Vleermuizen"
       }
     },
     {
@@ -223,8 +226,8 @@
       "order": "Columbiformes",
       "family": "Columbidae",
       "vernacularNames": {
-        "eng": "stock dove",
-        "nld": "holenduif"
+        "eng": "Stock dove",
+        "nld": "Holenduif"
       }
     },
     {
@@ -234,8 +237,8 @@
       "order": "Columbiformes",
       "family": "Columbidae",
       "vernacularNames": {
-        "eng": "common wood pigeon",
-        "nld": "houtduif"
+        "eng": "Common wood pigeon",
+        "nld": "Houtduif"
       }
     },
     {
@@ -245,7 +248,7 @@
       "order": "Passeriformes",
       "family": "Corvidae",
       "vernacularNames": {
-        "eng": "crows, ravens and rooks"
+        "eng": "Crows, ravens and rooks"
       }
     },
     {
@@ -255,8 +258,8 @@
       "order": "Passeriformes",
       "family": "Corvidae",
       "vernacularNames": {
-        "eng": "carrion crow",
-        "nld": "zwarte kraai"
+        "eng": "Carrion crow",
+        "nld": "Zwarte kraai"
       }
     },
     {
@@ -267,7 +270,7 @@
       "family": "Paridae",
       "vernacularNames": {
         "eng": "Eurasian blue tit",
-        "nld": "pimpelmees"
+        "nld": "Pimpelmees"
       }
     },
     {
@@ -277,8 +280,8 @@
       "order": "Piciformes",
       "family": "Picidae",
       "vernacularNames": {
-        "eng": "great spotted woodpecker",
-        "nld": "grote bonte specht"
+        "eng": "Great spotted woodpecker",
+        "nld": "Grote bonte specht"
       }
     },
     {
@@ -289,7 +292,7 @@
       "family": "Erinaceidae",
       "vernacularNames": {
         "eng": "European hedgehog",
-        "nld": "egel"
+        "nld": "Egel"
       }
     },
     {
@@ -300,7 +303,7 @@
       "family": "Muscicapidae",
       "vernacularNames": {
         "eng": "European robin",
-        "nld": "roodborst"
+        "nld": "Roodborst"
       }
     },
     {
@@ -310,8 +313,8 @@
       "order": "Carnivora",
       "family": "Felidae",
       "vernacularNames": {
-        "eng": "domestic cat",
-        "nld": "kat"
+        "eng": "Domestic cat",
+        "nld": "Kat"
       }
     },
     {
@@ -321,8 +324,8 @@
       "order": "Passeriformes",
       "family": "Fringillidae",
       "vernacularNames": {
-        "eng": "common chaffinch",
-        "nld": "vink"
+        "eng": "Common chaffinch",
+        "nld": "Vink"
       }
     },
     {
@@ -332,8 +335,8 @@
       "order": "Galliformes",
       "family": "Phasianidae",
       "vernacularNames": {
-        "eng": "chicken",
-        "nld": "kip"
+        "eng": "Chicken",
+        "nld": "Kip"
       }
     },
     {
@@ -344,7 +347,7 @@
       "family": "Corvidae",
       "vernacularNames": {
         "eng": "Eurasian jay",
-        "nld": "gaai"
+        "nld": "Gaai"
       }
     },
     {
@@ -354,8 +357,8 @@
       "order": "Primates",
       "family": "Hominidae",
       "vernacularNames": {
-        "eng": "human",
-        "nld": "mens"
+        "eng": "Human",
+        "nld": "Mens"
       }
     },
     {
@@ -366,7 +369,7 @@
       "family": "Leporidae",
       "vernacularNames": {
         "eng": "European hare",
-        "nld": "haas"
+        "nld": "Haas"
       }
     },
     {
@@ -376,8 +379,8 @@
       "order": "Carnivora",
       "family": "Mustelidae",
       "vernacularNames": {
-        "eng": "martens",
-        "nld": "marters"
+        "eng": "Martens",
+        "nld": "Marters"
       }
     },
     {
@@ -387,8 +390,8 @@
       "order": "Carnivora",
       "family": "Mustelidae",
       "vernacularNames": {
-        "eng": "beech marten",
-        "nld": "steenmarter"
+        "eng": "Beech marten",
+        "nld": "Steenmarter"
       }
     },
     {
@@ -399,7 +402,7 @@
       "family": "Mustelidae",
       "vernacularNames": {
         "eng": "European pine marten",
-        "nld": "boommarter"
+        "nld": "Boommarter"
       }
     },
     {
@@ -420,8 +423,8 @@
       "order": "Rodentia",
       "family": "Muridae",
       "vernacularNames": {
-        "eng": "murids",
-        "nld": "muisachtigen"
+        "eng": "Murids",
+        "nld": "Muisachtigen"
       }
     },
     {
@@ -432,7 +435,7 @@
       "family": "Mustelidae",
       "vernacularNames": {
         "eng": "European polecat",
-        "nld": "bunzing"
+        "nld": "Bunzing"
       }
     },
     {
@@ -442,8 +445,8 @@
       "order": "Carnivora",
       "family": "Mustelidae",
       "vernacularNames": {
-        "eng": "mustelids",
-        "nld": "marterachtigen"
+        "eng": "Mustelids",
+        "nld": "Marterachtigen"
       }
     },
     {
@@ -464,8 +467,8 @@
       "order": "Passeriformes",
       "family": "Paridae",
       "vernacularNames": {
-        "eng": "great tit",
-        "nld": "koolmees"
+        "eng": "Great tit",
+        "nld": "Koolmees"
       }
     },
     {
@@ -475,8 +478,8 @@
       "order": "Passeriformes",
       "family": "Passeridae",
       "vernacularNames": {
-        "eng": "house sparrow",
-        "nld": "huismus"
+        "eng": "House sparrow",
+        "nld": "Huismus"
       }
     },
     {
@@ -487,7 +490,7 @@
       "family": "Corvidae",
       "vernacularNames": {
         "eng": "Eurasian magpie",
-        "nld": "ekster"
+        "nld": "Ekster"
       }
     },
     {
@@ -498,7 +501,7 @@
       "family": "Picidae",
       "vernacularNames": {
         "eng": "European green woodpecker",
-        "nld": "groene specht"
+        "nld": "Groene specht"
       }
     },
     {
@@ -508,8 +511,8 @@
       "order": "Carnivora",
       "family": "Procyonidae",
       "vernacularNames": {
-        "eng": "raccoon",
-        "nld": "gewone wasbeer"
+        "eng": "Raccoon",
+        "nld": "Gewone wasbeer"
       }
     },
     {
@@ -519,8 +522,8 @@
       "order": "Rodentia",
       "family": "Muridae",
       "vernacularNames": {
-        "eng": "brown rat",
-        "nld": "bruine rat"
+        "eng": "Brown rat",
+        "nld": "Bruine rat"
       }
     },
     {
@@ -530,8 +533,8 @@
       "order": "Rodentia",
       "family": "Sciuridae",
       "vernacularNames": {
-        "eng": "red squirrel",
-        "nld": "rode eekhoorn"
+        "eng": "Red squirrel",
+        "nld": "Rode eekhoorn"
       }
     },
     {
@@ -542,7 +545,7 @@
       "family": "Scolopacidae",
       "vernacularNames": {
         "eng": "Eurasian woodcock",
-        "nld": "houtsnip"
+        "nld": "Houtsnip"
       }
     },
     {
@@ -552,8 +555,8 @@
       "order": "Strigiformes",
       "family": "Strigidae",
       "vernacularNames": {
-        "eng": "tawny owl",
-        "nld": "bosuil"
+        "eng": "Tawny owl",
+        "nld": "Bosuil"
       }
     },
     {
@@ -563,8 +566,8 @@
       "order": "Passeriformes",
       "family": "Sturnidae",
       "vernacularNames": {
-        "eng": "common starling",
-        "nld": "spreeuw"
+        "eng": "Common starling",
+        "nld": "Spreeuw"
       }
     },
     {
@@ -574,8 +577,8 @@
       "order": "Passeriformes",
       "family": "Turdidae",
       "vernacularNames": {
-        "eng": "true thrushes",
-        "nld": "echte lijsters"
+        "eng": "True thrushes",
+        "nld": "Echte lijsters"
       }
     },
     {
@@ -585,8 +588,8 @@
       "order": "Passeriformes",
       "family": "Turdidae",
       "vernacularNames": {
-        "eng": "redwing",
-        "nld": "koperwiek"
+        "eng": "Redwing",
+        "nld": "Koperwiek"
       }
     },
     {
@@ -596,8 +599,8 @@
       "order": "Passeriformes",
       "family": "Turdidae",
       "vernacularNames": {
-        "eng": "common blackbird",
-        "nld": "merel"
+        "eng": "Common blackbird",
+        "nld": "Merel"
       }
     },
     {
@@ -607,8 +610,8 @@
       "order": "Passeriformes",
       "family": "Turdidae",
       "vernacularNames": {
-        "eng": "song thrush",
-        "nld": "zanglijster"
+        "eng": "Song thrush",
+        "nld": "Zanglijster"
       }
     },
     {
@@ -618,8 +621,8 @@
       "order": "Carnivora",
       "family": "Canidae",
       "vernacularNames": {
-        "eng": "red fox",
-        "nld": "vos"
+        "eng": "Red fox",
+        "nld": "Vos"
       }
     }
   ],
