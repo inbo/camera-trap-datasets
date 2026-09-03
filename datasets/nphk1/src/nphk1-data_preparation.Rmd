@@ -1,5 +1,5 @@
 ---
-title: "Prepare Agouti project NPHK (Camtrap DP) for publication on GBIF"
+title: "Prepare nphk1 dataset for publication on GBIF"
 author: 
 - Sanne Govaert
 - Jim Casaer
@@ -32,6 +32,50 @@ name_exportfolder <- "nphk-national-park-hoge-kempen-20260828104130"
 file <- here::here("datasets", "nphk1", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
+
+## Partial validation
+
+Validation against the Camtrap DP specificaitons is only possible with [frictionless-py](https://camtrap-dp.tdwg.org/#validation).
+
+Here we check for some common issues that need to be fixed in Agouti.
+
+Load custom functions for validation, and set Agouti project id:
+
+```{r}
+source(here::here("functions", "validate.R"))
+agouti_id <- "fed8eb80-9339-44ab-8801-de302be0357b"
+```
+
+### Validate deployments
+
+Checks if any of these 4 required fields is empty:
+- latitude
+- longitude
+- deploymentStart
+- deploymentEnd
+
+```{r}
+validate_deployments(dataset, agouti_id)
+```
+
+### Validate observations
+
+Checks for the following issues:
+- eventStart or eventEnd is empty
+- eventStart is before the start of the project
+- count is 0
+- count is NA if scientificName is not NA
+
+```{r}
+validate_observations(dataset, agouti_id)
+```
+
+### Check taxonomic scope
+
+```{r}
+taxa(dataset)
+```
+
 
 # Get data ready for publication
 
