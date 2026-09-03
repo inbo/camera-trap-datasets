@@ -1,5 +1,5 @@
 ---
-title: "Prepare Agouti project NPHK (Camtrap DP) for publication on GBIF"
+title: "Prepare nphk1 dataset for publication on GBIF"
 author: 
 - Sanne Govaert
 - Jim Casaer

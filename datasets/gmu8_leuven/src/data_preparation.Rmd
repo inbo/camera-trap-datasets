@@ -1,5 +1,5 @@
 ---
-title: "Prepare dataset for publication to GBIF"
+title: "Prepare gmu8_leuven dataset for publication to GBIF"
 author: 
 - Sanne Govaert
 - Jim Casaer
