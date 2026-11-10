@@ -27,7 +27,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "muntjacantwerp-20260305150639"
+name_exportfolder <- "muntjacantwerp-20260826120325"
 file <- here::here("datasets", "muntjac_antwerp", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
@@ -99,6 +99,51 @@ INS11 | 2024-04 -- 2024-05 | Problematic in various aspects. (1) Set to daylight
 VOR10b | 2024-12 -- 2025-02 | Many blanks, oddly enough at particular times (XX:03:01, XX:33:01...). Nonetheless, movement is detected. | No action required.
 
 ## Fix issues
+
+### Fields populated in observations when they shouldn't
+
+This is an Agouti issue which has not been solved in Agouti yet.
+
+Observations that don't have observationType "animal" or "human" should not have the remaining fields populated (like count, lifeStage, classificationProbability).
+
+```{r}
+observations(dataset) |>
+  dplyr::filter(!(observationType %in% c("animal", "human"))) |>
+  dplyr::filter(!is.na(count) | !is.na(lifeStage) | !is.na(classificationProbability))
+```
+
+Set these fields to NA:
+
+```{r}
+observations(dataset) <-
+  observations(dataset) |>
+  dplyr::mutate(
+    count = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_integer_,
+      count
+    ),
+    lifeStage = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_character_,
+      lifeStage
+    ),
+    classificationProbability = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_real_,
+      classificationProbability
+    )
+  )
+```
+
+Check:
+
+```{r}
+observations(dataset) |>
+  dplyr::filter(!(observationType %in% c("animal", "human"))) |>
+  dplyr::filter(!is.na(count) | !is.na(lifeStage) | !is.na(classificationProbability))
+```
+
 
 ### Fix missassigned observations
 
@@ -352,6 +397,8 @@ camtrapdp::observations(dataset) <-
 
 ```{r add metadata}
 # Basic metadata
+dataset$id <- "https://doi.org/10.15468/gn87d6"
+  
 dataset$title <- "MUNTJAC_ANTWERP - Camera trap observations of Chinese muntjac in forested areas near Antwerp (Belgium)"
 
 dataset$licenses <- list(
@@ -368,10 +415,10 @@ dataset$licenses <- list(
   )
 
 dataset$description <- paste(
-  paste0("<emphasis>", dataset$title, "</emphasis> is a camera trap dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)</citetitle></ulink>. It contains camera trapping data collected for the monitoring of Chinese muntjac (<emphasis>Muntiacus reevesi</emphasis>) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti</citetitle></ulink> for data annotation. All observations of muntjac were double-checked in the framework of further analyses. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>."),
-  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
+  paste0("**", dataset$title, "** is a camera trap dataset published by the [Research Institute for Nature and Forest (INBO)](https://www.inbo.be/en). It contains camera trapping data collected for the monitoring of Chinese muntjac (*Muntiacus reevesi*) in the Region of Flanders with respect to Regulation EU nr. 1143/2014. The monitoring is performed in close collaboration with the Agency for Nature and Forest (ANB). Several forest areas east of Antwerp were sampled for animal wildlife, since Chinese muntjac is known to occur in the wider region since about 2012. The main area of study is Park Vordenstein, a government-owned woodland park that is open to the public. Camera traps were installed per forest area, in northerly direction at a height of about 50 cm. The number of camera traps varied per area and per year. Images from the camera traps were uploaded to [Agouti](https://www.agouti.eu) for data annotation. All observations of muntjac were double-checked in the framework of further analyses. Issues with the dataset can be reported at <https://github.com/inbo/camera-trap-datasets/issues>."),
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We would appreciate it if you follow the INBO norms for data use (<https://www.inbo.be/en/norms-data-use>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be.",
   "This dataset was collected using infrastructure managed by INBO and financed by the Research Foundation - Flanders (FWO) as part of the Belgian contribution to LifeWatch.",
-  "\n"
+  sep = "\n\n"
 )
 
 dataset$contributors <-
