@@ -100,6 +100,51 @@ VOR10b | 2024-12 -- 2025-02 | Many blanks, oddly enough at particular times (XX:
 
 ## Fix issues
 
+### Fields populated in observations when they shouldn't
+
+This is an Agouti issue which has not been solved in Agouti yet.
+
+Observations that don't have observationType "animal" or "human" should not have the remaining fields populated (like count, lifeStage, classificationProbability).
+
+```{r}
+observations(dataset) |>
+  dplyr::filter(!(observationType %in% c("animal", "human"))) |>
+  dplyr::filter(!is.na(count) | !is.na(lifeStage) | !is.na(classificationProbability))
+```
+
+Set these fields to NA:
+
+```{r}
+observations(dataset) <-
+  observations(dataset) |>
+  dplyr::mutate(
+    count = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_integer_,
+      count
+    ),
+    lifeStage = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_character_,
+      lifeStage
+    ),
+    classificationProbability = dplyr::if_else(
+      !(observationType %in% c("animal", "human")),
+      NA_real_,
+      classificationProbability
+    )
+  )
+```
+
+Check:
+
+```{r}
+observations(dataset) |>
+  dplyr::filter(!(observationType %in% c("animal", "human"))) |>
+  dplyr::filter(!is.na(count) | !is.na(lifeStage) | !is.na(classificationProbability))
+```
+
+
 ### Fix missassigned observations
 
 Issue: 5 observations have been assigned to the wrong deployment. They belong to VOR08a instead of BHN12:
