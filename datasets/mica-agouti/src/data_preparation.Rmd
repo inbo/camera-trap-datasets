@@ -25,7 +25,7 @@ library(zip)
 ## Read data
 
 ```{r camtrap data}
-name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20250519123531"
+name_exportfolder <- "mica-management-of-invasive-coypu-and-muskrat-in-europe-20260824121318"
 file <- here::here("datasets", "mica-agouti", "data", "raw", name_exportfolder, "datapackage.json")
 dataset <- camtrapdp::read_camtrapdp(file)
 ```
