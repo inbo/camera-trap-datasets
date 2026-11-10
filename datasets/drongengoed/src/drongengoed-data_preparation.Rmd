@@ -97,18 +97,13 @@ dataset$licenses <- list(
   )
 
 dataset$description <- paste(
-  paste0(
-    "<emphasis>", dataset$title, "</emphasis> is a dataset published by the <ulink url=\"https://www.inbo.be/en\"><citetitle>Research Institute for Nature and Forest (INBO)</citetitle></ulink>. It contains camera trap data ..."),
-    
-    "We used a ..." ,
-
-"Images from the camera traps were uploaded to <ulink url=\"https://www.agouti.eu\"><citetitle>Agouti</citetitle></ulink> for data annotation. Issues with the dataset can be reported at <ulink url=\"https://github.com/inbo/camera-trap-datasets/issues\"><citetitle>https://github.com/inbo/camera-trap-datasets/issues</citetitle></ulink>.",
-
-    "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (<ulink url=\"https://www.inbo.be/en/norms-data-use\"><citetitle>https://www.inbo.be/en/norms-data-use</citetitle></ulink>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be.",
-
-    "This dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
-    sep = "\n"
-  )
+  paste0("**", dataset$title, "** is a dataset published by the [Research Institute for Nature and Forest (INBO)](https://www.inbo.be/en). It contains camera trap data ..."),
+  "We used a ...",
+  "Images from the camera traps were uploaded to [Agouti](https://www.agouti.eu) for data annotation. Issues with the dataset can be reported at <https://github.com/inbo/camera-trap-datasets/issues>.",
+  "We have released this dataset to the public domain under a Creative Commons Zero waiver. We kindly ask users to follow the INBO norms for data use (<https://www.inbo.be/en/norms-data-use>) when using the data. If you have any questions regarding this dataset, don't hesitate to contact us via the contact information provided in the metadata or via opendata@inbo.be. Researchers can request more detailed geographic coordinates of the camera trap locations by contacting jim.casaer@inbo.be.",
+  "This dataset was collected using infrastructure managed by INBO and funded by the Research Foundation – Flanders (FWO) as part of Belgium’s contribution to LifeWatch.",
+  sep = "\n\n"
+)
 
 dataset$contributors <- list(
   list(   
